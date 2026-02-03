@@ -20,19 +20,56 @@ int main()
         sf::Vector2f oldPlayerPos = player.getPosition();
         sf::Vector2f oldSquarePos = ennemies.getPosition();
 
+        // Mise à jour des entités
+        player.update(speed);
+        ennemies.update(speed);
 
-    
+        // Récupération taille fenêtre
+        sf::Vector2u winSize = window.getSize();
+        float winW = static_cast<float>(winSize.x);
+        float winH = static_cast<float>(winSize.y);
 
-        player.update(speed); ennemies.update(speed); // Collision
-        if (player.getBounds().findIntersection(ennemies.getBounds()))
-        {   player.setPosition(oldPlayerPos); 
-        ennemies.setPosition(oldSquarePos);
+
+        // Clamp helper
+        auto clampPosToWindow = [&](const sf::FloatRect& bounds, sf::Vector2f pos) -> sf::Vector2f
+            {
+                float maxX = std::max(0.f, winW - bounds.size.x);
+                float maxY = std::max(0.f, winH - bounds.size.y);
+                pos.x = std::clamp(pos.x, 0.f, maxX);
+                pos.y = std::clamp(pos.y, 0.f, maxY);
+                return pos;
+            };
+
+        // Verrouiller les positions pour qu'elles restent dans la fenêtre
+        {
+            sf::FloatRect pBounds = player.getBounds();
+            sf::Vector2f pPos = player.getPosition();
+            pPos = clampPosToWindow(pBounds, pPos);
+            player.setPosition(pPos);
         }
-        window.clear(sf::Color::Black); 
+
+        {
+            sf::FloatRect eBounds = ennemies.getBounds();
+            sf::Vector2f ePos = ennemies.getPosition();
+            ePos = clampPosToWindow(eBounds, ePos);
+            ennemies.setPosition(ePos);
+        }
+
+        // Collision (rollback si nécessaire)
+        if (player.getBounds().findIntersection(ennemies.getBounds()))
+        {
+            player.setPosition(oldPlayerPos);
+            ennemies.setPosition(oldSquarePos);
+        }
+
+        
+        window.clear(sf::Color::Black);
         player.draw(window);
         ennemies.draw(window);
         window.display();
+
     }
+    return 0;
 }
 
 
@@ -41,3 +78,10 @@ int main()
 
      
      
+
+
+
+
+
+
+
