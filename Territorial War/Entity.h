@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
+#include "Entity.h"
 template <typename ShapeType>
 class Entity {
 public:

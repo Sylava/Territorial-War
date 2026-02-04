@@ -20,17 +20,15 @@ int main()
         sf::Vector2f oldPlayerPos = player.getPosition();
         sf::Vector2f oldSquarePos = ennemies.getPosition();
 
-        // Mise à jour des entités
         player.update(speed);
         ennemies.update(speed);
 
-        // Récupération taille fenêtre
+
         sf::Vector2u winSize = window.getSize();
         float winW = static_cast<float>(winSize.x);
         float winH = static_cast<float>(winSize.y);
 
 
-        // Clamp helper
         auto clampPosToWindow = [&](const sf::FloatRect& bounds, sf::Vector2f pos) -> sf::Vector2f
             {
                 float maxX = std::max(0.f, winW - bounds.size.x);
@@ -40,7 +38,6 @@ int main()
                 return pos;
             };
 
-        // Verrouiller les positions pour qu'elles restent dans la fenêtre
         {
             sf::FloatRect pBounds = player.getBounds();
             sf::Vector2f pPos = player.getPosition();
@@ -54,8 +51,6 @@ int main()
             ePos = clampPosToWindow(eBounds, ePos);
             ennemies.setPosition(ePos);
         }
-
-        // Collision (rollback si nécessaire)
         if (player.getBounds().findIntersection(ennemies.getBounds()))
         {
             player.setPosition(oldPlayerPos);
