@@ -16,7 +16,7 @@ public:
         text.setFillColor(sf::Color::White);
 
         sf::FloatRect bounds = text.getLocalBounds();
-        text.setOrigin(bounds.size.x / 2, bounds.size.y / 2);
+        text.setOrigin(bounds.width / 2, bounds.height / 2);
         text.setPosition(pos + size / 2.f);
     }
 
