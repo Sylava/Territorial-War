@@ -8,14 +8,18 @@ public:
         shape.setPosition({ 400.f, 300.f });
     }
 
-    void update(float speed) override {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Up))
-            move({ 0.f, -speed });
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Down))
-            move({ 0.f, speed });
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Left))
-            move({ -speed, 0.f });
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Right))
-            move({ speed, 0.f });
+    void update(float dt) override {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+            move({ 0.f, -speed * dt });
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+            move({ 0.f, speed * dt });
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+            move({ -speed * dt, 0.f });
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+            move({ speed * dt, 0.f });
     }
+
+private:
+    float speed = 220.f;
+    int pv = 5;
 };

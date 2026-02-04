@@ -1,14 +1,21 @@
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 #include "Ennemies.h"
+#include "NPC.h"
+#include "Entity.h"
+#include <vector>
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode({ 800, 800 }), "SFML works!");
-    sf::CircleShape shape(100.f);
    
+
     Player player; 
-    Ennemies ennemies;
-    float speed = 0.1f;
+    Npc npc;
+
+    npc.Init();
+
+    sf::Clock clock;
 
     while (window.isOpen())
     {
@@ -17,20 +24,22 @@ int main()
             if (event->is<sf::Event::Closed>())
                 window.close();
         }
+        float dt = clock.restart().asSeconds();
         sf::Vector2f oldPlayerPos = player.getPosition();
-        sf::Vector2f oldSquarePos = ennemies.getPosition();
+        sf::Vector2f oldSquarePos = npc.getPosition();
 
+        npc.update(dt);
 
-    
-
-        player.update(speed); ennemies.update(speed); // Collision
-        if (player.getBounds().findIntersection(ennemies.getBounds()))
-        {   player.setPosition(oldPlayerPos); 
-        ennemies.setPosition(oldSquarePos);
+        player.update(dt);
+        // Collision
+        if (player.getBounds().findIntersection(npc.getBounds()))
+        {   
+            player.setPosition(oldPlayerPos);
+            npc.setPosition(oldSquarePos);
         }
-        window.clear(sf::Color::Black); 
+        window.clear(); 
         player.draw(window);
-        ennemies.draw(window);
+        npc.draw(window);
         window.display();
     }
 }
