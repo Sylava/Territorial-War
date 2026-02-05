@@ -45,7 +45,6 @@ public:
 
     void update(float dt) override
     {
-        std::cout << "NPC update" << std::endl;
         fsm.Update(context);
         // calcul de la direction
         if (PointToGo)

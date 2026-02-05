@@ -29,8 +29,8 @@ public:
         return shape.getGlobalBounds();
     }
 
-    void draw(sf::RenderWindow& window) {
-        window.draw(shape);
+    void draw(sf::RenderWindow* window) {
+        window->draw(shape);
     }
 };
 

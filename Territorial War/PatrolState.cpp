@@ -7,7 +7,7 @@ void PatrolState::Enter(NpcContext _context)
 
 void PatrolState::Execute(NpcContext _context)
 {
-	std::cout << "Patrol State update" << std::endl;
+
 }
 
 void PatrolState::Exit(NpcContext _context)
