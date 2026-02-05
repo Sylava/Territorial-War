@@ -131,8 +131,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Bouton.cpp" />
-    <ClCompile Include="Ennemies.cpp" />
+    <ClCompile Include="ChaseState.cpp" />
+    <ClCompile Include="ColisionBox.cpp" />
+    <ClCompile Include="Conditions.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Launch.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -142,8 +143,9 @@
     <ClCompile Include="Territorial War.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bouton.h" />
-    <ClInclude Include="Ennemies.h" />
+    <ClInclude Include="ChaseState.h" />
+    <ClInclude Include="ColisionBox.h" />
+    <ClInclude Include="Conditions.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Launch.h" />
     <ClInclude Include="Player.h" />

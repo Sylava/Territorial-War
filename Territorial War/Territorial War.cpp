@@ -1,6 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include "Player.h"
-#include "Ennemies.h"
+
+#include "NPC.h"
+#include "Entity.h"
+#include <vector>
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode({ 800, 800 }), "SFML works!");
@@ -45,14 +49,24 @@ int main()
             player.setPosition(pPos);
         }
 
+        player.update(dt);
+        // --- Collision avec les bords de la fenêtre ---
+        sf::FloatRect playerBounds = player.getBounds();
+        sf::Vector2u winSize = window.getSize();
+
+        if (playerBounds.position.x < 0.f ||
+            playerBounds.position.y < 0.f ||
+            playerBounds.position.x + playerBounds.size.x > static_cast<float>(winSize.x) ||
+            playerBounds.position.y + playerBounds.size.y > static_cast<float>(winSize.y))
         {
-            sf::FloatRect eBounds = ennemies.getBounds();
-            sf::Vector2f ePos = ennemies.getPosition();
-            ePos = clampPosToWindow(eBounds, ePos);
-            ennemies.setPosition(ePos);
+           
+            player.setPosition(oldPlayerPos);
+            // On peut aussi recalculer les bounds si besoin
+            playerBounds = player.getBounds();
         }
-        if (player.getBounds().findIntersection(ennemies.getBounds()))
-        {
+        // Collision
+        if (player.getBounds().findIntersection(npc.getBounds()))
+        {   
             player.setPosition(oldPlayerPos);
             ennemies.setPosition(oldSquarePos);
         }
