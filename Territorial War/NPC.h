@@ -63,3 +63,32 @@ public:
             PointToGo = true;
     }
 };
+
+//#pragma once
+//#include <SFML/Graphics.hpp>
+//#include "StateMachine.h"
+//#include "ChaseState.h"
+//#include "Conditions.h"
+//#include "NpcContext.h"
+//#include "PatrolState.h"
+//#include "Entity.h"
+//
+//using namespace NpcAi;
+//
+//class Npc : public Entity<sf::RectangleShape>
+//{
+//public:
+//    Npc();
+//    ~Npc() = default;
+//
+//    void Init();
+//    void update(float dt, const sf::RenderWindow& window);
+//
+//    // Utilitaire
+//    static sf::Vector2f Normalize(const sf::Vector2f& v);
+//
+//    // Données
+//    FSM::StateMachine<NpcContext> fsm;
+//    sf::Vector2f direction;
+//    float speed = 100.f;
+//};
