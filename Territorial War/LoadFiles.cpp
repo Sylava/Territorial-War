@@ -22,7 +22,7 @@ sf::Texture LoadFiles::loadTexture(std::string path)
 //	return texture;
 //}
 
-sf::Sprite LoadFiles::createSprite(sf::IntRect& rect, sf::Texture& texture )
+sf::Sprite LoadFiles::createSprite(const sf::IntRect& rect, sf::Texture& texture )
 {
 	return sf::Sprite (texture, rect);
 

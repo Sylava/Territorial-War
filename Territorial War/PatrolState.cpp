@@ -1,4 +1,5 @@
 #include "PatrolState.h"
+#include "NPC.h"
 
 void PatrolState::Enter(NpcContext _context)
 {
@@ -7,7 +8,7 @@ void PatrolState::Enter(NpcContext _context)
 
 void PatrolState::Execute(NpcContext _context)
 {
-
+    _context.npc->speed = 500.f;
 }
 
 void PatrolState::Exit(NpcContext _context)

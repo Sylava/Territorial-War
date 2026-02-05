@@ -3,9 +3,9 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode({ 800, 800 }), "SFML works!", sf::State::Fullscreen);
+    sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "SFML works!", sf::State::Fullscreen);
     InGame game;
-    game.init();
+    game.init(&window);
     game.run(&window);
     
 }

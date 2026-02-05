@@ -22,43 +22,7 @@ public:
     bool PointToGo = true;
     float speed = 100.f;
 
-    void Init()
-    {
-        PatrolState* patrolState = fsm.CreateState<PatrolState>();
-        ChaseState* chaseState = fsm.CreateState<ChaseState>();
+    void Init();
 
-        patrolState->AddTransition(Conditions::IsSeeingPlayer, chaseState);
-
-        chaseState->AddTransition([](const NpcContext _context)
-            {
-                return !Conditions::IsSeeingPlayer(_context);
-            }, patrolState);
-
-        fsm.Init(patrolState, context);
-    }
-
-    sf::Vector2f getDirection(const sf::Vector2f& v)
-    {
-        float length = std::sqrt(v.x * v.x + v.y * v.y);
-        return (length != 0.f) ? v / length : sf::Vector2f(0.f, 0.f);
-    }
-
-    void update(float dt) override
-    {
-        fsm.Update(context);
-        // calcul de la direction
-        if (PointToGo)
-        {
-            direction = getDirection(PointA - getPosition());
-        }
-        else
-        {
-            direction = getDirection(PointB - getPosition());
-        }
-        move(direction * speed * dt);
-        if (getPosition().x >= PointA.x)
-            PointToGo = false;
-        if (getPosition().y >= PointB.y)
-            PointToGo = true;
-    }
+    void update(float dt) override;
 };
