@@ -4,7 +4,7 @@
 #include "Conditions.h"
 #include "NpcContext.h"
 #include "PatrolState.h"
-#include "ennemies.h"
+#include "Entity.h"
 
 using namespace NpcAi;
 

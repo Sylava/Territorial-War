@@ -134,6 +134,8 @@
     <ClCompile Include="ChaseState.cpp" />
     <ClCompile Include="Conditions.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="InGame.cpp" />
+    <ClCompile Include="LoadFiles.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="NpcContext.cpp" />
     <ClCompile Include="PatrolState.cpp" />
@@ -147,6 +149,8 @@
     <ClInclude Include="ChaseState.h" />
     <ClInclude Include="Conditions.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="InGame.h" />
+    <ClInclude Include="LoadFiles.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="NpcContext.h" />
     <ClInclude Include="PatrolState.h" />
