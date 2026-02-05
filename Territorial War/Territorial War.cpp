@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Player.h"
-
+#include "colisionBox.h"
 #include "NPC.h"
 #include "Entity.h"
 #include <vector>
@@ -26,17 +26,14 @@ int main()
         }
         float dt = clock.restart().asSeconds();
         sf::Vector2f oldPlayerPos = player.getPosition();
-        sf::Vector2f oldSquarePos = npc.getPosition();
+        sf::Vector2f oldNpcPos = npc.getPosition();
 
         npc.update(dt);
 
         player.update(dt);
         // Collision
-        if (player.getBounds().findIntersection(npc.getBounds()))
-        {   
-            player.setPosition(oldPlayerPos);
-            npc.setPosition(oldSquarePos);
-        }
+        CollisionBox::HandlePlayerWindowCollision(player, window, oldPlayerPos);
+        CollisionBox::HandlePlayerNpcCollision(player, npc, oldPlayerPos, oldNpcPos);
         window.clear(); 
         player.draw(window);
         npc.draw(window);
