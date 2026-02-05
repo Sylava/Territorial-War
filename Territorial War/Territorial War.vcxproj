@@ -140,8 +140,6 @@
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneMenu.cpp" />
     <ClCompile Include="Territorial War.cpp" />
-    <ClCompile Include="TileMap.cpp" />
-    <ClCompile Include="TileType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bouton.h" />
@@ -152,8 +150,6 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneMenu.h" />
-    <ClInclude Include="TileMap.h" />
-    <ClInclude Include="TileType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
