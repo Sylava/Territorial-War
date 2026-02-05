@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ChaseState.cpp" />
+    <ClCompile Include="ColisionBox.cpp" />
     <ClCompile Include="Conditions.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="NPC.cpp" />
@@ -145,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChaseState.h" />
+    <ClInclude Include="ColisionBox.h" />
     <ClInclude Include="Conditions.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="NPC.h" />

@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "NPC.h"
 
-class CollisionManager
+class CollisionBox
 {
 public:
     static void HandlePlayerWindowCollision(Player& player, const sf::RenderWindow& window, const sf::Vector2f& oldPos);
@@ -12,3 +12,5 @@ public:
         const sf::Vector2f& oldPlayerPos,
         const sf::Vector2f& oldNpcPos);
 };
+
+
