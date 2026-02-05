@@ -6,12 +6,11 @@ class Entity {
 public:
     ShapeType shape;
 
-    Entity(){}
     Entity(const ShapeType& s) : shape(s) {}
 
     virtual ~Entity() = default;
 
-    virtual void update(float dt) = 0; // déplacement propre à chaque entité
+    virtual void update(float speed) = 0; // déplacement propre à chaque entité
 
     void move(const sf::Vector2f& offset) {
         shape.move(offset);
