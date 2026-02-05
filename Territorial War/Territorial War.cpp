@@ -8,11 +8,14 @@
 int main()
 {
     sf::RenderWindow window(sf::VideoMode({ 800, 800 }), "SFML works!");
-    sf::CircleShape shape(100.f);
    
+
     Player player; 
-    Ennemies ennemies;
-    float speed = 0.1f;
+    Npc npc;
+
+    npc.Init();
+
+    sf::Clock clock;
 
     while (window.isOpen())
     {
@@ -21,61 +24,29 @@ int main()
             if (event->is<sf::Event::Closed>())
                 window.close();
         }
+        float dt = clock.restart().asSeconds();
         sf::Vector2f oldPlayerPos = player.getPosition();
-        sf::Vector2f oldSquarePos = ennemies.getPosition();
+        sf::Vector2f oldSquarePos = npc.getPosition();
 
-        player.update(speed);
-        ennemies.update(speed);
-
-
-        sf::Vector2u winSize = window.getSize();
-        float winW = static_cast<float>(winSize.x);
-        float winH = static_cast<float>(winSize.y);
-
-
-        auto clampPosToWindow = [&](const sf::FloatRect& bounds, sf::Vector2f pos) -> sf::Vector2f
-            {
-                float maxX = std::max(0.f, winW - bounds.size.x);
-                float maxY = std::max(0.f, winH - bounds.size.y);
-                pos.x = std::clamp(pos.x, 0.f, maxX);
-                pos.y = std::clamp(pos.y, 0.f, maxY);
-                return pos;
-            };
-
-        {
-            sf::FloatRect pBounds = player.getBounds();
-            sf::Vector2f pPos = player.getPosition();
-            pPos = clampPosToWindow(pBounds, pPos);
-            player.setPosition(pPos);
-        }
+        npc.update(dt);
 
         player.update(dt);
-        // --- Collision avec les bords de la fenêtre ---
-        sf::FloatRect playerBounds = player.getBounds();
-        sf::Vector2u winSize = window.getSize();
-
-        if (playerBounds.position.x < 0.f ||
-            playerBounds.position.y < 0.f ||
-            playerBounds.position.x + playerBounds.size.x > static_cast<float>(winSize.x) ||
-            playerBounds.position.y + playerBounds.size.y > static_cast<float>(winSize.y))
-        {
-           
-            player.setPosition(oldPlayerPos);
-            // On peut aussi recalculer les bounds si besoin
-            playerBounds = player.getBounds();
-        }
         // Collision
         if (player.getBounds().findIntersection(npc.getBounds()))
         {   
             player.setPosition(oldPlayerPos);
-            ennemies.setPosition(oldSquarePos);
+            npc.setPosition(oldSquarePos);
         }
-
-        
-        window.clear(sf::Color::Black);
+        window.clear(); 
         player.draw(window);
-        ennemies.draw(window);
+        npc.draw(window);
         window.display();
-
     }
 }
+
+
+
+  
+
+     
+     
