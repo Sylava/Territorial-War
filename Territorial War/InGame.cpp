@@ -6,39 +6,39 @@
 #include "NPC.h"
 #include "Entity.h"
 
-void InGame::init(sf::RenderWindow* window)
+InGame::InGame(sf::RenderWindow* inWindow)
 {
-    if(!landTex.loadFromFile("assets/tiles.png"))
-        std::cout << "texture non chargee" << std::endl;
-    bgTex = LoadFiles::loadTexture("assets/background.png");
-    a.emplace(landTex);
-    a->setPosition({ 0, 500 });
-
+    window = inWindow;
     xOffset = (window->getSize().x - ((float)mapWidth * 64)) / 2;
     yOffset = (window->getSize().y - ((float)mapHeight * 64)) / 2;
+}
+
+void InGame::init()
+{
+    if(!mapTex.loadFromFile("assets/tiles.png"))
+        std::cout << "texture non chargee" << std::endl;
+    bgTex = LoadFiles::loadTexture("assets/background.png");
+    background.emplace(bgTex);
+    auto winSize = window->getSize();
+    auto texSize = bgTex.getSize();
+    background->setScale({ (float)(winSize.x) / texSize.x, (float)(winSize.y) / texSize.y });
+
 
     createFirstRow();
     createMiddleRows();
     createLastRow();
 }
 
-void InGame::run(sf::RenderWindow* window)
+void InGame::run()
 {
-
-    Player player;
-    Npc npc;
-    sf::Sprite background(bgTex);
-    auto winSize = window->getSize();
-    auto texSize = bgTex.getSize();
-
-    background.setScale({ static_cast<float>(winSize.x) / texSize.x, static_cast<float>(winSize.y) / texSize.y });
-
-    npc.Init();
+    Player player(window);
+    //Npc npc;
+    //npc.Init();
 
     sf::Clock clock;
-
-    while (window->isOpen())
+    while (running)
     {
+        float dt = clock.restart().asSeconds();
         while (const std::optional event = window->pollEvent())
         {
             if (event->is<sf::Event::Closed>())
@@ -47,28 +47,37 @@ void InGame::run(sf::RenderWindow* window)
             {
                 auto key = event->getIf<sf::Event::KeyPressed>();
                 if (key->code == sf::Keyboard::Key::Escape)
-                    window->close();
+                    running = false;
             }
         }
-        float dt = clock.restart().asSeconds();
-        sf::Vector2f oldPlayerPos = player.getPosition();
-        sf::Vector2f oldSquarePos = npc.getPosition();
-
-        npc.update(dt);
-        player.update(dt);
-
-        // Collision
-        if (player.getBounds().findIntersection(npc.getBounds()))
+        player.isMoving = false;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z))
         {
-            player.setPosition(oldPlayerPos);
-            npc.setPosition(oldSquarePos);
+            player.isMoving = true;
+            player.move({ 0.f, -player.speed * dt });
         }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+        {
+            player.isMoving = true;
+            player.move({ 0.f, player.speed * dt });
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
+        {
+            player.isMoving = true;
+            player.direction = false;
+            player.move({ -player.speed * dt, 0.f });
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+        {
+            player.isMoving = true;
+            player.direction = true;
+            player.move({ player.speed * dt, 0.f });
+        }
+        player.update(dt);
+        player.wasMoving = player.isMoving;
         window->clear();
-        window->draw(background);
-        draw(window);
-        player.draw(window);
-        npc.draw(window);
-        //window->draw(*a);
+        draw();
+        player.draw();
         window->display();
     }
 }
@@ -80,23 +89,23 @@ void InGame::createFirstRow()
         if (i == 0)
         {
             sf::IntRect rect({ 320, 0 }, { 64, 64 });
-            sf::Sprite sprite(landTex, rect);
+            sf::Sprite sprite(mapTex, rect);
             sprite.setPosition({ xOffset + 0, yOffset + 0 });
-            lands.push_back(sprite);
+            map.push_back(sprite);
         }
         else if(i < mapWidth - 1)
         {
             sf::IntRect rect({ 384, 0 }, { 64, 64 });
-            sf::Sprite sprite(landTex, rect);
+            sf::Sprite sprite(mapTex, rect);
             sprite.setPosition({ xOffset + 64 * (float)i, yOffset + 0 });
-            lands.push_back(sprite);
+            map.push_back(sprite);
         }
         else
         {
             sf::IntRect rect({ 448, 0 }, { 64, 64 });
-            sf::Sprite sprite(landTex, rect);
+            sf::Sprite sprite(mapTex, rect);
             sprite.setPosition({ xOffset + ((float)mapWidth - 1.f) * 64, yOffset + 0 });
-            lands.push_back(sprite);
+            map.push_back(sprite);
         }
     }
 }
@@ -110,23 +119,23 @@ void InGame::createMiddleRows()
             if (x == 0)
             {
                 sf::IntRect rect({ 320, 64 }, { 64, 64 });
-                sf::Sprite sprite = (LoadFiles::createSprite(rect, landTex));
+                sf::Sprite sprite = (LoadFiles::createSprite(rect, mapTex));
                 sprite.setPosition({ xOffset + 0, yOffset + (float)y * 64 + 64 });
-                lands.push_back(sprite);
+                map.push_back(sprite);
             }
             else if (x < mapWidth - 1)
             {
                 sf::IntRect rect({ 384, 64 }, { 64, 64 });
-                sf::Sprite sprite = (LoadFiles::createSprite(rect, landTex));
+                sf::Sprite sprite = (LoadFiles::createSprite(rect, mapTex));
                 sprite.setPosition({ xOffset + 64 * (float)x, yOffset + 64 * ((float)y + 1) });
-                lands.push_back(sprite);
+                map.push_back(sprite);
             }
             else
             {
                 sf::IntRect rect({ 448, 64 }, { 64, 64 });
-                sf::Sprite sprite = (LoadFiles::createSprite(rect, landTex));
+                sf::Sprite sprite = (LoadFiles::createSprite(rect, mapTex));
                 sprite.setPosition({ xOffset + ((float)mapWidth - 1.f) * 64, yOffset + 64 * ((float)y + 1) });
-                lands.push_back(sprite);
+                map.push_back(sprite);
             }
         }
     }
@@ -139,30 +148,31 @@ void InGame::createLastRow()
         if (i == 0)
         {
             sf::IntRect rect({ 320, 128 }, { 64, 64 });
-            sf::Sprite sprite(landTex, rect);
+            sf::Sprite sprite(mapTex, rect);
             sprite.setPosition({ xOffset + 0, yOffset + ((float)mapHeight - 1) * 64 });
-            lands.push_back(sprite);
+            map.push_back(sprite);
         }
         else if (i < mapWidth - 1)
         {
             sf::IntRect rect({ 384, 128 }, { 64, 64 });
-            sf::Sprite sprite(landTex, rect);
+            sf::Sprite sprite(mapTex, rect);
             sprite.setPosition({ xOffset+ 64 * (float)i, yOffset + ((float)mapHeight - 1) * 64 });
-            lands.push_back(sprite);
+            map.push_back(sprite);
         }
         else
         {
             sf::IntRect rect({ 448, 128 }, { 64, 64 });
-            sf::Sprite sprite(landTex, rect);
+            sf::Sprite sprite(mapTex, rect);
             sprite.setPosition({ xOffset+((float)mapWidth - 1.f) * 64, yOffset + ((float)mapHeight - 1) * 64 });
-            lands.push_back(sprite);
+            map.push_back(sprite);
         }
     }
 }
 
-void InGame::draw(sf::RenderWindow* window)
+void InGame::draw()
 {
-    for (sf::Sprite sprite : lands)
+    window->draw(*background);
+    for (sf::Sprite sprite : map)
     {
         window->draw(sprite);
     }

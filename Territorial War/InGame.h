@@ -6,22 +6,25 @@
 class InGame
 {
 public:
-	void init(sf::RenderWindow* window);
-	void run(sf::RenderWindow* window);
+	InGame(sf::RenderWindow* inWindow);
+	void init();
+	void run();
 
 private:
-	std::optional<sf::Sprite> a;
-	sf::Texture landTex;
+	sf::RenderWindow* window;
+	sf::Texture mapTex;
 	sf::Texture bgTex;
-	std::vector<sf::Sprite> lands;
+	std::optional<sf::Sprite> background;
+	std::vector<sf::Sprite> map;
 	int mapWidth = 14;
 	int mapHeight = 10;
 	float xOffset;
 	float yOffset;
+	bool running = true;
 
 	void createFirstRow();
 	void createMiddleRows();
 	void createLastRow();
-	void draw(sf::RenderWindow* window);
+	void draw();
 };
 

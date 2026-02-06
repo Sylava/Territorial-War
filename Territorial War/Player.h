@@ -1,25 +1,29 @@
 #pragma once
+#include <SFML/Graphics.hpp>
 #include "Entity.h"
 
-class Player : public Entity<sf::CircleShape> {
+class Player {
 public:
-    Player() : Entity(sf::CircleShape(20.f)) {
-        shape.setFillColor(sf::Color::Red);
-        shape.setPosition({ 400.f, 300.f });
-    }
+    Player(sf::RenderWindow* inWindow);
 
-    void update(float dt) override {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
-            move({ 0.f, -speed * dt });
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
-            move({ 0.f, speed * dt });
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
-            move({ -speed * dt, 0.f });
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
-            move({ speed * dt, 0.f });
-    }
+    void update(float dt);
+    void move(const sf::Vector2f& offset);
+    void draw();
+    float speed = 150.f;
+    bool isMoving = false;
+    bool wasMoving = false;
+    bool direction = true;
 
 private:
-    float speed = 220.f;
+    sf::RenderWindow* window;
+    sf::Texture idleTex;
+    sf::Texture runTex;
+    std::optional<sf::Sprite> playerSprite;
+    sf::Vector2f position;
     int pv = 5;
+    int idleIndex = 0;
+    bool idleReverse = false;
+    int runIndex = 0;
+    bool runReverse = false;
+    float animTime = 0.1f;
 };

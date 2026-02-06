@@ -12,16 +12,6 @@ sf::Texture LoadFiles::loadTexture(std::string path)
 	return texture;
 }
 
-//sf::Texture LoadFiles::loadPartOfTexture(std::string path, sf::IntRect rect)
-//{
-//	sf::Texture texture;
-//	if (!texture.loadFromFile(path, rect))
-//	{
-//		std::cout << "texture non chargee" << std::endl;
-//	}
-//	return texture;
-//}
-
 sf::Sprite LoadFiles::createSprite(const sf::IntRect& rect, sf::Texture& texture )
 {
 	return sf::Sprite (texture, rect);
