@@ -33,8 +33,6 @@
 //        window.draw(shape);
 //    }
 //};
-
-
 #pragma once
 #include <SFML/Graphics.hpp>
 
@@ -60,6 +58,7 @@ public:
     }
 
     T& getShape() { return m_drawable; }
+    const T& getShape() const { return m_drawable; } 
 
 protected:
     T m_drawable;

@@ -3,7 +3,7 @@
 #include <algorithm>
 
 Player::Player()
-    : Entity(sf::CircleShape(25.f)) // rayon 25 ? diamètre 50
+    : Entity(sf::CircleShape(25.f)) 
 {
     getShape().setFillColor(sf::Color::Blue);
 }
@@ -19,7 +19,7 @@ void Player::update(float dt)
 
     move(moveVec);
 
-    // Empêcher de sortir de la fenêtre (800x600)
+    // block les sortir de la fenêtre en (800x600)
     auto pos = getPosition();
     float radius = getShape().getRadius();
 
