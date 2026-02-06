@@ -1,11 +1,22 @@
+//#pragma once
+//
+//class Npc;
+//
+//class NpcContext
+//{
+//public:
+//    Npc* npc;
+//    // Input
+//    // Map
+//};
+
+
 #pragma once
-
 class Npc;
+class Player;
 
-class NpcContext
+struct NpcContext
 {
-public:
-    Npc* npc;
-    // Input
-    // Map
+    Npc* npc = nullptr;
+    Player* player = nullptr;
 };

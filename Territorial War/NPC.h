@@ -1,68 +1,37 @@
-#pragma once
-#include "StateMachine.h"
-#include "ChaseState.h"
-#include "Conditions.h"
-#include "NpcContext.h"
-#include "PatrolState.h"
-#include "Entity.h"
+//#pragma once
+//#include <SFML/Graphics.hpp>
+//#include <random>
+//#include "Entity.h"
+//#include "Statemachine.h"
+//#include "NpcContext.h"
+//
+//class Npc : public Entity<sf::RectangleShape>
+//{
+//public:
+//    Npc();
+//    ~Npc();
+//
+//    void Init();
+//    void update(float dt) override;
+//
+//private:
+//    sf::Vector2f getDirection(const sf::Vector2f& v);
+//    void chooseRandomTarget();
+//
+//private:
+//    FSM::StateMachine<NpcContext> fsm;
+//    NpcContext context;
+//
+//    sf::Vector2f target;     // point aléatoire à atteindre
+//    sf::Vector2f direction;  // direction normalisée
+//    float speed = 100.f;
+//
+//    // Générateur aléatoire
+//    std::mt19937 gen;
+//    std::uniform_int_distribution<int> distX;
+//    std::uniform_int_distribution<int> distY;
+//};
 
-using namespace NpcAi;
-
-class Npc : public Entity<sf::RectangleShape>
-{
-public:
-    Npc() : Entity(sf::RectangleShape({ 50.f, 50.f })){}
-    ~Npc();
-    FSM::StateMachine<NpcContext> fsm;
-
-    NpcContext context{};
-    sf::Vector2f PointA = { 600.f, 50.f };
-    sf::Vector2f PointB = { 100.f, 600.f };
-    sf::Vector2f direction;
-    bool PointToGo = true;
-    float speed = 100.f;
-
-    void Init()
-    {
-        PatrolState* patrolState = fsm.CreateState<PatrolState>();
-        ChaseState* chaseState = fsm.CreateState<ChaseState>();
-
-        patrolState->AddTransition(Conditions::IsSeeingPlayer, chaseState);
-
-        chaseState->AddTransition([](const NpcContext _context)
-            {
-                return !Conditions::IsSeeingPlayer(_context);
-            }, patrolState);
-
-        fsm.Init(patrolState, context);
-    }
-
-    sf::Vector2f getDirection(const sf::Vector2f& v)
-    {
-        float length = std::sqrt(v.x * v.x + v.y * v.y);
-        return (length != 0.f) ? v / length : sf::Vector2f(0.f, 0.f);
-    }
-
-    void update(float dt) override
-    {
-        std::cout << "NPC update" << std::endl;
-        fsm.Update(context);
-        // calcul de la direction
-        if (PointToGo)
-        {
-            direction = getDirection(PointA - getPosition());
-        }
-        else
-        {
-            direction = getDirection(PointB - getPosition());
-        }
-        move(direction * speed * dt);
-        if (getPosition().x >= PointA.x)
-            PointToGo = false;
-        if (getPosition().y >= PointB.y)
-            PointToGo = true;
-    }
-};
 
 //#pragma once
 //#include <SFML/Graphics.hpp>
@@ -92,3 +61,25 @@ public:
 //    sf::Vector2f direction;
 //    float speed = 100.f;
 //};
+
+#pragma once
+#include "Entity.h"
+#include "StateMachine.h"
+#include "NpcContext.h"
+#include "IdleState.h"
+#include "PatrolState.h"
+#include "ChaseState.h"
+#include "Player.h"
+class Npc : public Entity<sf::RectangleShape>
+{
+public:
+    Npc();
+    void Init(Player* player);
+    void update(float dt) override;
+
+    float speed = 120.f;
+
+private:
+    StateMachine<NpcContext> fsm;
+    NpcContext context;
+};
