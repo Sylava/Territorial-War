@@ -9,7 +9,9 @@ public:
     void update(float dt);
     void move(const sf::Vector2f& offset);
     void draw();
-    float speed = 150.f;
+
+    sf::Vector2f position;
+    float speed = 180.f;
     bool isMoving = false;
     bool wasMoving = false;
     bool direction = true;
@@ -19,11 +21,10 @@ private:
     sf::Texture idleTex;
     sf::Texture runTex;
     std::optional<sf::Sprite> playerSprite;
-    sf::Vector2f position;
     int pv = 5;
     int idleIndex = 0;
     bool idleReverse = false;
     int runIndex = 0;
     bool runReverse = false;
-    float animTime = 0.1f;
+    float animTime = 0.08f;
 };

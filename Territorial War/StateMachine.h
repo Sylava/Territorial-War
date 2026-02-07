@@ -15,8 +15,8 @@ namespace FSM
         template<typename StateType>
         StateType* CreateState();
 
-        void Init(State* _initialState, ContextType _context);
-        void Update(ContextType _context);
+        void Init(State* _initialState, ContextType& _context);
+        void Update(ContextType& _context, float dt);
 
     private:
         std::vector<State*> states;

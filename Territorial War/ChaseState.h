@@ -9,14 +9,8 @@ namespace NpcAi
 {
     class ChaseState : public FSM::State<NpcContext>
     {
-        void Enter(NpcContext _context) override
-        {
-            std::cout << "Enter Patrol _State" << std::endl;
-        }
-
-        void Exit(NpcContext _context) override
-        {
-            std::cout << "Exit Patrol _State" << std::endl;
-        }
+        void Enter(NpcContext& _context) override;
+        void Execute(NpcContext& _context, float dt);
+        void Exit(NpcContext& _context) override;
     };
 }

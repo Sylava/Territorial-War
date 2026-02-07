@@ -1,19 +1,19 @@
-#include "Player.h"
-#include <iostream>
+#include "Warrior.h"
 
-Player::Player(sf::RenderWindow* inWindow)
+Warrior::Warrior(sf::RenderWindow* inWindow)
 {
 	window = inWindow;
-	if (!idleTex.loadFromFile("assets/Warrior_Idle.png"))
+	if (!idleTex.loadFromFile("assets/RedWarrior_Idle.png"))
 		std::cout << "texture non chargee" << std::endl;
-	if (!runTex.loadFromFile("assets/Warrior_Run.png"))
+	if (!runTex.loadFromFile("assets/RedWarrior_Run.png"))
 		std::cout << "texture non chargee" << std::endl;
-	position.x = 400.f;
-	position.y = 200.f;
+	position.x = 1200.f;
+	position.y = 800.f;
 }
 
-void Player::update(float dt)
+void Warrior::update(float dt)
 {
+	updateFsm(dt);
 	sf::IntRect rect;
 	if (isMoving && !wasMoving)
 	{
@@ -80,27 +80,23 @@ void Player::update(float dt)
 	if (isMoving)
 	{
 		rect = sf::IntRect({ 62 + (runIndex * 189), 46 }, { 92, 90 });
-		playerSprite.emplace(runTex);
+		npcSprite.emplace(runTex);
 	}
 	else
 	{
 		rect = sf::IntRect({ 62 + (idleIndex * 190), 47 }, { 92, 90 });
-		playerSprite.emplace(idleTex);
+		npcSprite.emplace(idleTex);
 	}
-	playerSprite->setTextureRect(rect);
-	sf::FloatRect bounds = playerSprite->getLocalBounds();
-	playerSprite->setOrigin({ bounds.size.x / 2.f,bounds.size.y / 2.f });
+	npcSprite->setTextureRect(rect);
+	sf::FloatRect bounds = npcSprite->getLocalBounds();
+	npcSprite->setOrigin({ bounds.size.x / 2.f,bounds.size.y / 2.f });
 	if (!direction)
-		playerSprite->setScale({ -1.f, 1.f });
-	playerSprite->setPosition(position);
+		npcSprite->setScale({ -1.f, 1.f });
+	npcSprite->setPosition(position);
+	wasMoving = isMoving;
 }
 
-void Player::move(const sf::Vector2f& offset)
+void Warrior::draw()
 {
-	position += offset;
-}
-
-void Player::draw()
-{
-	window->draw(*playerSprite);
+	window->draw(*npcSprite);
 }

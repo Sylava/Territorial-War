@@ -1,20 +1,17 @@
 #pragma once
-
 #include <iostream>
 #include <ostream>
 #include <SFML/Graphics.hpp>
 #include "NpcContext.h"
 #include "State.h"
 
-class PatrolState : public FSM::State<NpcContext>
+class IdleState : public FSM::State<NpcContext>
 {
 public:
     void Enter(NpcContext& _context) override;
     virtual void Execute(NpcContext& _context, float dt) override;
     void Exit(NpcContext& _context) override;
 
-private:
-    void setPatrolPoints();
-
-    sf::Vector2f pointToGo;
+    float timer;
 };
+

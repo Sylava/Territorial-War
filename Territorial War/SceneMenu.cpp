@@ -66,7 +66,6 @@ void SceneMenu::run()
 		window->display();
 	}
 	InGame game(window);
-	game.init();
 	game.run();
 }
 

@@ -1,19 +1,19 @@
 #include "NPC.h"
-
-Npc::~Npc()
-{
-
-}
+#include "Conditions.h"
 
 void Npc::Init()
 {
     context.npc = this;
     PatrolState* patrolState = fsm.CreateState<PatrolState>();
     ChaseState* chaseState = fsm.CreateState<ChaseState>();
+    IdleState* idleState = fsm.CreateState<IdleState>();
 
+    idleState->AddTransition(Conditions::IsSeeingPlayer, chaseState);
+    idleState->AddTransition(Conditions::HasWaited, patrolState);
     patrolState->AddTransition(Conditions::IsSeeingPlayer, chaseState);
+    patrolState->AddTransition(Conditions::HasReachedPoint, idleState);
 
-    chaseState->AddTransition([](const NpcContext _context)
+    chaseState->AddTransition([](NpcContext& _context)
         {
             return !Conditions::IsSeeingPlayer(_context);
         }, patrolState);
@@ -21,21 +21,16 @@ void Npc::Init()
     fsm.Init(patrolState, context);
 }
 
-void Npc::update(float dt)
+void Npc::updateFsm(float dt)
 {
-    fsm.Update(context);
-    // calcul de la direction
-    if (PointToGo)
-    {
-        direction = (PointA - getPosition()).normalized();
-    }
-    else
-    {
-        direction = (PointB - getPosition()).normalized();
-    }
-    move(direction * speed * dt);
-    if (getPosition().x >= PointA.x)
-        PointToGo = false;
-    if (getPosition().y >= PointB.y)
-        PointToGo = true;
+    fsm.Update(context, dt);
+}
+
+void Npc::move(const sf::Vector2f& offset)
+{
+    if (offset.x > 0.f)
+        direction = true;
+    else if (offset.x < 0.f)
+        direction = false;
+    position += offset;
 }

@@ -7,7 +7,6 @@ class InGame
 {
 public:
 	InGame(sf::RenderWindow* inWindow);
-	void init();
 	void run();
 
 private:
@@ -16,8 +15,8 @@ private:
 	sf::Texture bgTex;
 	std::optional<sf::Sprite> background;
 	std::vector<sf::Sprite> map;
-	int mapWidth = 14;
-	int mapHeight = 10;
+	int mapWidth = 22;
+	int mapHeight = 15;
 	float xOffset;
 	float yOffset;
 	bool running = true;

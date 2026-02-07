@@ -1,23 +1,19 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "InGame.h"
-#include "LoadFiles.h"
 #include "Player.h"
 #include "NPC.h"
-#include "Entity.h"
+#include "Warrior.h"
 
 InGame::InGame(sf::RenderWindow* inWindow)
 {
     window = inWindow;
     xOffset = (window->getSize().x - ((float)mapWidth * 64)) / 2;
     yOffset = (window->getSize().y - ((float)mapHeight * 64)) / 2;
-}
-
-void InGame::init()
-{
-    if(!mapTex.loadFromFile("assets/tiles.png"))
+    if (!mapTex.loadFromFile("assets/tiles.png"))
         std::cout << "texture non chargee" << std::endl;
-    bgTex = LoadFiles::loadTexture("assets/background.png");
+    if (!bgTex.loadFromFile("assets/background.png"))
+        std::cout << "texture non chargee" << std::endl;
     background.emplace(bgTex);
     auto winSize = window->getSize();
     auto texSize = bgTex.getSize();
@@ -32,8 +28,9 @@ void InGame::init()
 void InGame::run()
 {
     Player player(window);
-    //Npc npc;
-    //npc.Init();
+    Warrior npc(window);
+    npc.context.player = &player;
+    npc.Init();
 
     sf::Clock clock;
     while (running)
@@ -74,10 +71,12 @@ void InGame::run()
             player.move({ player.speed * dt, 0.f });
         }
         player.update(dt);
+        npc.update(dt);
         player.wasMoving = player.isMoving;
         window->clear();
         draw();
         player.draw();
+        npc.draw();
         window->display();
     }
 }
@@ -119,21 +118,21 @@ void InGame::createMiddleRows()
             if (x == 0)
             {
                 sf::IntRect rect({ 320, 64 }, { 64, 64 });
-                sf::Sprite sprite = (LoadFiles::createSprite(rect, mapTex));
+                sf::Sprite sprite(mapTex, rect);
                 sprite.setPosition({ xOffset + 0, yOffset + (float)y * 64 + 64 });
                 map.push_back(sprite);
             }
             else if (x < mapWidth - 1)
             {
                 sf::IntRect rect({ 384, 64 }, { 64, 64 });
-                sf::Sprite sprite = (LoadFiles::createSprite(rect, mapTex));
+                sf::Sprite sprite(mapTex, rect);
                 sprite.setPosition({ xOffset + 64 * (float)x, yOffset + 64 * ((float)y + 1) });
                 map.push_back(sprite);
             }
             else
             {
                 sf::IntRect rect({ 448, 64 }, { 64, 64 });
-                sf::Sprite sprite = (LoadFiles::createSprite(rect, mapTex));
+                sf::Sprite sprite(mapTex, rect);
                 sprite.setPosition({ xOffset + ((float)mapWidth - 1.f) * 64, yOffset + 64 * ((float)y + 1) });
                 map.push_back(sprite);
             }
