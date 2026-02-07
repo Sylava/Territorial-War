@@ -1,19 +1,22 @@
 #include "Warrior.h"
+#include "Map.h"
 
-Warrior::Warrior(sf::RenderWindow* inWindow)
+Warrior::Warrior(sf::RenderWindow* inWindow, const Map* map)
 {
 	window = inWindow;
 	if (!idleTex.loadFromFile("assets/RedWarrior_Idle.png"))
 		std::cout << "texture non chargee" << std::endl;
 	if (!runTex.loadFromFile("assets/RedWarrior_Run.png"))
 		std::cout << "texture non chargee" << std::endl;
-	position.x = 1200.f;
-	position.y = 800.f;
-	hitbox.position = { position.x - 20.f, position.y - 40.f };
 	hitbox.size = { 40.f, 80.f };
+	position.x = map->right;
+	position.y = map->bottom + hitbox.size.y / 2;
+	hitbox.position = { position.x - 20.f, position.y - 40.f };
+	range = 80.f;
+	detectionRadius = 300.f;
 }
 
-void Warrior::update(float dt)
+void Warrior::update(const float dt)
 {
 	updateFsm(dt);
 	sf::IntRect rect;

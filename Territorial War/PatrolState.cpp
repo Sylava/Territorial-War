@@ -3,38 +3,39 @@
 #include "Map.h"
 #include <random>
 
-void PatrolState::Enter(NpcContext& _context)
+void PatrolState::Enter(NpcContext& context)
 {
     std::cout << "Enter Patrol State" << std::endl;
-    _context.reachedPoint = false;
-    _context.npc->isMoving = true;
-    _context.reachedPoint = false;
-    setPatrolPoints();
+    context.reachedPoint = false;
+    context.npc->isMoving = true;
+    context.reachedPoint = false;
+    setPatrolPoints(context);
 }
 
-void PatrolState::Execute(NpcContext& _context, float dt)
+void PatrolState::Execute(NpcContext& context, const float dt)
 {
-    sf::Vector2f pos = _context.npc->position;
-    sf::Vector2f dir = pointToGo - pos;
+    sf::Vector2f dir = (pointToGo - context.npc->position).normalized();
+    context.npc->move(dir * context.npc->speed * dt, context.map);
 
-    float length = std::sqrt(dir.x * dir.x + dir.y * dir.y);
-    if (length > 1.f)
-        dir /= length;
-
-    _context.npc->move(dir * _context.npc->speed * dt, _context.map->rocks);
-
-    if (length < 3.f || !_context.npc->isMoving)
-        _context.reachedPoint = true;
+    if (getDistance(pointToGo, context.npc->position) < 5.f || !context.npc->isMoving)
+        context.reachedPoint = true;
 }
 
-void PatrolState::Exit(NpcContext& _context)
+void PatrolState::Exit(NpcContext& context)
 {
 
 }
 
-void PatrolState::setPatrolPoints()
+void PatrolState::setPatrolPoints(NpcContext& context)
 {
-    float y = 200 + rand() % (900 - 200 + 1);
-    float x = 400 + rand() % (1700 - 400 + 1);
+    float y = context.map->top + rand() % ((int)context.map->bottom - (int)context.map->top + 1);
+    float x = context.map->left + rand() % ((int)context.map->right - (int)context.map->left + 1);
     pointToGo = sf::Vector2f(x, y);
+}
+
+float PatrolState::getDistance(const sf::Vector2f& a, const sf::Vector2f& b)
+{
+    float dx = b.x - a.x;
+    float dy = b.y - a.y;
+    return std::sqrt(dx * dx + dy * dy);
 }

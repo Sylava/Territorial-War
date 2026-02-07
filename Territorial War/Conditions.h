@@ -21,14 +21,12 @@ namespace NpcAi
         {
             if (!context.npc || !context.player)
                 return false;
-
             sf::Vector2f npcPos = context.npc->position;
             sf::Vector2f playerPos = context.player->position;
-
             sf::Vector2f diff = playerPos - npcPos;
             float dist = std::sqrt(diff.x * diff.x + diff.y * diff.y);
 
-            return dist < 200.f; // distance de détection (à ajuster)
+            return dist < context.npc->detectionRadius;
         }
     };
 }

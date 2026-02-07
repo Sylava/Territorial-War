@@ -1,18 +1,21 @@
-#include "Player.h"
 #include <iostream>
+#include "Player.h"
+#include "Map.h"
 
-Player::Player(sf::RenderWindow* inWindow)
+Player::Player(sf::RenderWindow* inWindow, const Map* map)
 {
 	window = inWindow;
 	if (!idleTex.loadFromFile("assets/Warrior_Idle.png"))
 		std::cout << "texture non chargee" << std::endl;
 	if (!runTex.loadFromFile("assets/Warrior_Run.png"))
 		std::cout << "texture non chargee" << std::endl;
-	position.x = 400.f;
-	position.y = 200.f;
+	hitbox.size = { 40.f, 80.f };
+	position.x = map->left + hitbox.size.x;
+	position.y = map->top + hitbox.size.y / 2;
+	hitbox.position = { position.x - 20.f, position.y - 40.f };
 }
 
-void Player::update(float dt)
+void Player::update(const float dt)
 {
 	sf::IntRect rect;
 	if (isMoving && !wasMoving)
@@ -96,9 +99,50 @@ void Player::update(float dt)
 	wasMoving = isMoving;
 }
 
-void Player::move(const sf::Vector2f& move)
+void Player::move(const sf::Vector2f& move, const Map* map)
 {
-	position += move;
+	sf::Vector2f oldPosition = position;
+	sf::FloatRect oldHitbox = hitbox;
+
+	position.x += move.x * speed;
+	hitbox.position.x += move.x * speed;
+	if (hitbox.position.x > map->left && hitbox.position.x < map->right)
+	{
+		for (const sf::Sprite& rock : map->rocks)
+		{
+			if (hitbox.findIntersection(rock.getGlobalBounds()))
+			{
+				position.x = oldPosition.x;
+				hitbox.position.x = oldHitbox.position.x;
+				break;
+			}
+		}
+	}
+	else
+	{
+		position.x = oldPosition.x;
+		hitbox.position.x = oldHitbox.position.x;
+	}
+
+	position.y += move.y * speed;
+	hitbox.position.y += move.y * speed;
+	if (hitbox.position.y > map->top && hitbox.position.y < map->bottom)
+	{
+		for (const sf::Sprite& rock : map->rocks)
+		{
+			if (hitbox.findIntersection(rock.getGlobalBounds()))
+			{
+				position.y = oldPosition.y;
+				hitbox.position.y = oldHitbox.position.y;
+				break;
+			}
+		}
+	}
+	else
+	{
+		position.y = oldPosition.y;
+		hitbox.position.y = oldHitbox.position.y;
+	}
 }
 
 void Player::draw()

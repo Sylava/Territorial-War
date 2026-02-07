@@ -7,7 +7,7 @@ class Inputs
 public:
 	Inputs(sf::RenderWindow* inWindow);
 
-	void manageInputs(Player& player, float& dt, bool& running);
+	sf::Vector2f manageInputs(Player& player, const float& dt, bool& running);
 private:
 	sf::RenderWindow* window;
 };

@@ -12,11 +12,10 @@ void Npc::Init()
     idleState->AddTransition(Conditions::HasWaited, patrolState);
     patrolState->AddTransition(Conditions::IsSeeingPlayer, chaseState);
     patrolState->AddTransition(Conditions::HasReachedPoint, idleState);
-
     chaseState->AddTransition([](NpcContext& _context)
         {
             return !Conditions::IsSeeingPlayer(_context);
-        }, patrolState);
+        }, idleState);
 
     fsm.Init(patrolState, context);
 }
@@ -26,7 +25,7 @@ void Npc::updateFsm(float dt)
     fsm.Update(context, dt);
 }
 
-void Npc::move(const sf::Vector2f& move, std::vector<sf::Sprite> rocks)
+void Npc::move(const sf::Vector2f& move, const Map* map)
 {
     if (move.x > 0.f)
         animMirror = true;
@@ -38,28 +37,45 @@ void Npc::move(const sf::Vector2f& move, std::vector<sf::Sprite> rocks)
 
     position.x += move.x;
     hitbox.position.x += move.x;
-
-    for (const sf::Sprite& rock : rocks)
+    if (hitbox.position.x > map->left && hitbox.position.x < map->right)
     {
-        if (hitbox.findIntersection(rock.getGlobalBounds()))
+        for (const sf::Sprite& rock : map->rocks)
         {
-            position.x = oldPosition.x;
-            hitbox.position.x = oldHitbox.position.x;
-            break;
+            if (hitbox.findIntersection(rock.getGlobalBounds()))
+            {
+                position.x = oldPosition.x;
+                hitbox.position.x = oldHitbox.position.x;
+                break;
+            }
         }
     }
+    else
+    {
+        position.x = oldPosition.x;
+        hitbox.position.x = oldHitbox.position.x;
+    }
+
     position.y += move.y;
     hitbox.position.y += move.y;
-
-    for (const sf::Sprite& rock : rocks)
+    if (hitbox.position.y > map->top && hitbox.position.y < map->bottom)
     {
-        if (hitbox.findIntersection(rock.getGlobalBounds()))
+
+        for (const sf::Sprite& rock : map->rocks)
         {
-            position.y = oldPosition.y;
-            hitbox.position.y = oldHitbox.position.y;
-            break;
+            if (hitbox.findIntersection(rock.getGlobalBounds()))
+            {
+                position.y = oldPosition.y;
+                hitbox.position.y = oldHitbox.position.y;
+                break;
+            }
         }
     }
+    else
+    {
+        position.y = oldPosition.y;
+        hitbox.position.y = oldHitbox.position.y;
+    }
+
     if (position == oldPosition)
         isMoving = false;
 }

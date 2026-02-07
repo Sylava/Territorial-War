@@ -8,9 +8,9 @@
 class IdleState : public FSM::State<NpcContext>
 {
 public:
-    void Enter(NpcContext& _context) override;
-    virtual void Execute(NpcContext& _context, float dt) override;
-    void Exit(NpcContext& _context) override;
+    void Enter(NpcContext& context) override;
+    virtual void Execute(NpcContext& context, float dt) override;
+    void Exit(NpcContext& context) override;
 
     float timer;
 };

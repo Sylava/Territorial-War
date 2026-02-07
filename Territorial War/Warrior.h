@@ -4,9 +4,9 @@
 class Warrior : public Npc
 {
 public:
-	Warrior(sf::RenderWindow* inWindow);
+	Warrior(sf::RenderWindow* inWindow, const Map* map);
 
-    void update(float dt);
+    void update(const float dt);
     void draw();
 
 private:

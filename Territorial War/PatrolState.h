@@ -1,5 +1,4 @@
 #pragma once
-
 #include <iostream>
 #include <ostream>
 #include <SFML/Graphics.hpp>
@@ -9,12 +8,13 @@
 class PatrolState : public FSM::State<NpcContext>
 {
 public:
-    void Enter(NpcContext& _context) override;
-    virtual void Execute(NpcContext& _context, float dt) override;
-    void Exit(NpcContext& _context) override;
+    void Enter(NpcContext& context) override;
+    virtual void Execute(NpcContext& context, const float dt) override;
+    void Exit(NpcContext& context) override;
 
 private:
-    void setPatrolPoints();
+    void setPatrolPoints(NpcContext& context);
+    float getDistance(const sf::Vector2f& a, const sf::Vector2f& b);
 
     sf::Vector2f pointToGo;
 };

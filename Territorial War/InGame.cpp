@@ -14,8 +14,8 @@ InGame::InGame(sf::RenderWindow* inWindow)
 void InGame::run()
 {
     Map map(window);
-    Player player(window);
-    Warrior npc(window);
+    Player player(window, &map);
+    Warrior npc(window, &map);
     Inputs input(window);
 
     npc.context.map = &map;
@@ -26,8 +26,9 @@ void InGame::run()
     while (running)
     {
         float dt = clock.restart().asSeconds();
-        input.manageInputs(player, dt, running);
+        sf::Vector2f direction = input.manageInputs(player, dt, running);
 
+        player.move(direction * dt, &map);
         player.update(dt);
         npc.update(dt);
         window->clear();

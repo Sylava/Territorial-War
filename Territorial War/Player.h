@@ -1,17 +1,18 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Map.h"
 
 class Player {
 public:
-    Player(sf::RenderWindow* inWindow);
+    Player(sf::RenderWindow* inWindow, const Map* map);
 
-    void update(float dt);
-    void move(const sf::Vector2f& move);
+    void update(const float dt);
+    void move(const sf::Vector2f& move, const Map* map);
     void draw();
 
     sf::Vector2f position;
     sf::FloatRect hitbox;
-    float speed = 180.f;
+    float speed = 800.f;
     bool isMoving = false;
     bool wasMoving = false;
     bool animMirror = true;

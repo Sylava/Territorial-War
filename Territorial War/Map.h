@@ -8,6 +8,10 @@ public:
 	Map(sf::RenderWindow* inWindow);
 
 	std::vector<sf::Sprite> rocks;
+	float top;
+	float bottom;
+	float left;
+	float right;
 
 	void draw();
 

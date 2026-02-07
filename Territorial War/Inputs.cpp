@@ -5,7 +5,7 @@ Inputs::Inputs(sf::RenderWindow* inWindow)
     window = inWindow;
 }
 
-void Inputs::manageInputs(Player& player, float& dt, bool& running)
+sf::Vector2f Inputs::manageInputs(Player& player, const float& dt, bool& running)
 {
     while (const std::optional event = window->pollEvent())
     {
@@ -18,27 +18,29 @@ void Inputs::manageInputs(Player& player, float& dt, bool& running)
                 running = false;
         }
     }
+    sf::Vector2f direction{ 0.f, 0.f };
     player.isMoving = false;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z))
     {
         player.isMoving = true;
-        player.move({ 0.f, -player.speed * dt });
+        direction.y -= 1.f;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
     {
         player.isMoving = true;
-        player.move({ 0.f, player.speed * dt });
+        direction.y += 1.f;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
     {
         player.isMoving = true;
         player.animMirror = false;
-        player.move({ -player.speed * dt, 0.f });
+        direction.x -= 1.f;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
     {
         player.isMoving = true;
         player.animMirror = true;
-        player.move({ player.speed * dt, 0.f });
+        direction.x += 1.f;
     }
+    return direction;
 }
