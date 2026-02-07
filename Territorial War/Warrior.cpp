@@ -9,6 +9,8 @@ Warrior::Warrior(sf::RenderWindow* inWindow)
 		std::cout << "texture non chargee" << std::endl;
 	position.x = 1200.f;
 	position.y = 800.f;
+	hitbox.position = { position.x - 20.f, position.y - 40.f };
+	hitbox.size = { 40.f, 80.f };
 }
 
 void Warrior::update(float dt)

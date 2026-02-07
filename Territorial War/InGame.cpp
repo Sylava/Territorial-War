@@ -18,6 +18,7 @@ void InGame::run()
     Warrior npc(window);
     Inputs input(window);
 
+    npc.context.map = &map;
     npc.context.player = &player;
     npc.Init();
 

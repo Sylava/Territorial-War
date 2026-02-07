@@ -96,9 +96,9 @@ void Player::update(float dt)
 	wasMoving = isMoving;
 }
 
-void Player::move(const sf::Vector2f& offset)
+void Player::move(const sf::Vector2f& move)
 {
-	position += offset;
+	position += move;
 }
 
 void Player::draw()

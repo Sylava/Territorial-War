@@ -1,5 +1,6 @@
 #include "PatrolState.h"
 #include "NPC.h"
+#include "Map.h"
 #include <random>
 
 void PatrolState::Enter(NpcContext& _context)
@@ -20,9 +21,9 @@ void PatrolState::Execute(NpcContext& _context, float dt)
     if (length > 1.f)
         dir /= length;
 
-    _context.npc->move(dir * _context.npc->speed * dt);
+    _context.npc->move(dir * _context.npc->speed * dt, _context.map->rocks);
 
-    if (length < 3.f)
+    if (length < 3.f || !_context.npc->isMoving)
         _context.reachedPoint = true;
 }
 
@@ -34,6 +35,6 @@ void PatrolState::Exit(NpcContext& _context)
 void PatrolState::setPatrolPoints()
 {
     float y = 200 + rand() % (900 - 200 + 1);
-    float x = 400 + rand() % (1500 - 400 + 1);
+    float x = 400 + rand() % (1700 - 400 + 1);
     pointToGo = sf::Vector2f(x, y);
 }

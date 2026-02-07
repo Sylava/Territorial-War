@@ -6,9 +6,10 @@ Map::Map(sf::RenderWindow* inWindow)
     window = inWindow;
     xOffset = (window->getSize().x - ((float)mapWidth * 64)) / 2;
     yOffset = (window->getSize().y - ((float)mapHeight * 64)) / 2;
+    sf::IntRect rect({ 7, 17 }, { 49, 34 });
 	if (!bgTex.loadFromFile("assets/background.png"))
 		std::cout << "texture non chargee" << std::endl;
-	if (!rockTex.loadFromFile("assets/Rock2.png"))
+	if (!rockTex.loadFromFile("assets/Rock2.png", false, rect))
 		std::cout << "texture non chargee" << std::endl;
 	if (!landTex.loadFromFile("assets/tiles.png"))
 		std::cout << "texture non chargee" << std::endl;
@@ -113,7 +114,7 @@ void Map::createLastRow()
 
 void Map::createRock(const sf::Vector2f& position)
 {
-    if ((std::rand() % 8) == 0)
+    if ((std::rand() % 10) == 0)
     {
         sf::Sprite rock(rockTex);
         rock.setPosition(position);

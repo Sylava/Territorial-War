@@ -26,11 +26,40 @@ void Npc::updateFsm(float dt)
     fsm.Update(context, dt);
 }
 
-void Npc::move(const sf::Vector2f& movement)
+void Npc::move(const sf::Vector2f& move, std::vector<sf::Sprite> rocks)
 {
-    if (movement.x > 0.f)
+    if (move.x > 0.f)
         animMirror = true;
-    else if (movement.x < 0.f)
+    else if (move.x < 0.f)
         animMirror = false;
-    position += movement;
+
+    sf::Vector2f oldPosition = position;
+    sf::FloatRect oldHitbox = hitbox;
+
+    position.x += move.x;
+    hitbox.position.x += move.x;
+
+    for (const sf::Sprite& rock : rocks)
+    {
+        if (hitbox.findIntersection(rock.getGlobalBounds()))
+        {
+            position.x = oldPosition.x;
+            hitbox.position.x = oldHitbox.position.x;
+            break;
+        }
+    }
+    position.y += move.y;
+    hitbox.position.y += move.y;
+
+    for (const sf::Sprite& rock : rocks)
+    {
+        if (hitbox.findIntersection(rock.getGlobalBounds()))
+        {
+            position.y = oldPosition.y;
+            hitbox.position.y = oldHitbox.position.y;
+            break;
+        }
+    }
+    if (position == oldPosition)
+        isMoving = false;
 }

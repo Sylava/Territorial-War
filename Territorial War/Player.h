@@ -1,16 +1,16 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Entity.h"
 
 class Player {
 public:
     Player(sf::RenderWindow* inWindow);
 
     void update(float dt);
-    void move(const sf::Vector2f& offset);
+    void move(const sf::Vector2f& move);
     void draw();
 
     sf::Vector2f position;
+    sf::FloatRect hitbox;
     float speed = 180.f;
     bool isMoving = false;
     bool wasMoving = false;

@@ -4,7 +4,6 @@
 #include "NpcContext.h"
 #include "PatrolState.h"
 #include "IdleState.h"
-#include "Entity.h"
 
 using namespace NpcAi;
 
@@ -15,6 +14,7 @@ public:
     FSM::StateMachine<NpcContext> fsm;
     NpcContext context{};
     sf::Vector2f position;
+    sf::FloatRect hitbox;
     sf::Texture idleTex;
     sf::Texture runTex;
     std::optional<sf::Sprite> npcSprite;
@@ -24,6 +24,6 @@ public:
     bool animMirror = false;
 
     void Init();
-    void move(const sf::Vector2f& movement);
+    void move(const sf::Vector2f& move, std::vector<sf::Sprite> rocks);
     void updateFsm(float dt);
 };
