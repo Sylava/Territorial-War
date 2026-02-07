@@ -137,10 +137,12 @@
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="InGame.cpp" />
     <ClCompile Include="Inputs.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="NpcContext.cpp" />
     <ClCompile Include="PatrolState.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Rocks.cpp" />
     <ClCompile Include="SceneMenu.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateMachine.cpp" />
@@ -154,10 +156,12 @@
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="InGame.h" />
     <ClInclude Include="Inputs.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="NpcContext.h" />
     <ClInclude Include="PatrolState.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Rocks.h" />
     <ClInclude Include="SceneMenu.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />

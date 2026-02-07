@@ -90,7 +90,7 @@ void Warrior::update(float dt)
 	npcSprite->setTextureRect(rect);
 	sf::FloatRect bounds = npcSprite->getLocalBounds();
 	npcSprite->setOrigin({ bounds.size.x / 2.f,bounds.size.y / 2.f });
-	if (!direction)
+	if (!animMirror)
 		npcSprite->setScale({ -1.f, 1.f });
 	npcSprite->setPosition(position);
 	wasMoving = isMoving;

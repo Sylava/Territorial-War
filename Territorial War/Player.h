@@ -14,7 +14,7 @@ public:
     float speed = 180.f;
     bool isMoving = false;
     bool wasMoving = false;
-    bool direction = true;
+    bool animMirror = true;
 
 private:
     sf::RenderWindow* window;

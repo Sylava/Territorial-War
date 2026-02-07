@@ -21,9 +21,9 @@ public:
     float speed = 180.f;
     bool isMoving = false;
     bool wasMoving = false;
-    bool direction = false;
+    bool animMirror = false;
 
     void Init();
-    void move(const sf::Vector2f& offset);
+    void move(const sf::Vector2f& movement);
     void updateFsm(float dt);
 };

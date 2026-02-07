@@ -90,9 +90,10 @@ void Player::update(float dt)
 	playerSprite->setTextureRect(rect);
 	sf::FloatRect bounds = playerSprite->getLocalBounds();
 	playerSprite->setOrigin({ bounds.size.x / 2.f,bounds.size.y / 2.f });
-	if (!direction)
+	if (!animMirror)
 		playerSprite->setScale({ -1.f, 1.f });
 	playerSprite->setPosition(position);
+	wasMoving = isMoving;
 }
 
 void Player::move(const sf::Vector2f& offset)

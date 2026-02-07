@@ -26,11 +26,11 @@ void Npc::updateFsm(float dt)
     fsm.Update(context, dt);
 }
 
-void Npc::move(const sf::Vector2f& offset)
+void Npc::move(const sf::Vector2f& movement)
 {
-    if (offset.x > 0.f)
-        direction = true;
-    else if (offset.x < 0.f)
-        direction = false;
-    position += offset;
+    if (movement.x > 0.f)
+        animMirror = true;
+    else if (movement.x < 0.f)
+        animMirror = false;
+    position += movement;
 }
