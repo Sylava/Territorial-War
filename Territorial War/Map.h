@@ -5,6 +5,7 @@
 class Map
 {
 public:
+	Map();
 	Map(sf::RenderWindow* inWindow);
 
 	std::vector<sf::Sprite> rocks;

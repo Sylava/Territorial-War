@@ -1,11 +1,17 @@
 #include "Inputs.h"
+#include <SFML/Graphics.hpp>
+
+Inputs::Inputs()
+{
+
+}
 
 Inputs::Inputs(sf::RenderWindow* inWindow)
 {
     window = inWindow;
 }
 
-sf::Vector2f Inputs::manageInputs(Player& player, const float& dt, bool& running)
+sf::Vector2f Inputs::manageInputs(Player* player, const float& dt, bool& running)
 {
     while (const std::optional event = window->pollEvent())
     {
@@ -19,28 +25,36 @@ sf::Vector2f Inputs::manageInputs(Player& player, const float& dt, bool& running
         }
     }
     sf::Vector2f direction{ 0.f, 0.f };
-    player.isMoving = false;
+    player->isMoving = false;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z))
     {
-        player.isMoving = true;
+        player->isMoving = true;
         direction.y -= 1.f;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
     {
-        player.isMoving = true;
+        player->isMoving = true;
         direction.y += 1.f;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
     {
-        player.isMoving = true;
-        player.animMirror = false;
+        player->isMoving = true;
+        player->animMirror = false;
         direction.x -= 1.f;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
     {
-        player.isMoving = true;
-        player.animMirror = true;
+        player->isMoving = true;
+        player->animMirror = true;
         direction.x += 1.f;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+    {
+        if (player->isAttacking == false)
+        {
+            player->isAttacking = true;
+            player->attackAnimTime = 0.08f;
+        }
     }
     return direction;
 }

@@ -1,9 +1,11 @@
 #include "NPC.h"
 #include "Conditions.h"
 
-void Npc::Init()
+void Npc::Init(Map* map, Player* player)
 {
     context.npc = this;
+    context.map = map;
+    context.player = player;
     PatrolState* patrolState = fsm.CreateState<PatrolState>();
     ChaseState* chaseState = fsm.CreateState<ChaseState>();
     IdleState* idleState = fsm.CreateState<IdleState>();
@@ -20,62 +22,45 @@ void Npc::Init()
     fsm.Init(patrolState, context);
 }
 
-void Npc::updateFsm(float dt)
-{
-    fsm.Update(context, dt);
-}
-
 void Npc::move(const sf::Vector2f& move, const Map* map)
 {
     if (move.x > 0.f)
         animMirror = true;
     else if (move.x < 0.f)
         animMirror = false;
-
     sf::Vector2f oldPosition = position;
-    sf::FloatRect oldHitbox = hitbox;
-
-    position.x += move.x;
-    hitbox.position.x += move.x;
-    if (hitbox.position.x > map->left && hitbox.position.x < map->right)
-    {
-        for (const sf::Sprite& rock : map->rocks)
-        {
-            if (hitbox.findIntersection(rock.getGlobalBounds()))
-            {
-                position.x = oldPosition.x;
-                hitbox.position.x = oldHitbox.position.x;
-                break;
-            }
-        }
-    }
+    moveOnAxis(position.x, hitbox.position.x, move.x, map->left, map->right, map);
+    moveOnAxis(position.y, hitbox.position.y, move.y, map->top, map->bottom, map);
+    if (animMirror)
+        attackArea.setPosition({ position.x + 25, position.y });
     else
-    {
-        position.x = oldPosition.x;
-        hitbox.position.x = oldHitbox.position.x;
-    }
-
-    position.y += move.y;
-    hitbox.position.y += move.y;
-    if (hitbox.position.y > map->top && hitbox.position.y < map->bottom)
-    {
-
-        for (const sf::Sprite& rock : map->rocks)
-        {
-            if (hitbox.findIntersection(rock.getGlobalBounds()))
-            {
-                position.y = oldPosition.y;
-                hitbox.position.y = oldHitbox.position.y;
-                break;
-            }
-        }
-    }
-    else
-    {
-        position.y = oldPosition.y;
-        hitbox.position.y = oldHitbox.position.y;
-    }
-
+        attackArea.setPosition({ position.x - 25, position.y });
     if (position == oldPosition)
         isMoving = false;
+}
+
+void Npc::moveOnAxis(float& pos, float& hitboxPos, float move, float min, float max, const Map* map)
+{
+    float oldPosition = pos;
+    float oldHitbox = hitboxPos;
+
+    pos += move;
+    hitboxPos += move;
+    if (hitboxPos > min && hitboxPos < max)
+    {
+        for (const sf::Sprite& rock : map->rocks)
+        {
+            if (hitbox.findIntersection(rock.getGlobalBounds()))
+            {
+                pos = oldPosition;
+                hitboxPos = oldHitbox;
+                break;
+            }
+        }
+    }
+    else
+    {
+        pos = oldPosition;
+        hitboxPos = oldHitbox;
+    }
 }

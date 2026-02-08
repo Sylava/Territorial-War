@@ -8,97 +8,117 @@ Warrior::Warrior(sf::RenderWindow* inWindow, const Map* map)
 		std::cout << "texture non chargee" << std::endl;
 	if (!runTex.loadFromFile("assets/RedWarrior_Run.png"))
 		std::cout << "texture non chargee" << std::endl;
-	hitbox.size = { 40.f, 80.f };
+	if (!attackTex.loadFromFile("assets/RedWarrior_Attack1.png"))
+		std::cout << "texture non chargee" << std::endl;
+	hitbox.size = { 40.f, 76.f };
 	position.x = map->right;
 	position.y = map->bottom + hitbox.size.y / 2;
-	hitbox.position = { position.x - 20.f, position.y - 40.f };
-	range = 80.f;
+	hitbox.position = { position.x - 20.f, position.y - 38.f };
+	range = 90.f;
 	detectionRadius = 300.f;
+	attackArea.setRadius(45);
+	attackArea.setOrigin({ attackArea.getRadius(), attackArea.getRadius() });
+	attackArea.setFillColor(sf::Color::Transparent);
+	attackArea.setOutlineColor(sf::Color::Red);
+	attackArea.setOutlineThickness(3);
+	attackArea.setPosition({ position.x - 25, position.y });
 }
 
 void Warrior::update(const float dt)
 {
-	updateFsm(dt);
-	sf::IntRect rect;
-	if (isMoving && !wasMoving)
-	{
-		runIndex = 0;
-		animTime = 0.08f;
-	}
-	else if (wasMoving && !isMoving)
-	{
-		idleIndex = 0;
-		animTime = 0.08f;
-	}
-
-	animTime -= dt;
-	if (isMoving)
-	{
-		if (animTime <= 0.f)
-		{
-			animTime = 0.08f;
-			if (!runReverse)
-			{
-				runIndex++;
-				if (runIndex > 5)
-				{
-					runIndex = 4;
-					runReverse = true;
-				}
-			}
-			else
-			{
-				runIndex--;
-				if (runIndex < 0)
-				{
-					runIndex = 1;
-					runReverse = false;
-				}
-			}
-		}
-	}
+	invunerability += dt;
+	fsm.Update(context, dt);
+	if (isAttacking)
+		attackAnimation(dt);
+	else if (isMoving)
+		runAnimation(dt);
 	else
-	{
-		if (animTime <= 0.f)
-		{
-			animTime = 0.08f;
-			if (!idleReverse)
-			{
-				idleIndex++;
-				if (idleIndex > 7)
-				{
-					idleIndex = 6;
-					idleReverse = true;
-				}
-			}
-			else
-			{
-				idleIndex--;
-				if (idleIndex < 0)
-				{
-					idleIndex = 1;
-					idleReverse = false;
-				}
-			}
-		}
-	}
-	if (isMoving)
-	{
-		rect = sf::IntRect({ 62 + (runIndex * 189), 46 }, { 92, 90 });
-		npcSprite.emplace(runTex);
-	}
-	else
-	{
-		rect = sf::IntRect({ 62 + (idleIndex * 190), 47 }, { 92, 90 });
-		npcSprite.emplace(idleTex);
-	}
-	npcSprite->setTextureRect(rect);
+		idleAnimation(dt);
 	sf::FloatRect bounds = npcSprite->getLocalBounds();
 	npcSprite->setOrigin({ bounds.size.x / 2.f,bounds.size.y / 2.f });
 	if (!animMirror)
 		npcSprite->setScale({ -1.f, 1.f });
 	npcSprite->setPosition(position);
-	wasMoving = isMoving;
+}
+
+void Warrior::attackAnimation(const float dt)
+{
+	sf::IntRect rect;
+	attackAnimTime -= dt;
+	if (attackAnimTime <= 0.f)
+	{
+		attackAnimTime = 0.08f;
+		attackIndex++;
+	}
+	if (attackIndex > 3)
+		rect = sf::IntRect({ (3 * 192) + 192, 0 }, { 192, 192 });
+	else
+		rect = sf::IntRect({ (attackIndex * 192), 0 }, { 192, 192 });
+
+	npcSprite.emplace(attackTex);
+	npcSprite->setTextureRect(rect);
+	if (attackIndex > 3)
+		isAttacking = false;
+}
+
+void Warrior::runAnimation(const float dt)
+{
+	runAnimTime -= dt;
+	if (runAnimTime <= 0.f)
+	{
+		runAnimTime = 0.08f;
+		if (!runReverse)
+		{
+			runIndex++;
+			if (runIndex > 5)
+			{
+				runIndex = 4;
+				runReverse = true;
+			}
+		}
+		else
+		{
+			runIndex--;
+			if (runIndex < 0)
+			{
+				runIndex = 1;
+				runReverse = false;
+			}
+		}
+	}
+	sf::IntRect rect({ runIndex * 192, 0 }, { 192, 192 });
+	npcSprite.emplace(runTex);
+	npcSprite->setTextureRect(rect);
+}
+
+void Warrior::idleAnimation(const float dt)
+{
+	idleAnimTime -= dt;
+	if (idleAnimTime <= 0.f)
+	{
+		idleAnimTime = 0.08f;
+		if (!idleReverse)
+		{
+			idleIndex++;
+			if (idleIndex > 7)
+			{
+				idleIndex = 6;
+				idleReverse = true;
+			}
+		}
+		else
+		{
+			idleIndex--;
+			if (idleIndex < 0)
+			{
+				idleIndex = 1;
+				idleReverse = false;
+			}
+		}
+	}
+	sf::IntRect rect({ idleIndex * 192, 0 }, { 192, 192 });
+	npcSprite.emplace(idleTex);
+	npcSprite->setTextureRect(rect);
 }
 
 void Warrior::draw()

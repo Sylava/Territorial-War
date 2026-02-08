@@ -1,6 +1,11 @@
 #include "Map.h"
 #include <iostream>
 
+Map::Map()
+{
+
+}
+
 Map::Map(sf::RenderWindow* inWindow)
 {
     window = inWindow;

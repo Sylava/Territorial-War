@@ -7,15 +7,12 @@ public:
 	Warrior(sf::RenderWindow* inWindow, const Map* map);
 
     void update(const float dt);
+    void idleAnimation(const float dt) override;
+    void runAnimation(const float dt) override;
+    void attackAnimation(const float dt) override;
     void draw();
 
 private:
     sf::RenderWindow* window;
-    int pv = 5;
-    int idleIndex = 0;
-    bool idleReverse = false;
-    int runIndex = 0;
-    bool runReverse = false;
-    float animTime = 0.08f;
 };
 

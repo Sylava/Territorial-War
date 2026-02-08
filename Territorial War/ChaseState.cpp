@@ -14,7 +14,12 @@ void ChaseState::Execute(NpcContext& context, float dt)
     if (distance <= context.npc->range)
     {
         context.npc->isMoving = false;
-        // attack
+        if (context.npc->isAttacking == false)
+        {
+            context.npc->isAttacking = true;
+            context.npc->attackIndex = 0;
+            context.npc->attackAnimTime = 0.08f;
+        }
     }
     else
     {
