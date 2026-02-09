@@ -1,9 +1,10 @@
 #include "NPC.h"
 #include "Conditions.h"
 
-void Npc::Init(Map* map, Player* player)
+void Npc::Init(Map* map, Player* player, std::vector<Npc*>* npcs)
 {
     context.npc = this;
+    context.npcs = npcs;
     context.map = map;
     context.player = player;
     PatrolState* patrolState = fsm.CreateState<PatrolState>();

@@ -1,10 +1,6 @@
 #include "Inputs.h"
 #include <SFML/Graphics.hpp>
 
-Inputs::Inputs()
-{
-
-}
 
 Inputs::Inputs(sf::RenderWindow* inWindow)
 {

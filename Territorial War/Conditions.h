@@ -12,7 +12,6 @@ namespace NpcAi
         {
             return context.reachedPoint;
         }
-
         static bool HasWaited(NpcContext& context)
         {
             return context.idleTimer >= 2.f;
@@ -27,6 +26,27 @@ namespace NpcAi
             float dist = std::sqrt(diff.x * diff.x + diff.y * diff.y);
 
             return dist < context.npc->detectionRadius;
+        }
+        static bool needHealing(NpcContext& context)
+        {
+            if (context.npc->skillCD >= 1.f)
+            {
+                for (Npc* npc : *context.npcs)
+                {
+                    if (npc->hp < npc->hpMax)
+                    {
+                        context.npc->target = npc;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        static bool onCooldown(NpcContext& context)
+        {
+            if (context.npc->skillCD <= 1.f)
+                return true;
+            return false;
         }
     };
 }

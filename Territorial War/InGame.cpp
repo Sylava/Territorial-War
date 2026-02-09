@@ -3,17 +3,16 @@
 #include <algorithm>
 #include "InGame.h"
 #include "Warrior.h"
+#include "Healer.h"
 
-InGame::InGame(sf::RenderWindow* inWindow)
+InGame::InGame(sf::RenderWindow* inWindow) : window(inWindow), input(Inputs(window))
 {
-    window = inWindow;
+    //window = inWindow;
     map = new Map(window);
     player = new Player(window, map);
-    input = Inputs(window);
-    for (int i = 0; i < 50; ++i)
-    {
-        npcs.push_back(new Warrior(window, map));
-    }
+    //input = Inputs(window);
+    npcs.push_back(new Warrior(window, map));
+    npcs.push_back(new Healer(window, map));
     npcsInit(map);
 }
 
@@ -56,7 +55,7 @@ void InGame::npcsInit(Map* map)
 {
     for (Npc* npc : npcs)
     {
-        npc->Init(map, player);
+        npc->Init(map, player, &npcs);
     }
 }
 
@@ -64,7 +63,7 @@ void InGame::checkHits(Player* player)
 {
     for (auto it = npcs.begin(); it != npcs.end(); )
     {
-        if ((*it)->attackIndex > 1 && player->invunerability >= 0.5f && circleIntersectsRect((*it)->attackArea, player->hitbox))
+        if ((*it)->attackIndex > 1 && player->invunerability >= 0.4f && circleIntersectsRect((*it)->attackArea, player->hitbox))
         {
             player->invunerability = 0.f;
             player->hp--;
@@ -75,7 +74,7 @@ void InGame::checkHits(Player* player)
                 return;
             }*/
         }
-        if (player->attackIndex > 1 && (*it)->invunerability >= 0.5f && circleIntersectsRect(player->attackArea, (*it)->hitbox))
+        if (player->attackIndex > 1 && (*it)->invunerability >= 0.4f && circleIntersectsRect(player->attackArea, (*it)->hitbox))
         {
             (*it)->invunerability = 0.f;
             (*it)->hp--;
