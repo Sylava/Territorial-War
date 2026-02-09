@@ -7,10 +7,8 @@
 
 InGame::InGame(sf::RenderWindow* inWindow) : window(inWindow), input(Inputs(window))
 {
-    //window = inWindow;
     map = new Map(window);
     player = new Player(window, map);
-    //input = Inputs(window);
     npcs.push_back(new Warrior(window, map));
     npcs.push_back(new Healer(window, map));
     npcsInit(map);
@@ -27,19 +25,7 @@ void InGame::run()
         player->update(dt);
         npcsUpdate(dt);
         checkHits(player);
-        window->clear();
-        map->draw();
-        player->draw();
-        npcsDraw();
-        window->display();
-    }
-}
-
-void InGame::npcsDraw()
-{
-    for (Npc* npc : npcs)
-    {
-        npc->draw();
+        draw();
     }
 }
 
@@ -108,4 +94,24 @@ bool InGame::circleIntersectsRect(const sf::CircleShape& circle, const sf::Float
     float dy = center.y - closestY;
 
     return (dx * dx + dy * dy) <= (radius * radius);
+}
+
+void InGame::npcsDraw()
+{
+    for (Npc* npc : npcs)
+    {
+        npc->draw();
+    }
+}
+
+void InGame::draw()
+{
+    if (running)
+    {
+        window->clear();
+        map->draw();
+        npcsDraw();
+        player->draw();
+        window->display();
+    }
 }

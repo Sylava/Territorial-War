@@ -21,7 +21,8 @@ void HealState::Execute(NpcContext& context, float dt)
         if(context.npc->isAttacking == false)
         {
             context.npc->isAttacking = true;
-            context.npc->target->hp++;
+            if(context.npc->target->hp < context.npc->target->hpMax)
+                context.npc->target->hp++;
             context.npc->attackIndex = 0;
             context.npc->attackAnimTime = 0.08f;
         }
