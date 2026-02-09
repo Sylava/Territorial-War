@@ -1,11 +1,6 @@
 #include "Map.h"
 #include <iostream>
 
-Map::Map()
-{
-
-}
-
 Map::Map(sf::RenderWindow* inWindow)
 {
     window = inWindow;
@@ -18,14 +13,17 @@ Map::Map(sf::RenderWindow* inWindow)
     sf::IntRect rect({ 7, 17 }, { 49, 34 });
 	if (!bgTex.loadFromFile("assets/background.png"))
 		std::cout << "texture non chargee" << std::endl;
-	if (!rockTex.loadFromFile("assets/Rock2.png", false, rect))
+	if (!rockTex.loadFromFile("assets/Rock.png", false, rect))
 		std::cout << "texture non chargee" << std::endl;
+    if (!rock2Tex.loadFromFile("assets/Rock2.png", false, rect))
+        std::cout << "texture non chargee" << std::endl;
 	if (!landTex.loadFromFile("assets/tiles.png"))
 		std::cout << "texture non chargee" << std::endl;
 
     createFirstRow();
     createMiddleRows();
     createLastRow();
+    createRocksRow();
 	background.emplace(bgTex);
     auto winSize = window->getSize();
     auto texSize = bgTex.getSize();
@@ -116,6 +114,34 @@ void Map::createLastRow()
             sf::IntRect rect({ 448, 128 }, { 64, 64 });
             sf::Sprite sprite(landTex, rect);
             sprite.setPosition({ xOffset + ((float)mapWidth - 1.f) * 64, yOffset + ((float)mapHeight - 1) * 64 });
+            tiles.push_back(sprite);
+        }
+    }
+}
+
+void Map::createRocksRow()
+{
+    for (int i = 0; i < mapWidth; ++i)
+    {
+        if (i == 0)
+        {
+            sf::IntRect rect({ 320, 320 }, { 64, 64 });
+            sf::Sprite sprite(landTex, rect);
+            sprite.setPosition({ xOffset + 0, yOffset + ((float)mapHeight) * 64 });
+            tiles.push_back(sprite);
+        }
+        else if (i < mapWidth - 1)
+        {
+            sf::IntRect rect({ 384, 320 }, { 64, 64 });
+            sf::Sprite sprite(landTex, rect);
+            sprite.setPosition({ xOffset + 64 * (float)i, yOffset + ((float)mapHeight) * 64 });
+            tiles.push_back(sprite);
+        }
+        else
+        {
+            sf::IntRect rect({ 448, 320 }, { 64, 64 });
+            sf::Sprite sprite(landTex, rect);
+            sprite.setPosition({ xOffset + ((float)mapWidth - 1.f) * 64, yOffset + ((float)mapHeight) * 64 });
             tiles.push_back(sprite);
         }
     }
