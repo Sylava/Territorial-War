@@ -79,6 +79,7 @@ class Npc
 {
 public:
 
+
     FSM::StateMachine<NpcContext> fsm;
     NpcContext context{};
     sf::Vector2f position;
@@ -115,6 +116,4 @@ public:
     virtual void draw() = 0;
 
 private:
-    StateMachine<NpcContext> fsm;
-    NpcContext context;
 };
