@@ -42,13 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -133,9 +133,11 @@
   <ItemGroup>
     <ClCompile Include="ChaseState.cpp" />
     <ClCompile Include="Conditions.cpp" />
+    <ClCompile Include="HealState.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="InGame.cpp" />
     <ClCompile Include="Inputs.cpp" />
+    <ClCompile Include="Healer.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="NpcContext.cpp" />
@@ -150,9 +152,11 @@
   <ItemGroup>
     <ClInclude Include="ChaseState.h" />
     <ClInclude Include="Conditions.h" />
+    <ClInclude Include="HealState.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="InGame.h" />
     <ClInclude Include="Inputs.h" />
+    <ClInclude Include="Healer.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="NpcContext.h" />

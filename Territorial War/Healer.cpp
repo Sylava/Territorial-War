@@ -1,29 +1,35 @@
-#include "Warrior.h"
+#include "Healer.h"
 #include "Map.h"
 #include "Conditions.h"
 
-Warrior::Warrior(sf::RenderWindow* inWindow, const Map* map)
+Healer::Healer(sf::RenderWindow* inWindow, const Map* map)
 {
 	window = inWindow;
-	if (!idleTex.loadFromFile("assets/RedWarrior_Idle.png"))
+	if (!idleTex.loadFromFile("assets/HealerIdle.png"))
 		std::cout << "texture non chargee" << std::endl;
-	if (!runTex.loadFromFile("assets/RedWarrior_Run.png"))
+	if (!runTex.loadFromFile("assets/HealerRun.png"))
 		std::cout << "texture non chargee" << std::endl;
-	if (!attackTex.loadFromFile("assets/RedWarrior_Attack1.png"))
+	if (!attackTex.loadFromFile("assets/HealerHeal.png"))
+		std::cout << "texture non chargee" << std::endl;
+	if (!effectTex.loadFromFile("assets/Heal_Effect.png"))
 		std::cout << "texture non chargee" << std::endl;
 	hitbox.size = { 40.f, 76.f };
 	position.x = map->right;
 	position.y = map->bottom + hitbox.size.y / 2;
 	hitbox.position = { position.x - 20.f, position.y - 38.f };
-	range = 90.f;
-	detectionRadius = 300.f;
-	attackArea.setRadius(45);
+	range = 500.f;
+	detectionRadius = 650.f;
+	attackArea.setRadius(0);
 	attackArea.setOrigin({ attackArea.getRadius(), attackArea.getRadius() });
-	attackArea.setPosition({ position.x - 25, position.y });
+	attackArea.setFillColor(sf::Color::Transparent);
+	attackArea.setOutlineColor(sf::Color::Red);
+	attackArea.setOutlineThickness(3);
+	attackArea.setPosition({ position.x, position.y });
 }
 
-void Warrior::update(const float dt)
+void Healer::update(const float dt)
 {
+	skillCD += dt;
 	invunerability += dt;
 	fsm.Update(context, dt);
 	if (isAttacking)
@@ -39,30 +45,54 @@ void Warrior::update(const float dt)
 	npcSprite->setPosition(position);
 }
 
-void Warrior::attackAnimation(const float dt)
+void Healer::healAnimation(const float dt)
+{
+	sf::IntRect rect;
+	healAnimTime -= dt;
+	if (healAnimTime <= 0.f)
+	{
+		healAnimTime = 0.08f;
+		healIndex++;
+	}
+	if (healIndex > 10)
+	{
+		rect = sf::IntRect({ (healIndex * 0), 0 }, { 1, 1 });
+		healIndex = 0;
+	}
+	else
+		rect = sf::IntRect({ (healIndex * 192), 0 }, { 192, 192 });
+	healEffect.emplace(effectTex);
+	healEffect->setTextureRect(rect);
+	sf::FloatRect bounds = healEffect->getLocalBounds();
+	healEffect->setOrigin({ bounds.size.x / 2.f,bounds.size.y / 2.f });
+	healEffect->setPosition(target->position);
+}
+
+void Healer::attackAnimation(const float dt)
 {
 	sf::IntRect rect;
 	attackAnimTime -= dt;
+	healAnimation(dt);
 	if (attackAnimTime <= 0.f)
 	{
 		attackAnimTime = 0.08f;
 		attackIndex++;
 	}
-	if (attackIndex > 3)
-		rect = sf::IntRect({ (3 * 192) + 192, 0 }, { 192, 192 });
+	if (attackIndex > 10)
+		rect = sf::IntRect({ (9 * 192) + 192, 0 }, { 192, 192 });
 	else
 		rect = sf::IntRect({ (attackIndex * 192), 0 }, { 192, 192 });
 
 	npcSprite.emplace(attackTex);
 	npcSprite->setTextureRect(rect);
-	if (attackIndex > 3)
+	if (attackIndex > 10)
 	{
-		attackIndex = 0;
 		isAttacking = false;
+		skillCD = 0.f;
 	}
 }
 
-void Warrior::runAnimation(const float dt)
+void Healer::runAnimation(const float dt)
 {
 	runAnimTime -= dt;
 	if (runAnimTime <= 0.f)
@@ -71,9 +101,9 @@ void Warrior::runAnimation(const float dt)
 		if (!runReverse)
 		{
 			runIndex++;
-			if (runIndex > 5)
+			if (runIndex > 3)
 			{
-				runIndex = 4;
+				runIndex = 2;
 				runReverse = true;
 			}
 		}
@@ -92,7 +122,7 @@ void Warrior::runAnimation(const float dt)
 	npcSprite->setTextureRect(rect);
 }
 
-void Warrior::idleAnimation(const float dt)
+void Healer::idleAnimation(const float dt)
 {
 	idleAnimTime -= dt;
 	if (idleAnimTime <= 0.f)
@@ -101,9 +131,9 @@ void Warrior::idleAnimation(const float dt)
 		if (!idleReverse)
 		{
 			idleIndex++;
-			if (idleIndex > 7)
+			if (idleIndex > 5)
 			{
-				idleIndex = 6;
+				idleIndex = 4;
 				idleReverse = true;
 			}
 		}
@@ -122,29 +152,28 @@ void Warrior::idleAnimation(const float dt)
 	npcSprite->setTextureRect(rect);
 }
 
-void Warrior::Init(Map* map, Player* player, std::vector<Npc*>* npcs)
+void Healer::Init(Map* map, Player* player, std::vector<Npc*>* npcs)
 {
 	context.npc = this;
-	context.map = map;
 	context.npcs = npcs;
+	context.map = map;
 	context.player = player;
 	PatrolState* patrolState = fsm.CreateState<PatrolState>();
-	ChaseState* chaseState = fsm.CreateState<ChaseState>();
 	IdleState* idleState = fsm.CreateState<IdleState>();
+	HealState* healstate = fsm.CreateState<HealState>();
 
-	idleState->AddTransition(Conditions::IsSeeingPlayer, chaseState);
 	idleState->AddTransition(Conditions::HasWaited, patrolState);
-	patrolState->AddTransition(Conditions::IsSeeingPlayer, chaseState);
+	idleState->AddTransition(Conditions::needHealing, healstate);
 	patrolState->AddTransition(Conditions::HasReachedPoint, idleState);
-	chaseState->AddTransition([](NpcContext& _context)
-		{
-			return !Conditions::IsSeeingPlayer(_context);
-		}, idleState);
+	patrolState->AddTransition(Conditions::needHealing, healstate);
+	healstate->AddTransition(Conditions::onCooldown, patrolState);
 
 	fsm.Init(patrolState, context);
 }
 
-void Warrior::draw()
+void Healer::draw()
 {
 	window->draw(*npcSprite);
+	if(isAttacking)
+		window->draw(*healEffect);
 }

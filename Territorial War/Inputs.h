@@ -6,7 +6,6 @@
 class Inputs
 {
 public:
-	Inputs();
 	Inputs(sf::RenderWindow* inWindow);
 
 	sf::Vector2f manageInputs(Player* player, const float& dt, bool& running);
