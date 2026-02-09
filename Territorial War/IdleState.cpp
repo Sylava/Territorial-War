@@ -1,14 +1,20 @@
 #include "IdleState.h"
+#include "NPC.h"
 #include <random>
 
-void IdleState::Enter(NpcContext& ctx)
+void IdleState::Enter(NpcContext& context)
 {
-    static std::mt19937 gen(std::random_device{}());
-    std::uniform_real_distribution<float> dist(1.f, 3.f);
-    timer = dist(gen);
+    std::cout << "Enter Idle State" << std::endl;
+    context.npc->isMoving = false;
+    context.idleTimer = 0.f;
 }
 
-void IdleState::Update(NpcContext& ctx, float dt)
+void IdleState::Execute(NpcContext& context, const float dt)
 {
-    timer -= dt;
+    context.idleTimer += dt;
+}
+
+void IdleState::Exit(NpcContext& context)
+{
+
 }

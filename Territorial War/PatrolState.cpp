@@ -57,35 +57,46 @@
 //}
 
 #include "PatrolState.h"
-#include "Npc.h"
+#include "NPC.h"
+#include "Map.h"
 #include <random>
 #include <cmath>
 
-void PatrolState::Enter(NpcContext& ctx)
+void PatrolState::Enter(NpcContext& context)
 {
-    chooseRandomTarget();
+    std::cout << "Enter Patrol State" << std::endl;
+    context.reachedPoint = false;
+    context.npc->isMoving = true;
+    context.reachedPoint = false;
+    setPatrolPoints(context);
 }
 
-void PatrolState::chooseRandomTarget()
+void PatrolState::Execute(NpcContext& context, const float dt)
 {
-    static std::mt19937 gen(std::random_device{}());
-    std::uniform_int_distribution<int> distX(0, 800);
-    std::uniform_int_distribution<int> distY(0, 600);
+    sf::Vector2f dir = (pointToGo - context.npc->position).normalized();
+    context.npc->move(dir * context.npc->speed * dt, context.map);
 
-    target = sf::Vector2f(distX(gen), distY(gen));
+    if (getDistance(pointToGo, context.npc->position) < 5.f || !context.npc->isMoving)
+        context.reachedPoint = true;
 }
 
-void PatrolState::Update(NpcContext& ctx, float dt)
+void PatrolState::Exit(NpcContext& context)
 {
     sf::Vector2f pos = ctx.npc->getPosition();
     sf::Vector2f dir = target - pos;
 
-    float len = std::sqrt(dir.x * dir.x + dir.y * dir.y);
-    if (len > 1.f)
-        dir /= len;
+}
 
-    ctx.npc->move(dir * ctx.npc->speed * dt);
+void PatrolState::setPatrolPoints(NpcContext& context)
+{
+    float y = context.map->top + rand() % ((int)context.map->bottom - (int)context.map->top + 1);
+    float x = context.map->left + rand() % ((int)context.map->right - (int)context.map->left + 1);
+    pointToGo = sf::Vector2f(x, y);
+}
 
-    if (len < 5.f)
-        chooseRandomTarget();
+float PatrolState::getDistance(const sf::Vector2f& a, const sf::Vector2f& b)
+{
+    float dx = b.x - a.x;
+    float dy = b.y - a.y;
+    return std::sqrt(dx * dx + dy * dy);
 }

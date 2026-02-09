@@ -1,14 +1,17 @@
 #pragma once
-#pragma once
-#include "StateMachine.h"
+#include <iostream>
+#include <ostream>
+#include <SFML/Graphics.hpp>
 #include "NpcContext.h"
+#include "State.h"
 
-class IdleState : public State<NpcContext>
+class IdleState : public FSM::State<NpcContext>
 {
 public:
-    void Enter(NpcContext& ctx) override;
-    void Update(NpcContext& ctx, float dt) override;
+    void Enter(NpcContext& context) override;
+    virtual void Execute(NpcContext& context, float dt) override;
+    void Exit(NpcContext& context) override;
 
-private:
-    float timer = 0.f;
+    float timer;
 };
+

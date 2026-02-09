@@ -1,22 +1,19 @@
-//#pragma once
-//
-//class Npc;
-//
-//class NpcContext
-//{
-//public:
-//    Npc* npc;
-//    // Input
-//    // Map
-//};
+#pragma once
 
 
 #pragma once
 class Npc;
 class Player;
+class Map;
 
-struct NpcContext
+
+class NpcContext
 {
-    Npc* npc = nullptr;
-    Player* player = nullptr;
+public:
+    Npc* npc;
+    Player* player;
+    Map* map;
+    bool reachedPoint = false;
+    float idleTimer = 0.f;
+    // Input
 };

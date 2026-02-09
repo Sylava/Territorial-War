@@ -34,17 +34,22 @@
 //
 //};
 #pragma once
-#include "StateMachine.h"
-#include "NpcContext.h"
+#include <iostream>
+#include <ostream>
 #include <SFML/Graphics.hpp>
+#include "NpcContext.h"
+#include "State.h"
 
-class PatrolState : public State<NpcContext>
+class PatrolState : public FSM::State<NpcContext>
 {
 public:
-    void Enter(NpcContext& ctx) override;
-    void Update(NpcContext& ctx, float dt) override;
+    void Enter(NpcContext& context) override;
+    virtual void Execute(NpcContext& context, const float dt) override;
+    void Exit(NpcContext& context) override;
 
 private:
-    sf::Vector2f target;
-    void chooseRandomTarget();
+    void setPatrolPoints(NpcContext& context);
+    float getDistance(const sf::Vector2f& a, const sf::Vector2f& b);
+
+    sf::Vector2f pointToGo;
 };

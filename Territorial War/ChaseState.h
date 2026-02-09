@@ -22,11 +22,22 @@
 //}
 
 #pragma once
-#include "StateMachine.h"
+#include <iostream>
+#include <ostream>
+#include <SFML/Graphics.hpp>
 #include "NpcContext.h"
+#include "State.h"
 
-class ChaseState : public State<NpcContext>
+namespace NpcAi
 {
-public:
-    void Update(NpcContext& ctx, float dt) override;
-};
+    class ChaseState : public FSM::State<NpcContext>
+    {
+    private:
+        void Enter(NpcContext& context) override;
+        void Execute(NpcContext& context, const float dt);
+        void Exit(NpcContext& context) override;
+
+    public:
+        float getDistance(const sf::Vector2f& a, const sf::Vector2f& b);
+    };
+}

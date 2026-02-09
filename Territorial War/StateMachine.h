@@ -30,59 +30,27 @@
 #pragma once
 #include <functional>
 #include <vector>
+#include "State.h"
 
-template<typename Context>
-class State
+namespace FSM
 {
-public:
-    virtual ~State() = default;
-    virtual void Enter(Context&) {}
-    virtual void Update(Context&, float) {}
-    virtual void Exit(Context&) {}
+    template<typename ContextType>
+    class StateMachine
+    {
+        using State = State<ContextType>;
 
-    void AddTransition(std::function<bool(const Context&)> condition, State* target) {
-        transitions.push_back({ condition, target });
-    }
+    public:
+        template<typename StateType>
+        StateType* CreateState();
 
-    State* CheckTransitions(const Context& ctx) {
-        for (auto& t : transitions)
-            if (t.condition(ctx))
-                return t.target;
-        return nullptr;
-    }
+        void Init(State* _initialState, ContextType& context);
+        void Update(ContextType& context, const float dt);
 
-private:
-    struct Transition {
-        std::function<bool(const Context&)> condition;
-        State* target;
+    private:
+        std::vector<State*> states;
+
+        State* currentState = nullptr;
     };
+}
 
-    std::vector<Transition> transitions;
-};
-
-template<typename Context>
-class StateMachine
-{
-public:
-    void Init(State<Context>* start, Context& ctx) {
-        current = start;
-        current->Enter(ctx);
-    }
-
-    void Update(Context& ctx, float dt) {
-        if (!current) return;
-
-        State<Context>* next = current->CheckTransitions(ctx);
-        if (next && next != current) {
-            current->Exit(ctx);
-            current = next;
-            current->Enter(ctx);
-        }
-
-        current->Update(ctx, dt);
-    }
-
-private:
-    State<Context>* current = nullptr;
-};
-
+#include "StateMachine.inl"

@@ -11,23 +11,23 @@ StateType* FSM::StateMachine<ContextType>::CreateState()
 }
 
 template<typename ContextType>
-void FSM::StateMachine<ContextType>::Init(State* _initialState, ContextType _context)
+void FSM::StateMachine<ContextType>::Init(State* _initialState, ContextType& context)
 {
     currentState = _initialState;
-    currentState->Enter(_context);
+    currentState->Enter(context);
 }
 
 template<typename ContextType>
-void FSM::StateMachine<ContextType>::Update(ContextType _context)
+void FSM::StateMachine<ContextType>::Update(ContextType& context, const float dt)
 {
-    currentState->Execute(_context);
+    currentState->Execute(context, dt);
 
-    auto next = currentState->TryGetNext(_context);
+    auto next = currentState->TryGetNext(context);
 
     if (next)
     {
-        currentState->Exit(_context);
+        currentState->Exit(context);
         currentState = next;
-        currentState->Enter(_context);
+        currentState->Enter(context);
     }
 }

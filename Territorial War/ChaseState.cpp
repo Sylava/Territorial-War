@@ -1,18 +1,43 @@
 #include "ChaseState.h"
-#include "Npc.h"
+#include "NPC.h"
 #include "Player.h"
-#include <cmath>
+#include <random>
 
-void ChaseState::Update(NpcContext& ctx, float dt)
+void ChaseState::Enter(NpcContext& context)
 {
-    sf::Vector2f pos = ctx.npc->getPosition();
-    sf::Vector2f target = ctx.player->getPosition();
+    std::cout << "Enter Chase State" << std::endl;
+}
 
-    sf::Vector2f dir = target - pos;
-    float len = std::sqrt(dir.x * dir.x + dir.y * dir.y);
+void ChaseState::Execute(NpcContext& context, float dt)
+{
+    float distance = getDistance(context.npc->position, context.player->position);
+    if (distance <= context.npc->range)
+    {
+        context.npc->isMoving = false;
+        if (context.npc->isAttacking == false)
+        {
+            context.npc->isAttacking = true;
+            context.npc->attackIndex = 0;
+            context.npc->attackAnimTime = 0.08f;
+        }
+    }
+    else
+    {
+        context.npc->isMoving = true;
+        sf::Vector2f dir = (context.player->position - context.npc->position).normalized();
+        context.npc->move(dir * context.npc->speed * dt, context.map);
+    }
 
-    if (len > 1.f)
-        dir /= len;
+}
 
-    ctx.npc->move(dir * ctx.npc->speed * dt);
+void ChaseState::Exit(NpcContext& context)
+{
+
+}
+
+float ChaseState::getDistance(const sf::Vector2f& a, const sf::Vector2f& b)
+{
+    float dx = b.x - a.x;
+    float dy = b.y - a.y;
+    return std::sqrt(dx * dx + dy * dy);
 }
