@@ -14,11 +14,12 @@ public:
 	void run();
 
 private:
-	void npcsDraw();
 	void npcsUpdate(float dt);
 	void npcsInit(Map* map);
 	void checkHits(Player* player);
 	bool circleIntersectsRect(const sf::CircleShape& circle, const sf::FloatRect& rect);
+	void npcsDraw();
+	void draw();
 
 	sf::RenderWindow* window;
 	bool running = true;

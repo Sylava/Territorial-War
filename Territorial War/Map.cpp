@@ -11,11 +11,12 @@ Map::Map(sf::RenderWindow* inWindow)
     left = xOffset;
     right = ((float)mapWidth * 64) + xOffset - 40;
     sf::IntRect rect({ 7, 17 }, { 49, 34 });
-	if (!bgTex.loadFromFile("assets/background.png"))
-		std::cout << "texture non chargee" << std::endl;
 	if (!rockTex.loadFromFile("assets/Rock.png", false, rect))
 		std::cout << "texture non chargee" << std::endl;
+    rect = sf::IntRect({ 5, 14 }, { 53, 39 });
     if (!rock2Tex.loadFromFile("assets/Rock2.png", false, rect))
+        std::cout << "texture non chargee" << std::endl;
+    if (!bgTex.loadFromFile("assets/background.png"))
         std::cout << "texture non chargee" << std::endl;
 	if (!landTex.loadFromFile("assets/tiles.png"))
 		std::cout << "texture non chargee" << std::endl;
@@ -151,9 +152,24 @@ void Map::createRock(const sf::Vector2f& position)
 {
     if ((std::rand() % 9) == 0)
     {
-        sf::Sprite rock(rockTex);
-        rock.setPosition(position);
-        rocks.push_back(rock);
+        int type = std::rand() % 2;
+        switch (type)
+        {
+            case 0:
+            {
+                sf::Sprite rock(rockTex);
+                rock.setPosition(position);
+                rocks.push_back(rock);
+                break;
+            }
+            default:
+            {
+                sf::Sprite rock(rock2Tex);
+                rock.setPosition(position);
+                rocks.push_back(rock);
+                break;
+            }
+        }
     }
 }
 
