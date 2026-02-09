@@ -7,13 +7,13 @@ Map::Map(sf::RenderWindow* inWindow)
     xOffset = (window->getSize().x - ((float)mapWidth * 64)) / 2;
     yOffset = (window->getSize().y - ((float)mapHeight * 64)) / 2;
     top = yOffset - 30;
-    bottom = ((float)mapHeight * 64) + yOffset - 90;
+    bottom = ((float)mapHeight * 64) + yOffset - 80;
     left = xOffset;
     right = ((float)mapWidth * 64) + xOffset - 40;
     sf::IntRect rect({ 7, 17 }, { 49, 34 });
 	if (!rockTex.loadFromFile("assets/Rock.png", false, rect))
 		std::cout << "texture non chargee" << std::endl;
-    rect = sf::IntRect({ 5, 14 }, { 53, 39 });
+    rect = sf::IntRect({ 5, 14 }, { 53, 38 });
     if (!rock2Tex.loadFromFile("assets/Rock2.png", false, rect))
         std::cout << "texture non chargee" << std::endl;
     if (!bgTex.loadFromFile("assets/background.png"))

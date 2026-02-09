@@ -7,7 +7,7 @@ ScenePause::ScenePause(sf::RenderWindow* inWindow)
 	window = inWindow;
 	sf::Vector2u winSize = window->getSize();
 
-	sf::IntRect rect({ 0,0 }, { 26, 16 });
+	sf::IntRect rect({ 1,0 }, { 26, 17 });
 	if (!ContinuesTex.loadFromFile("assets/ButtonAgain.png", false, rect))
 		std::cout << "texture non chargee" << std::endl;
 	Continues.emplace(ContinuesTex);
@@ -16,7 +16,7 @@ ScenePause::ScenePause(sf::RenderWindow* inWindow)
 	Continues->setOrigin({ bounds.size.x / 2.f, bounds.size.y / 2.f });
 	Continues->setPosition({ (float)winSize.x / 2, ((float)winSize.y / 2) - 90 });
 
-	rect = sf::IntRect({ 33, 0 }, { 24, 16 });
+	rect = sf::IntRect({ 33, 0 }, { 25, 17 });
 	if (!MenuTex.loadFromFile("assets/ButtonHome.png", false, rect))
 		std::cout << "texture non chargee" << std::endl;
 	Menu.emplace(MenuTex);
