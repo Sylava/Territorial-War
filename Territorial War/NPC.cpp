@@ -3,7 +3,6 @@
 
 void Npc::Init(Map* map, Player* player)
 {
-    getShape().setFillColor(sf::Color::Red);
     context.npc = this;
     context.map = map;
     context.player = player;
