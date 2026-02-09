@@ -1,14 +1,16 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <optional>
-
-class ScenePause
+#include "SceneMenu.h"
+class ScenePause 
 {
 public:
+	
 	ScenePause(sf::RenderWindow* inWindow);
-	void run();
+	bool run();
 
 private:
+	
 	sf::RenderWindow* window;
 	sf::Texture bgTex;
 	sf::Texture ContinuesTex;
@@ -20,4 +22,6 @@ private:
 
 	void draw();
 };
+
+
 

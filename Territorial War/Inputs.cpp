@@ -1,10 +1,7 @@
 #include "Inputs.h"
 #include <SFML/Graphics.hpp>
+#include "ScenePause.h"
 
-Inputs::Inputs()
-{
-
-}
 
 Inputs::Inputs(sf::RenderWindow* inWindow)
 {
@@ -18,11 +15,15 @@ sf::Vector2f Inputs::manageInputs(Player* player, const float& dt, bool& running
         if (event->is<sf::Event::Closed>())
             window->close();
         if (event->is<sf::Event::KeyPressed>())
-        {
+        { 
             auto key = event->getIf<sf::Event::KeyPressed>();
-            if (key->code == sf::Keyboard::Key::Escape)
-                running = false;
+            if (key->code == sf::Keyboard::Key::Escape) {
+
+                ScenePause pause(window);
+                running = pause.run();
+            }
         }
+        
     }
     sf::Vector2f direction{ 0.f, 0.f };
     player->isMoving = false;

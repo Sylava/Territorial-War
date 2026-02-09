@@ -4,12 +4,12 @@
 #include "InGame.h"
 #include "Warrior.h"
 
-InGame::InGame(sf::RenderWindow* inWindow)
+InGame::InGame(sf::RenderWindow* inWindow) : window(inWindow), input(Inputs(window))
 {
-    window = inWindow;
+
     map = new Map(window);
     player = new Player(window, map);
-    input = Inputs(window);
+
     for (int i = 0; i < 50; ++i)
     {
         npcs.push_back(new Warrior(window, map));

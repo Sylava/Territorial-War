@@ -12,7 +12,7 @@ class InGame
 public:
 	InGame(sf::RenderWindow* inWindow);
 	void run();
-
+	
 private:
 	void npcsDraw();
 	void npcsUpdate(float dt);
