@@ -63,13 +63,13 @@
 //};
 
 #pragma once
-#include "Entity.h"
+
 #include "StateMachine.h"
 #include "ChaseState.h"
 #include "NpcContext.h"
 #include "IdleState.h"
 #include "PatrolState.h"
-#include "IdleState.h"
+
 #include "Map.h"
 #include "Player.h"
 
