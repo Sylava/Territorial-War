@@ -1,7 +1,5 @@
 #pragma once
 
-
-#pragma once
 class Npc;
 class Player;
 class Map;

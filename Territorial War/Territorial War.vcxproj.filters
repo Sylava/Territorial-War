@@ -104,17 +104,6 @@
     <ClInclude Include="Map.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionObstacle.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="StateMachine.inl">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </None>
-    <None Include="State.inl">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="StateMachine.inl">

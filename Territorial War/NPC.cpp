@@ -1,4 +1,4 @@
-﻿#include "NPC.h"
+#include "NPC.h"
 #include "Conditions.h"
 
 void Npc::Init(Map* map, Player* player)

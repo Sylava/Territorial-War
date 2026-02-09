@@ -142,7 +142,6 @@
     <ClCompile Include="PatrolState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneMenu.cpp" />
-    <ClCompile Include="ScenePause.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -160,7 +159,6 @@
     <ClInclude Include="PatrolState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneMenu.h" />
-    <ClInclude Include="ScenePause.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Warrior.h" />
