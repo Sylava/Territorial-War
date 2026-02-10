@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <algorithm>
+#include <iostream>
+#include <string>
 #include "InGame.h"
 #include "Warrior.h"
 #include "Healer.h"
@@ -20,12 +22,13 @@ void InGame::run()
     while (running)
     {
         float dt = clock.restart().asSeconds();
-        sf::Vector2f direction = input.manageInputs(player, dt, running);
+        sf::Vector2f direction = input.manageInputs(player, running);
         player->move(direction * dt, map);
         player->update(dt);
         npcsUpdate(dt);
         checkHits(player);
         draw();
+        checkEndGame();
     }
 }
 
@@ -53,12 +56,6 @@ void InGame::checkHits(Player* player)
         {
             player->invunerability = 0.f;
             player->hp--;
-            /*if (player->hp <= 0)
-            {
-                delete player;
-                player = nullptr;
-                return;
-            }*/
         }
         if (player->attackIndex > 1 && (*it)->invunerability >= 0.4f && circleIntersectsRect(player->attackArea, (*it)->hitbox))
         {
@@ -101,6 +98,64 @@ void InGame::npcsDraw()
     for (Npc* npc : npcs)
     {
         npc->draw();
+    }
+}
+
+void InGame::checkEndGame()
+{
+    if (player->hp <= 0)
+        endScreen(false);
+    else if (npcs.empty())
+        endScreen(true);
+}
+
+void InGame::endScreen(bool win)
+{
+    running = false;
+    std::string path;
+    if (win)
+        path = "assets/win.png";
+    else
+        path = "assets/gameover.png";
+    if (!endTex.loadFromFile(path))
+        std::cout << "texture non chargee" << std::endl;
+    end.emplace(endTex);
+    sf::FloatRect bounds = end->getLocalBounds();
+    end->setOrigin({ bounds.size.x / 2.f, bounds.size.y / 2.f });
+    end->setPosition({ (float)window->getSize().x / 2, ((float)window->getSize().y / 2) - 80 });
+    sf::IntRect rect({ 33, 0 }, { 25, 17 });
+    if (!homeTex.loadFromFile("assets/ButtonHome.png", false, rect))
+        std::cout << "texture non chargee" << std::endl;
+    home.emplace(homeTex);
+    home->setScale({ 8.f, 7.f });
+    bounds = home->getLocalBounds();
+    home->setOrigin({ bounds.size.x / 2.f, bounds.size.y / 2.f });
+    home->setPosition({ (float)window->getSize().x / 2, ((float)window->getSize().y / 2) + 80 });
+    bool clickedBtn = false;
+    while (!clickedBtn)
+    {
+        while (const std::optional event = window->pollEvent())
+        {
+            if (event->is<sf::Event::Closed>())
+                window->close();
+
+            if (event->is<sf::Event::MouseButtonPressed>())
+            {
+                auto mouse = event->getIf<sf::Event::MouseButtonPressed>();
+
+                if (mouse->button == sf::Mouse::Button::Left)
+                {
+                    sf::Vector2f mousePos = window->mapPixelToCoords(mouse->position);
+
+                    if (home->getGlobalBounds().contains(mousePos))
+                        clickedBtn = true;
+                }
+            }
+        }
+        window->clear();
+        window->draw(*end);
+        window->draw(*home);
+        window->display();
     }
 }
 

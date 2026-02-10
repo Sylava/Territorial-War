@@ -8,7 +8,7 @@ Inputs::Inputs(sf::RenderWindow* inWindow)
     window = inWindow;
 }
 
-sf::Vector2f Inputs::manageInputs(Player* player, const float& dt, bool& running)
+sf::Vector2f Inputs::manageInputs(Player* player, bool& running)
 {
     while (const std::optional event = window->pollEvent())
     {

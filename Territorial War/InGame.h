@@ -20,8 +20,14 @@ private:
 	bool circleIntersectsRect(const sf::CircleShape& circle, const sf::FloatRect& rect);
 	void npcsDraw();
 	void draw();
+	void checkEndGame();
+	void endScreen(bool win);
 
 	sf::RenderWindow* window;
+	sf::Texture endTex;
+	sf::Texture homeTex;
+	std::optional<sf::Sprite> end;
+	std::optional<sf::Sprite> home;
 	bool running = true;
 	std::vector<Npc*> npcs;
 	Map* map;
