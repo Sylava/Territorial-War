@@ -5,7 +5,6 @@
 class Player
 {
 public:
-    Player();
     Player(sf::RenderWindow* inWindow, const Map* map);
 
     void update(const float dt);
@@ -21,7 +20,7 @@ public:
     float invunerability = 1.f;
     bool isAttacking = false;
     bool isMoving = false;
-    int hp = 5;
+    int hp = 10;
     bool animMirror = true;
     int attackIndex = 0;
     float attackAnimTime = 0.08f;

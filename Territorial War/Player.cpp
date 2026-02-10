@@ -2,11 +2,6 @@
 #include "Player.h"
 #include "Map.h"
 
-Player::Player()
-{
-
-}
-
 Player::Player(sf::RenderWindow* inWindow, const Map* map)
 {
 	window = inWindow;
