@@ -147,6 +147,7 @@
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Warrior.cpp" />
+    <ClCompile Include="WaveInfini.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChaseState.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Warrior.h" />
+    <ClInclude Include="WaveInfini.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="State.inl" />

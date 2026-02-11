@@ -13,5 +13,6 @@ public:
     Map* map;
     bool reachedPoint = false;
     float idleTimer = 0.f;
+    
     // Input
 };
