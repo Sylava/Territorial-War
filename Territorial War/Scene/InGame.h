@@ -21,6 +21,8 @@ private:
 	void npcsDraw();
 	void draw();
 	void checkEndGame();
+	
+	void WaveInfini();
 	void endScreen(bool win);
 
 	sf::RenderWindow* window;

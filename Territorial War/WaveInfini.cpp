@@ -1,7 +1,7 @@
 //#include "WaveInfini.h"
 //#include "Map.h"
-//#include "Warrior.h"
-//
+//#include "Entities/Warrior.h"
+//#include "Entities/Healer.h"
 //
 //
 //
@@ -25,7 +25,7 @@
 //void WaveInfini::spawnWave() {
 //    currentWave++;
 //
-//    int enemyCount = 4 + currentWave * 2;
+//    int enemyCount = 2 + currentWave * 2;
 //
 //    for (int i = 0; i < enemyCount; i++) {
 //        float x = 50.f + (i * 60.f);
@@ -33,11 +33,13 @@
 //        int type = rand() % 2; 
 //
 //        if (type == 0)
-//            npcs.push_back(std::make_unique<Warrior>(sf::Vector2f(window, map)));
-//        /*else
-//            npcs.push_back(std::make_unique<EnemyTypeB>(sf::Vector2f(x, -50.f)));*/
+//            npcs.push_back(std::make_unique <Warrior>(sf::Vector2f(400, 100.f)));
+//        else
+//            npcs.push_back(std::make_unique<Healer>(sf::Vector2f(400, 100.f)));
 //    }
 //
 //    std::cout << "Vague " << currentWave << " ("
 //        << enemyCount << " ennemis, types mélangés)\n";
 //}
+//
+//

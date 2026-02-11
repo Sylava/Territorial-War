@@ -150,6 +150,7 @@
     <ClCompile Include="FSM\StateMachine.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Entities\Warrior.cpp" />
+    <ClCompile Include="WaveInfini.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="States\ChaseState.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="FSM\State.h" />
     <ClInclude Include="FSM\StateMachine.h" />
     <ClInclude Include="Entities\Warrior.h" />
+    <ClInclude Include="WaveInfini.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FSM\State.inl" />

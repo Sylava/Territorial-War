@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Scene/InGame.h"
 #include "Scene/SceneMenu.h"
+#include "Scene/ScenePause.h"
 
 int main()
 {

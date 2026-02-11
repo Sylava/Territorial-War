@@ -1,7 +1,11 @@
+//
+//class WaveInfini
+//{
+//};
 //#pragma once
 //#include <vector>
 //
-//#include "NPC.h"
+//#include "Entities/NPC.h"
 //
 //class WaveInfini {
 //public:
