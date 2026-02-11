@@ -12,7 +12,7 @@ class InGame
 public:
 	InGame(sf::RenderWindow* inWindow);
 	void run();
-	
+
 private:
 	void npcsUpdate(float dt);
 	void npcsInit(Map* map);
@@ -21,7 +21,7 @@ private:
 	void npcsDraw();
 	void draw();
 	void checkEndGame();
-	
+
 	void WaveInfini();
 	void endScreen(bool win);
 
@@ -35,6 +35,18 @@ private:
 	Map* map;
 	Player* player;
 	Inputs input;
+
+
+	int waveNumber = 0;
+	int targetNpcCount = 0;
+
+
+	int score = 0;
+	int pointsPerNpc = 10;
+	int waveBonusMultiplier = 50;
+	int maxNpcs = 100;
+
+
+	sf::Font font;
+	std::optional<sf::Text> scoreText;
 };
-
-

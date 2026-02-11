@@ -8,22 +8,23 @@ Inputs::Inputs(sf::RenderWindow* inWindow)
     window = inWindow;
 }
 
-sf::Vector2f Inputs::manageInputs(Player* player, bool& running)
+sf::Vector2f Inputs::manageInputs(Player* player, bool& running, int score, int wave)
 {
     while (const std::optional event = window->pollEvent())
     {
         if (event->is<sf::Event::Closed>())
             window->close();
         if (event->is<sf::Event::KeyPressed>())
-        { 
+        {
             auto key = event->getIf<sf::Event::KeyPressed>();
             if (key->code == sf::Keyboard::Key::Escape)
             {
-                ScenePause pause(window);
+               
+                ScenePause pause(window, score, wave);
                 running = pause.run();
             }
         }
-        
+
     }
     sf::Vector2f direction{ 0.f, 0.f };
     player->isMoving = false;

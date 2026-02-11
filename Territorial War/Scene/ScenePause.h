@@ -6,7 +6,8 @@
 class ScenePause
 {
 public:
-	ScenePause(sf::RenderWindow* inWindow);
+	
+	ScenePause(sf::RenderWindow* inWindow, int score = 0, int wave = 0);
 	bool run();
 
 private:
@@ -19,6 +20,10 @@ private:
 	std::optional<sf::Sprite> Continues;
 	std::optional<sf::Sprite> Menu;
 	bool running = true;
+
+
+	sf::Font font;
+	std::optional<sf::Text> scoreText;
 
 	void draw();
 };

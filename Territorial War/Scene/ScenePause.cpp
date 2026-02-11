@@ -2,7 +2,7 @@
 #include <iostream>
 #include "InGame.h"
 
-ScenePause::ScenePause(sf::RenderWindow* inWindow)
+ScenePause::ScenePause(sf::RenderWindow* inWindow, int score, int wave)
 {
 	window = inWindow;
 	sf::Vector2u winSize = window->getSize();
@@ -30,6 +30,21 @@ ScenePause::ScenePause(sf::RenderWindow* inWindow)
 	background.emplace(bgTex);
 	sf::Vector2u texSize = bgTex.getSize();
 	background->setScale({ (float)(winSize.x) / texSize.x, (float)(winSize.y) / texSize.y });
+
+
+	if (!font.openFromFile("assets/arial.ttf"))
+		std::cout << "police non chargee: assets/arial.ttf" << std::endl;
+	else
+	{
+		scoreText.emplace(font, "", 24);
+		std::string s = "Score: " + std::to_string(score) + "  Wave: " + std::to_string(wave);
+		scoreText->setString(s);
+		sf::FloatRect tb = scoreText->getLocalBounds();
+		sf::Vector2f origin{ tb.position.x + tb.size.x / 2.f, tb.position.y + tb.size.y / 2.f };
+		scoreText->setOrigin(origin);
+		scoreText->setPosition({ (float)winSize.x / 2.f, 20.f });
+		scoreText->setFillColor(sf::Color::White);
+	}
 }
 
 bool ScenePause::run()
@@ -60,6 +75,8 @@ bool ScenePause::run()
 		draw();
 		window->display();
 	}
+
+	return false;
 }
 
 void ScenePause::draw()
@@ -67,4 +84,6 @@ void ScenePause::draw()
 	window->draw(*background);
 	window->draw(*Continues);
 	window->draw(*Menu);
+	if (scoreText)
+		window->draw(*scoreText);
 }
