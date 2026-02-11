@@ -1,6 +1,6 @@
 #include "HealState.h"
-#include "NPC.h"
-#include "Player.h"
+#include "../Entities/NPC.h"
+#include "../Entities/Player.h"
 
 void HealState::Enter(NpcContext& context)
 {

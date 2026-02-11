@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
-#include "InGame.h"
-#include "SceneMenu.h"
+#include "Scene/InGame.h"
+#include "Scene/SceneMenu.h"
 
 int main()
 {

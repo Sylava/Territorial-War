@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Player.h"
-#include "Map.h"
 
 Player::Player(sf::RenderWindow* inWindow, const Map* map)
 {

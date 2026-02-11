@@ -4,8 +4,8 @@
 #include <iostream>
 #include <string>
 #include "InGame.h"
-#include "Warrior.h"
-#include "Healer.h"
+#include "../Entities/Warrior.h"
+#include "../Entities/Healer.h"
 
 InGame::InGame(sf::RenderWindow* inWindow) : window(inWindow), input(Inputs(window))
 {
@@ -52,7 +52,7 @@ void InGame::checkHits(Player* player)
 {
     for (auto it = npcs.begin(); it != npcs.end(); )
     {
-        if ((*it)->attackIndex > 1 && player->invunerability >= 0.4f && circleIntersectsRect((*it)->attackArea, player->hitbox))
+        if ((*it)->type == Type::Warrior && (*it)->attackIndex > 1 && player->invunerability >= 0.4f && circleIntersectsRect((*it)->attackArea, player->hitbox))
         {
             player->invunerability = 0.f;
             player->hp--;

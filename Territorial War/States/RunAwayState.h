@@ -2,12 +2,12 @@
 #include <iostream>
 #include <ostream>
 #include <SFML/Graphics.hpp>
-#include "NpcContext.h"
-#include "State.h"
+#include "../FSM/NpcContext.h"
+#include "../FSM/State.h"
 
 namespace NpcAi
 {
-    class HealState : public FSM::State<NpcContext>
+    class RunAwayState : public FSM::State<NpcContext>
     {
     private:
         void Enter(NpcContext& context) override;
@@ -18,4 +18,3 @@ namespace NpcAi
         float getDistance(const sf::Vector2f& a, const sf::Vector2f& b);
     };
 }
-

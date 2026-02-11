@@ -1,5 +1,5 @@
 #include "IdleState.h"
-#include "NPC.h"
+#include "../Entities/NPC.h"
 #include <random>
 
 void IdleState::Enter(NpcContext& context)

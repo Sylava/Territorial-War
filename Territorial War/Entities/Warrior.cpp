@@ -1,10 +1,10 @@
 #include "Warrior.h"
-#include "Map.h"
-#include "Conditions.h"
+#include "../FSM/Conditions.h"
 
 Warrior::Warrior(sf::RenderWindow* inWindow, const Map* map)
 {
 	window = inWindow;
+	type = Type::Warrior;
 	if (!idleTex.loadFromFile("assets/RedWarrior_Idle.png"))
 		std::cout << "texture non chargee" << std::endl;
 	if (!runTex.loadFromFile("assets/RedWarrior_Run.png"))
@@ -131,14 +131,15 @@ void Warrior::Init(Map* map, Player* player, std::vector<Npc*>* npcs)
 	PatrolState* patrolState = fsm.CreateState<PatrolState>();
 	ChaseState* chaseState = fsm.CreateState<ChaseState>();
 	IdleState* idleState = fsm.CreateState<IdleState>();
+	//RunAwayState* idleState = fsm.CreateState<RunAwayState>();
 
-	idleState->AddTransition(Conditions::IsSeeingPlayer, chaseState);
-	idleState->AddTransition(Conditions::HasWaited, patrolState);
-	patrolState->AddTransition(Conditions::IsSeeingPlayer, chaseState);
-	patrolState->AddTransition(Conditions::HasReachedPoint, idleState);
+	idleState->AddTransition(Conditions::isSeeingPlayer, chaseState);
+	idleState->AddTransition(Conditions::hasWaited, patrolState);
+	patrolState->AddTransition(Conditions::isSeeingPlayer, chaseState);
+	patrolState->AddTransition(Conditions::hasReachedPoint, idleState);
 	chaseState->AddTransition([](NpcContext& _context)
 		{
-			return !Conditions::IsSeeingPlayer(_context);
+			return !Conditions::isSeeingPlayer(_context);
 		}, idleState);
 
 	fsm.Init(patrolState, context);
