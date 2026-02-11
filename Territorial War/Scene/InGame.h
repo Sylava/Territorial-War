@@ -1,10 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <optional>
-#include "Map.h"
-#include "NPC.h"
-#include "Player.h"
-#include "Inputs.h"
+#include "../Map.h"
+#include "../Entities/NPC.h"
+#include "../Entities/Player.h"
+#include "../Inputs.h"
 
 
 class InGame

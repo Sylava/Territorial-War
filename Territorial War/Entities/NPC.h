@@ -1,19 +1,26 @@
 #pragma once
-#include "StateMachine.h"
-#include "ChaseState.h"
-#include "NpcContext.h"
-#include "PatrolState.h"
-#include "IdleState.h"
-#include "HealState.h"
-#include "Map.h"
+#include "../FSM/StateMachine.h"
+#include "../States/ChaseState.h"
+#include "../FSM/NpcContext.h"
+#include "../States/PatrolState.h"
+#include "../States/IdleState.h"
+#include "../States/HealState.h"
+#include "../States/RunawayState.h"
+#include "../Map.h"
 #include "Player.h"
 
 using namespace NpcAi;
 
+enum class Type
+{
+    Warrior,
+    Healer,
+};
+
 class Npc
 {
 public:
-
+    Type type;
     FSM::StateMachine<NpcContext> fsm;
     NpcContext context{};
     sf::Vector2f position;
@@ -26,6 +33,7 @@ public:
     Npc* target;
     float speed = 400.f;
     float invunerability = 0.6f;
+    float runAwayTime = 0.f;
     float skillCD = 1.f;
     float range;
     float detectionRadius;

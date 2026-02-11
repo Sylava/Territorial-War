@@ -1,10 +1,12 @@
+#include <iostream>
 #include "Healer.h"
-#include "Map.h"
-#include "Conditions.h"
+#include "../Map.h"
+#include "../FSM/Conditions.h"
 
 Healer::Healer(sf::RenderWindow* inWindow, const Map* map)
 {
 	window = inWindow;
+	type = Type::Healer;
 	if (!idleTex.loadFromFile("assets/HealerIdle.png"))
 		std::cout << "texture non chargee" << std::endl;
 	if (!runTex.loadFromFile("assets/HealerRun.png"))
@@ -162,9 +164,9 @@ void Healer::Init(Map* map, Player* player, std::vector<Npc*>* npcs)
 	IdleState* idleState = fsm.CreateState<IdleState>();
 	HealState* healstate = fsm.CreateState<HealState>();
 
-	idleState->AddTransition(Conditions::HasWaited, patrolState);
+	idleState->AddTransition(Conditions::hasWaited, patrolState);
 	idleState->AddTransition(Conditions::needHealing, healstate);
-	patrolState->AddTransition(Conditions::HasReachedPoint, idleState);
+	patrolState->AddTransition(Conditions::hasReachedPoint, idleState);
 	patrolState->AddTransition(Conditions::needHealing, healstate);
 	healstate->AddTransition(Conditions::onCooldown, patrolState);
 

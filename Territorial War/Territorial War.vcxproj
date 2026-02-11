@@ -42,13 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -131,47 +131,49 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ChaseState.cpp" />
-    <ClCompile Include="Conditions.cpp" />
-    <ClCompile Include="HealState.cpp" />
-    <ClCompile Include="IdleState.cpp" />
-    <ClCompile Include="InGame.cpp" />
+    <ClCompile Include="States\ChaseState.cpp" />
+    <ClCompile Include="FSM\Conditions.cpp" />
+    <ClCompile Include="States\HealState.cpp" />
+    <ClCompile Include="States\IdleState.cpp" />
+    <ClCompile Include="Scene\InGame.cpp" />
     <ClCompile Include="Inputs.cpp" />
-    <ClCompile Include="Healer.cpp" />
+    <ClCompile Include="Entities\Healer.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="NPC.cpp" />
-    <ClCompile Include="NpcContext.cpp" />
-    <ClCompile Include="PatrolState.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="SceneMenu.cpp" />
-    <ClCompile Include="ScenePause.cpp" />
-    <ClCompile Include="State.cpp" />
-    <ClCompile Include="StateMachine.cpp" />
+    <ClCompile Include="Entities\NPC.cpp" />
+    <ClCompile Include="FSM\NpcContext.cpp" />
+    <ClCompile Include="States\PatrolState.cpp" />
+    <ClCompile Include="Entities\Player.cpp" />
+    <ClCompile Include="States\RunAwayState.cpp" />
+    <ClCompile Include="Scene\SceneMenu.cpp" />
+    <ClCompile Include="Scene\ScenePause.cpp" />
+    <ClCompile Include="FSM\State.cpp" />
+    <ClCompile Include="FSM\StateMachine.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Warrior.cpp" />
+    <ClCompile Include="Entities\Warrior.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ChaseState.h" />
-    <ClInclude Include="Conditions.h" />
-    <ClInclude Include="HealState.h" />
-    <ClInclude Include="IdleState.h" />
-    <ClInclude Include="InGame.h" />
+    <ClInclude Include="States\ChaseState.h" />
+    <ClInclude Include="FSM\Conditions.h" />
+    <ClInclude Include="States\HealState.h" />
+    <ClInclude Include="States\IdleState.h" />
+    <ClInclude Include="Scene\InGame.h" />
     <ClInclude Include="Inputs.h" />
-    <ClInclude Include="Healer.h" />
+    <ClInclude Include="Entities\Healer.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="NPC.h" />
-    <ClInclude Include="NpcContext.h" />
-    <ClInclude Include="PatrolState.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="SceneMenu.h" />
-    <ClInclude Include="ScenePause.h" />
-    <ClInclude Include="State.h" />
-    <ClInclude Include="StateMachine.h" />
-    <ClInclude Include="Warrior.h" />
+    <ClInclude Include="Entities\NPC.h" />
+    <ClInclude Include="FSM\NpcContext.h" />
+    <ClInclude Include="States\PatrolState.h" />
+    <ClInclude Include="Entities\Player.h" />
+    <ClInclude Include="States\RunAwayState.h" />
+    <ClInclude Include="Scene\SceneMenu.h" />
+    <ClInclude Include="Scene\ScenePause.h" />
+    <ClInclude Include="FSM\State.h" />
+    <ClInclude Include="FSM\StateMachine.h" />
+    <ClInclude Include="Entities\Warrior.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="State.inl" />
-    <None Include="StateMachine.inl" />
+    <None Include="FSM\State.inl" />
+    <None Include="FSM\StateMachine.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

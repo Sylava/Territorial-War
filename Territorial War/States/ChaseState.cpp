@@ -1,6 +1,6 @@
 #include "ChaseState.h"
-#include "NPC.h"
-#include "Player.h"
+#include "../Entities/NPC.h"
+#include "../Entities/Player.h"
 #include <random>
 
 void ChaseState::Enter(NpcContext& context)

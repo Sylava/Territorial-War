@@ -1,22 +1,22 @@
 #pragma once
 #include "NpcContext.h"
-#include "NPC.h"
-#include "Player.h"
+#include "../Entities/NPC.h"
+#include "../Entities/Player.h"
 
 namespace NpcAi
 {
     class Conditions
     {
     public:
-        static bool HasReachedPoint(NpcContext& context)
+        static bool hasReachedPoint(NpcContext& context)
         {
             return context.reachedPoint;
         }
-        static bool HasWaited(NpcContext& context)
+        static bool hasWaited(NpcContext& context)
         {
             return context.idleTimer >= 2.f;
         }
-        static bool IsSeeingPlayer(NpcContext& context)
+        static bool isSeeingPlayer(NpcContext& context)
         {
             if (!context.npc || !context.player)
                 return false;
@@ -45,6 +45,12 @@ namespace NpcAi
         static bool onCooldown(NpcContext& context)
         {
             if (context.npc->skillCD <= 1.f)
+                return true;
+            return false;
+        }
+        static bool hasRunAway(NpcContext& context)
+        {
+            if (context.npc->runAwayTime >= 2.f)
                 return true;
             return false;
         }

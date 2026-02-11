@@ -2,8 +2,8 @@
 #include <iostream>
 #include <ostream>
 #include <SFML/Graphics.hpp>
-#include "NpcContext.h"
-#include "State.h"
+#include "../FSM/NpcContext.h"
+#include "../FSM/State.h"
 
 namespace NpcAi
 {
