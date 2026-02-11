@@ -7,7 +7,7 @@
 #include "../States/HealState.h"
 #include "../States/RunawayState.h"
 #include "../Map.h"
-#include "Player.h"
+#include "Entity.h"
 
 using namespace NpcAi;
 
@@ -20,16 +20,24 @@ enum class Type
 class Npc
 {
 public:
+    Npc();
+
     Type type;
     FSM::StateMachine<NpcContext> fsm;
     NpcContext context{};
     sf::Vector2f position;
     sf::CircleShape attackArea;
     sf::FloatRect hitbox;
+    sf::Texture hpBarTex;
+    sf::Texture hpFillTex;
     sf::Texture idleTex;
     sf::Texture runTex;
     sf::Texture attackTex;
     std::optional<sf::Sprite> npcSprite;
+    std::optional<sf::Sprite> startBar;
+    std::vector<sf::Sprite*> middleBar;
+    std::optional<sf::Sprite> endBar;
+    std::vector<sf::Sprite> hpFill;
     Npc* target;
     float speed = 400.f;
     float invunerability = 0.6f;
@@ -59,6 +67,7 @@ public:
     void move(const sf::Vector2f& move, const Map* map);
     void moveOnAxis(float& pos, float& hitboxPos, float delta, float min, float max, const Map* map);
     virtual void update(float dt) = 0;
+    void hpBar();
     virtual void draw() = 0;
 
 private:

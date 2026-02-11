@@ -3,7 +3,7 @@
 #include "../Map.h"
 #include "../FSM/Conditions.h"
 
-Healer::Healer(sf::RenderWindow* inWindow, const Map* map)
+Healer::Healer(sf::RenderWindow* inWindow, const Map* map) : Npc()
 {
 	window = inWindow;
 	type = Type::Healer;
@@ -15,9 +15,19 @@ Healer::Healer(sf::RenderWindow* inWindow, const Map* map)
 		std::cout << "texture non chargee" << std::endl;
 	if (!effectTex.loadFromFile("assets/Heal_Effect.png"))
 		std::cout << "texture non chargee" << std::endl;
-	hitbox.size = { 40.f, 76.f };
 	position.x = map->right;
 	position.y = map->bottom + hitbox.size.y / 2;
+	sf::IntRect rect({ 49, 22 }, { 14, 18 });
+	startBar.emplace(hpBarTex, rect);
+	rect = sf::IntRect({ 128, 22 }, { 64, 18 });
+	for (int i = 2; i < hpMax; ++i)
+	{
+		sf::Sprite sprite(hpBarTex, rect);
+		middleBar.push_back(&sprite);
+	}
+	rect = sf::IntRect({ 256, 22 }, { 14, 18 });
+	endBar.emplace(hpBarTex, rect);
+	hitbox.size = { 40.f, 76.f };
 	hitbox.position = { position.x - 20.f, position.y - 38.f };
 	range = 500.f;
 	detectionRadius = 650.f;

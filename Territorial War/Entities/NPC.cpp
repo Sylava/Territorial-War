@@ -1,6 +1,15 @@
 #include "NPC.h"
 #include "../FSM/Conditions.h"
 
+Npc::Npc()
+{
+    if (!hpBarTex.loadFromFile("assets/hpBar.png"))
+        std::cout << "texture non chargee" << std::endl;
+    if (!hpFillTex.loadFromFile("assets/hpBarFill.png"))
+        std::cout << "texture non chargee" << std::endl;
+
+}
+
 void Npc::Init(Map* map, Player* player, std::vector<Npc*>* npcs)
 {
     context.npc = this;
@@ -24,6 +33,19 @@ void Npc::move(const sf::Vector2f& move, const Map* map)
         attackArea.setPosition({ position.x - 25, position.y });
     if (position == oldPosition)
         isMoving = false;
+}
+
+void Npc::hpBar()
+{
+    startBar->setPosition({ position.x - 14 - (hpMax / 2 * 64), position.y - 30});
+    if (hpMax > 2)
+    {
+        for (int i = 0; i < hpMax - 2; ++i)
+        {
+            middleBar[i]->setPosition({ position.x - 64 * (hpMax - i), position.y - 30 });
+        }
+    }
+    endBar->setPosition({ position.x + 14, position.y - 30 });
 }
 
 void Npc::moveOnAxis(float& pos, float& hitboxPos, float move, float min, float max, const Map* map)

@@ -1,7 +1,7 @@
 #include "Warrior.h"
 #include "../FSM/Conditions.h"
 
-Warrior::Warrior(sf::RenderWindow* inWindow, const Map* map)
+Warrior::Warrior(sf::RenderWindow* inWindow, const Map* map) : Npc()
 {
 	window = inWindow;
 	type = Type::Warrior;
@@ -11,6 +11,16 @@ Warrior::Warrior(sf::RenderWindow* inWindow, const Map* map)
 		std::cout << "texture non chargee" << std::endl;
 	if (!attackTex.loadFromFile("assets/RedWarrior_Attack1.png"))
 		std::cout << "texture non chargee" << std::endl;
+	sf::IntRect rect({ 49, 22 }, { 14, 18 });
+	startBar.emplace(hpBarTex, rect);
+	rect = sf::IntRect({ 128, 22 }, { 64, 18 });
+	for (int i = 2; i < hpMax; ++i)
+	{
+		sf::Sprite* sprite(hpBarTex, rect);
+		middleBar.push_back(sprite);
+	}
+	rect = sf::IntRect({ 256, 22 }, { 14, 18 });
+	endBar.emplace(hpBarTex, rect);
 	hitbox.size = { 40.f, 76.f };
 	position.x = map->right;
 	position.y = map->bottom + hitbox.size.y / 2;
@@ -37,6 +47,7 @@ void Warrior::update(const float dt)
 	if (!animMirror)
 		npcSprite->setScale({ -1.f, 1.f });
 	npcSprite->setPosition(position);
+	hpBar();
 }
 
 void Warrior::attackAnimation(const float dt)
@@ -150,4 +161,11 @@ void Warrior::Init(Map* map, Player* player, std::vector<Npc*>* npcs)
 void Warrior::draw()
 {
 	window->draw(*npcSprite);
+	window->draw(*startBar);
+	for (auto sprite : middleBar)
+	{
+		if (sprite != nullptr)
+			window->draw(*sprite);
+	}
+	window->draw(*endBar);
 }

@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="States\ChaseState.cpp" />
     <ClCompile Include="FSM\Conditions.cpp" />
     <ClCompile Include="States\HealState.cpp" />
@@ -152,6 +153,7 @@
     <ClCompile Include="Entities\Warrior.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Entities\Entity.h" />
     <ClInclude Include="States\ChaseState.h" />
     <ClInclude Include="FSM\Conditions.h" />
     <ClInclude Include="States\HealState.h" />
