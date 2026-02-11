@@ -5,6 +5,7 @@
 
 void RunAwayState::Enter(NpcContext& context)
 {
+    std::cout << "run away state" << std::endl;
     context.npc->runAwayTime = 0.f;
 }
 

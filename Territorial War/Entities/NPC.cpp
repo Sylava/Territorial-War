@@ -7,22 +7,6 @@ void Npc::Init(Map* map, Player* player, std::vector<Npc*>* npcs)
     context.npcs = npcs;
     context.map = map;
     context.player = player;
-    PatrolState* patrolState = fsm.CreateState<PatrolState>();
-    ChaseState* chaseState = fsm.CreateState<ChaseState>();
-    IdleState* idleState = fsm.CreateState<IdleState>();
-    //RunAwayState* runAwayState = fsm.CreateState<IdleState>();
-
-    idleState->AddTransition(Conditions::isSeeingPlayer, chaseState);
-    idleState->AddTransition(Conditions::hasWaited, patrolState);
-    patrolState->AddTransition(Conditions::isSeeingPlayer, chaseState);
-    patrolState->AddTransition(Conditions::hasReachedPoint, idleState);
-    //runAwayState->AddTransition(Conditions::hasReachedPoint, patrolState);
-    chaseState->AddTransition([](NpcContext& _context)
-        {
-            return !Conditions::isSeeingPlayer(_context);
-        }, idleState);
-
-    fsm.Init(patrolState, context);
 }
 
 void Npc::move(const sf::Vector2f& move, const Map* map)

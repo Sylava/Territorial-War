@@ -163,12 +163,17 @@ void Healer::Init(Map* map, Player* player, std::vector<Npc*>* npcs)
 	PatrolState* patrolState = fsm.CreateState<PatrolState>();
 	IdleState* idleState = fsm.CreateState<IdleState>();
 	HealState* healstate = fsm.CreateState<HealState>();
+	RunAwayState* runAwayState = fsm.CreateState<RunAwayState>();
 
 	idleState->AddTransition(Conditions::hasWaited, patrolState);
 	idleState->AddTransition(Conditions::needHealing, healstate);
 	patrolState->AddTransition(Conditions::hasReachedPoint, idleState);
 	patrolState->AddTransition(Conditions::needHealing, healstate);
 	healstate->AddTransition(Conditions::onCooldown, patrolState);
+	runAwayState->AddTransition(Conditions::hasRunAway, patrolState);
+	healstate->AddTransition(Conditions::isLowHp, runAwayState);
+	patrolState->AddTransition(Conditions::isLowHp, runAwayState);
+	idleState->AddTransition(Conditions::isLowHp, runAwayState);
 
 	fsm.Init(patrolState, context);
 }

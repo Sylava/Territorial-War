@@ -42,6 +42,7 @@ public:
     bool animMirror = false;
     bool idleReverse = false;
     bool runReverse = false;
+    bool runForYourLife = false;
     int hp = 5;
     int hpMax = 5;
     int idleIndex = 0;
