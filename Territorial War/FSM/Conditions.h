@@ -50,7 +50,16 @@ namespace NpcAi
         }
         static bool hasRunAway(NpcContext& context)
         {
-            if (context.npc->runAwayTime >= 2.f)
+            if (context.npc->runAwayTime >= 1.5f)
+            {
+                context.npc->runForYourLife = false;
+                return true;
+            }
+            return false;
+        }
+        static bool isLowHp(NpcContext& context)
+        {
+            if (context.npc->runForYourLife)
                 return true;
             return false;
         }

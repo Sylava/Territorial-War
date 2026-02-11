@@ -131,12 +131,14 @@ void Warrior::Init(Map* map, Player* player, std::vector<Npc*>* npcs)
 	PatrolState* patrolState = fsm.CreateState<PatrolState>();
 	ChaseState* chaseState = fsm.CreateState<ChaseState>();
 	IdleState* idleState = fsm.CreateState<IdleState>();
-	//RunAwayState* idleState = fsm.CreateState<RunAwayState>();
+	RunAwayState* runAwayState = fsm.CreateState<RunAwayState>();
 
 	idleState->AddTransition(Conditions::isSeeingPlayer, chaseState);
 	idleState->AddTransition(Conditions::hasWaited, patrolState);
 	patrolState->AddTransition(Conditions::isSeeingPlayer, chaseState);
 	patrolState->AddTransition(Conditions::hasReachedPoint, idleState);
+	runAwayState->AddTransition(Conditions::hasRunAway, patrolState);
+	chaseState->AddTransition(Conditions::isLowHp, runAwayState);
 	chaseState->AddTransition([](NpcContext& _context)
 		{
 			return !Conditions::isSeeingPlayer(_context);

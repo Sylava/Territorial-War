@@ -55,13 +55,14 @@ void InGame::checkHits(Player* player)
         if ((*it)->type == Type::Warrior && (*it)->attackIndex > 1 && player->invunerability >= 0.4f && circleIntersectsRect((*it)->attackArea, player->hitbox))
         {
             player->invunerability = 0.f;
-            player->hp--;
+            //player->hp--;
         }
         if (player->attackIndex > 1 && (*it)->invunerability >= 0.4f && circleIntersectsRect(player->attackArea, (*it)->hitbox))
         {
             (*it)->invunerability = 0.f;
             (*it)->hp--;
-
+            if ((*it)->hp == 1)
+                 (*it)->runForYourLife = true;
         }
         if ((*it)->hp <= 0)
         {
