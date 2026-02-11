@@ -1,6 +1,6 @@
 #include "NPC.h"
 #include "Conditions.h"
-
+#include "IdleState.h"
 void Npc::Init(Map* map, Player* player)
 {
     context.npc = this;

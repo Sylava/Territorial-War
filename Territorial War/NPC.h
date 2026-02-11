@@ -3,7 +3,7 @@
 #include "ChaseState.h"
 #include "NpcContext.h"
 #include "PatrolState.h"
-#include "Entity.h"
+
 
 using namespace NpcAi;
 
