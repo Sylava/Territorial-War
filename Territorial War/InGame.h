@@ -14,6 +14,9 @@ public:
 	void run();
 	
 private:
+	int currentWave;
+	float waveInterval;
+	float timeSinceLastWave;
 	void npcsDraw();
 	void npcsUpdate(float dt);
 	void npcsInit(Map* map);
@@ -27,4 +30,5 @@ private:
 	Player* player;
 	Inputs input;
 };
+
 
