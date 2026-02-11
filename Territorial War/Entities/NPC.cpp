@@ -1,7 +1,7 @@
 #include "NPC.h"
 #include "../FSM/Conditions.h"
 
-Npc::Npc(sf::RenderWindow* inWindow) : Entity(inWindow)
+Npc::Npc(sf::RenderWindow* inWindow) : Entity(inWindow, 5)
 {
 }
 

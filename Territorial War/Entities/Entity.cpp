@@ -2,8 +2,10 @@
 #include "Entity.h"
 #include "../TextureManager.h"
 
-Entity::Entity(sf::RenderWindow* inWindow)
+Entity::Entity(sf::RenderWindow* inWindow, int inHp)
 {
+	hpMax = inHp;
+	hp = inHp;
 	window = inWindow;
 	buildHpBar();
 }

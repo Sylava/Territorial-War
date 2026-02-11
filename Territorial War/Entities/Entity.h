@@ -5,7 +5,7 @@
 class Entity
 {
 public:
-	Entity(sf::RenderWindow* inWindow);
+	Entity(sf::RenderWindow* inWindow, int inHp);
 
     virtual sf::Sprite* attackAnimation(const float dt);
     virtual sf::Sprite* runAnimation(const float dt);
@@ -16,7 +16,7 @@ public:
     sf::Vector2f position;
     sf::FloatRect hitbox;
     sf::Sprite* currentSprite = nullptr;
-    float speed = 400.f;
+    float speed = 300.f;
     float invunerability = 0.5f;
     bool isAttacking = false;
     bool isMoving = false;

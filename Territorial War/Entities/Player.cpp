@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "../TextureManager.h"
 
-Player::Player(sf::RenderWindow* inWindow, const Map* map) : Entity(inWindow)
+Player::Player(sf::RenderWindow* inWindow, const Map* map) : Entity(inWindow, 8)
 {
 	spriteIdle.emplace(*TextureManager::loadTexture("assets/Warrior_Idle.png"));
 	spriteRun.emplace(*TextureManager::loadTexture("assets/Warrior_Run.png"));

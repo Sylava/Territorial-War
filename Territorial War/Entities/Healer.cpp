@@ -19,13 +19,6 @@ Healer::Healer(sf::RenderWindow* inWindow, const Map* map) : Npc(inWindow)
 	hitbox.size = { 40.f, 76.f };
 	hitbox.position = { position.x - 20.f, position.y - 38.f };
 	range = 500.f;
-	detectionRadius = 650.f;
-	attackArea.setRadius(0);
-	attackArea.setOrigin({ attackArea.getRadius(), attackArea.getRadius() });
-	attackArea.setFillColor(sf::Color::Transparent);
-	attackArea.setOutlineColor(sf::Color::Red);
-	attackArea.setOutlineThickness(3);
-	attackArea.setPosition({ position.x, position.y });
 }
 
 void Healer::update(const float dt)
