@@ -1,7 +1,7 @@
-#include "PatrolState.h"
-#include "NPC.h"
-#include "Map.h"
 #include <random>
+#include "PatrolState.h"
+#include "../Entities/NPC.h"
+#include "../Map.h"
 
 void PatrolState::Enter(NpcContext& context)
 {

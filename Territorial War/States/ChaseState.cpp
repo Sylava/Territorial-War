@@ -1,6 +1,6 @@
 #include "ChaseState.h"
-#include "NPC.h"
-#include "Player.h"
+#include "../Entities/NPC.h"
+#include "../Entities/Player.h"
 #include <random>
 
 void ChaseState::Enter(NpcContext& context)
@@ -17,8 +17,6 @@ void ChaseState::Execute(NpcContext& context, float dt)
         if (context.npc->isAttacking == false)
         {
             context.npc->isAttacking = true;
-            context.npc->attackIndex = 0;
-            context.npc->attackAnimTime = 0.08f;
         }
     }
     else

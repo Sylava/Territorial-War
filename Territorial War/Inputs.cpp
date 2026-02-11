@@ -1,6 +1,6 @@
-#include "Inputs.h"
 #include <SFML/Graphics.hpp>
-#include "ScenePause.h"
+#include "Inputs.h"
+#include "Scene/ScenePause.h"
 
 
 Inputs::Inputs(sf::RenderWindow* inWindow)
@@ -8,7 +8,7 @@ Inputs::Inputs(sf::RenderWindow* inWindow)
     window = inWindow;
 }
 
-sf::Vector2f Inputs::manageInputs(Player* player, const float& dt, bool& running)
+sf::Vector2f Inputs::manageInputs(Player* player, bool& running)
 {
     while (const std::optional event = window->pollEvent())
     {
@@ -17,8 +17,8 @@ sf::Vector2f Inputs::manageInputs(Player* player, const float& dt, bool& running
         if (event->is<sf::Event::KeyPressed>())
         { 
             auto key = event->getIf<sf::Event::KeyPressed>();
-            if (key->code == sf::Keyboard::Key::Escape) {
-
+            if (key->code == sf::Keyboard::Key::Escape)
+            {
                 ScenePause pause(window);
                 running = pause.run();
             }

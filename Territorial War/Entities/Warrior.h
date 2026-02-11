@@ -10,7 +10,8 @@ public:
     void idleAnimation(const float dt) override;
     void runAnimation(const float dt) override;
     void attackAnimation(const float dt) override;
-    void draw();
+    void Init(Map* map, Player* player, std::vector<Npc*>* npcs) override;
+    void draw() override;
 
 private:
     sf::RenderWindow* window;

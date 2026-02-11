@@ -1,9 +1,10 @@
 #include "Warrior.h"
-#include "Map.h"
+#include "../FSM/Conditions.h"
 
 Warrior::Warrior(sf::RenderWindow* inWindow, const Map* map)
 {
 	window = inWindow;
+	type = Type::Warrior;
 	if (!idleTex.loadFromFile("assets/RedWarrior_Idle.png"))
 		std::cout << "texture non chargee" << std::endl;
 	if (!runTex.loadFromFile("assets/RedWarrior_Run.png"))
@@ -18,9 +19,6 @@ Warrior::Warrior(sf::RenderWindow* inWindow, const Map* map)
 	detectionRadius = 300.f;
 	attackArea.setRadius(45);
 	attackArea.setOrigin({ attackArea.getRadius(), attackArea.getRadius() });
-	attackArea.setFillColor(sf::Color::Transparent);
-	attackArea.setOutlineColor(sf::Color::Red);
-	attackArea.setOutlineThickness(3);
 	attackArea.setPosition({ position.x - 25, position.y });
 }
 
@@ -58,7 +56,10 @@ void Warrior::attackAnimation(const float dt)
 	npcSprite.emplace(attackTex);
 	npcSprite->setTextureRect(rect);
 	if (attackIndex > 3)
+	{
+		attackIndex = 0;
 		isAttacking = false;
+	}
 }
 
 void Warrior::runAnimation(const float dt)
@@ -119,6 +120,31 @@ void Warrior::idleAnimation(const float dt)
 	sf::IntRect rect({ idleIndex * 192, 0 }, { 192, 192 });
 	npcSprite.emplace(idleTex);
 	npcSprite->setTextureRect(rect);
+}
+
+void Warrior::Init(Map* map, Player* player, std::vector<Npc*>* npcs)
+{
+	context.npc = this;
+	context.map = map;
+	context.npcs = npcs;
+	context.player = player;
+	PatrolState* patrolState = fsm.CreateState<PatrolState>();
+	ChaseState* chaseState = fsm.CreateState<ChaseState>();
+	IdleState* idleState = fsm.CreateState<IdleState>();
+	RunAwayState* runAwayState = fsm.CreateState<RunAwayState>();
+
+	idleState->AddTransition(Conditions::isSeeingPlayer, chaseState);
+	idleState->AddTransition(Conditions::hasWaited, patrolState);
+	patrolState->AddTransition(Conditions::isSeeingPlayer, chaseState);
+	patrolState->AddTransition(Conditions::hasReachedPoint, idleState);
+	runAwayState->AddTransition(Conditions::hasRunAway, patrolState);
+	chaseState->AddTransition(Conditions::isLowHp, runAwayState);
+	chaseState->AddTransition([](NpcContext& _context)
+		{
+			return !Conditions::isSeeingPlayer(_context);
+		}, idleState);
+
+	fsm.Init(patrolState, context);
 }
 
 void Warrior::draw()

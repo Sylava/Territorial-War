@@ -1,25 +1,12 @@
 #include "NPC.h"
-#include "Conditions.h"
-#include "IdleState.h"
-void Npc::Init(Map* map, Player* player)
+#include "../FSM/Conditions.h"
+
+void Npc::Init(Map* map, Player* player, std::vector<Npc*>* npcs)
 {
     context.npc = this;
+    context.npcs = npcs;
     context.map = map;
     context.player = player;
-    PatrolState* patrolState = fsm.CreateState<PatrolState>();
-    ChaseState* chaseState = fsm.CreateState<ChaseState>();
-    IdleState* idleState = fsm.CreateState<IdleState>();
-
-    idleState->AddTransition(Conditions::IsSeeingPlayer, chaseState);
-    idleState->AddTransition(Conditions::HasWaited, patrolState);
-    patrolState->AddTransition(Conditions::IsSeeingPlayer, chaseState);
-    patrolState->AddTransition(Conditions::HasReachedPoint, idleState);
-    chaseState->AddTransition([](NpcContext& _context)
-        {
-            return !Conditions::IsSeeingPlayer(_context);
-        }, idleState);
-
-    fsm.Init(patrolState, context);
 }
 
 void Npc::move(const sf::Vector2f& move, const Map* map)
