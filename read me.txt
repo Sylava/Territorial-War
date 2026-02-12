@@ -23,10 +23,11 @@ ce que nous avons réussie a faire
 - barre hp (player et ennemies)
 - obstacle (player et ennemies)
 - déplacement (player et ennemies)
-- les textures (pour tout)
+- les textures/ asset (sont tous libre de droit et implementer pour tout)
 - 2 IA (pour chaque ennemis différent)
 - jeu jouable 
 - finir dans les temps 
+-
 
 ce que nous avons pas pu faire 
 - faire un système de magasin 
@@ -36,3 +37,4 @@ ce que nous avons pas pu faire
 - défirent type de carte 
 
 tout ceci par manque de temps mais ceci sont que des plus que nous avons penser si on avait tout fini ce que nous avons fait avant.
+
