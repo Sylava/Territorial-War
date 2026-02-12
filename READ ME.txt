@@ -1,39 +1,7 @@
-vous êtes un ancien chevalier trahi par sont royaume. ils vous ont jetés sur une île de gladiateur.
-votre seul moyen de survie est de s'échapper de cette île.
-abattez tous les ennemies qui se dresse devant vous et échapper vous de l'île.
+Prérequis:
 
-thème du jeu: médiévale et fantaisie.
-but du jeu: éliminer tous ces ennemis 
+Visual Studio
+SFML 3.0.2
 
-Contrôle:
-haut: z
-bas: s
-gauche: q
-droite: d
-attaquer: espace
-
-type d'ennemie:
-le chevalier, il patrouille et vous fonce dessus s'il vous vois et vous attaquera. Fui le joueur s'il n'a plus que 1 hp.
-le prêtre, il n'est pas agressif, il patrouille sur la map, se soigne ainsi que ses alliés. Fui le joueur s'il n'a plus que 1 hp.
-
-les states:
-- Patrol: 	Le npc reçoit une destination aléatoire sur la map et s'y dirige
-- Idle: 	Le npc ne fait rien pendant un certain temps
-- RunAway:	Le npc s'enfuit lorsqu'il a plus que 1 hp
-- Chase:	Le npc fonce sur sa cible et l'attaque
-- Heal:		Le npc soigne une cible indiqué
-
-ce que nous avons réussie a faire:
-- menu principal
-- map
-- barre hp
-- obstacles
-- les textures / assets ( tous libre de droit )
-- 2 IA
-- écrans de fin victoire / défaite
-- menu pause
-
-ce que nous avons pas pu faire:
-- un score
-- des sons
-- des vagues d'ennemies
+Execution:
+Lancer le programme avec F5 sur Visual Studio
