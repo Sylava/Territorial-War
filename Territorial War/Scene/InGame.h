@@ -38,6 +38,7 @@ private:
 
 
 	int waveNumber = 0;
+	int waveNumbermax = 10;
 	int targetNpcCount = 0;
 
 

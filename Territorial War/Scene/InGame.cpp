@@ -225,8 +225,8 @@ void InGame::WaveInfini()
 {
 
     waveNumber++;
-
-
+    if (waveNumber >= waveNumbermax)
+        running = false;
     int computed = 2 << (waveNumber - 1);
     if (computed > maxNpcs)
         targetNpcCount = maxNpcs;
