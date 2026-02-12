@@ -14,7 +14,7 @@ attaquer: espace
 
 type d'ennemie:
 le chevalier, il patrouille et vous fonce dessus s'il vous vois et vous attaquera. Fui le joueur s'il n'a plus que 1 hp.
-le prêtre, il n'est pas agressif, il patrouille sur la map, se soigne ainsi que ses alliés. Fui le joueur s'il n'a plus que 1 hp.
+le prêtre, il n'est pas agressif. Il patrouille sur la map, se soigne ainsi que ses alliés. Fui le joueur s'il n'a plus que 1 hp.
 
 les states:
 - Patrol: 	Le npc reçoit une destination aléatoire sur la map et s'y dirige
@@ -37,3 +37,6 @@ ce que nous avons pas pu faire:
 - un score
 - des sons
 - des vagues d'ennemies
+
+Nous avons préféré nous concentrer à restructurer et optimiser le programme avant ajouter des fonctionnalités bonus.
+Ce qui fait que nous avons manqué de temps pour ces features
