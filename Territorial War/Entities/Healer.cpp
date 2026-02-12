@@ -54,10 +54,95 @@ void Healer::healAnimation(const float dt)
 	}
 	else
 		rect = sf::IntRect({ (healIndex * 192), 0 }, { 192, 192 });
+	healEffect.emplace(effectTex);
 	healEffect->setTextureRect(rect);
 	sf::FloatRect bounds = healEffect->getLocalBounds();
 	healEffect->setOrigin({ bounds.size.x / 2.f,bounds.size.y / 2.f });
 	healEffect->setPosition(target->position);
+}
+
+void Healer::attackAnimation(const float dt)
+{
+	sf::IntRect rect;
+	attackAnimTime -= dt;
+	healAnimation(dt);
+	if (attackAnimTime <= 0.f)
+	{
+		attackAnimTime = 0.08f;
+		attackIndex++;
+	}
+	if (attackIndex > 10)
+		rect = sf::IntRect({ (9 * 192) + 192, 0 }, { 192, 192 });
+	else
+		rect = sf::IntRect({ (attackIndex * 192), 0 }, { 192, 192 });
+
+	npcSprite.emplace(attackTex);
+	npcSprite->setTextureRect(rect);
+	if (attackIndex > 10)
+	{
+		isAttacking = false;
+		skillCD = 0.f;
+	}
+}
+
+void Healer::runAnimation(const float dt)
+{
+	runAnimTime -= dt;
+	if (runAnimTime <= 0.f)
+	{
+		runAnimTime = 0.08f;
+		if (!runReverse)
+		{
+			runIndex++;
+			if (runIndex > 3)
+			{
+				runIndex = 2;
+				runReverse = true;
+			}
+		}
+		else
+		{
+			runIndex--;
+			if (runIndex < 0)
+			{
+				runIndex = 1;
+				runReverse = false;
+			}
+		}
+	}
+	sf::IntRect rect({ runIndex * 192, 0 }, { 192, 192 });
+	npcSprite.emplace(runTex);
+	npcSprite->setTextureRect(rect);
+}
+
+void Healer::idleAnimation(const float dt)
+{
+	idleAnimTime -= dt;
+	if (idleAnimTime <= 0.f)
+	{
+		idleAnimTime = 0.08f;
+		if (!idleReverse)
+		{
+			idleIndex++;
+			if (idleIndex > 5)
+			{
+				idleIndex = 4;
+				idleReverse = true;
+			}
+		}
+		else
+		{
+			idleIndex--;
+			if (idleIndex < 0)
+			{
+				idleIndex = 1;
+				idleReverse = false;
+			}
+		}
+	}
+	sf::IntRect rect({ idleIndex * 192, 0 }, { 192, 192 });
+	npcSprite.emplace(idleTex);
+	npcSprite->setTextureRect(rect);
 }
 
 void Healer::Init(Map* map, Player* player, std::vector<Npc*>* npcs)

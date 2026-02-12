@@ -8,7 +8,7 @@ Map::Map(sf::RenderWindow* inWindow)
     xOffset = (window->getSize().x - ((float)mapWidth * 64)) / 2;
     yOffset = (window->getSize().y - ((float)mapHeight * 64)) / 2;
     top = yOffset - 30;
-    bottom = ((float)mapHeight * 64) + yOffset - 80;
+    bottom = ((float)mapHeight * 64) + yOffset - 90;
     left = xOffset;
     right = ((float)mapWidth * 64) + xOffset - 40;
     /*sf::IntRect rect({ 7, 17 }, { 49, 34 });
@@ -25,7 +25,6 @@ Map::Map(sf::RenderWindow* inWindow)
     createFirstRow();
     createMiddleRows();
     createLastRow();
-    createRocksRow();
 	background.emplace(bgTex);
     auto winSize = window->getSize();
     auto texSize = bgTex.getSize();

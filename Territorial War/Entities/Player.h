@@ -14,5 +14,5 @@ public:
 
 private:
     void moveOnAxis(float& pos, float& hitboxPos, float delta, float min, float max, const Map* map);
-    
+
 };

@@ -138,17 +138,14 @@
     <ClCompile Include="States\IdleState.cpp" />
     <ClCompile Include="Scene\InGame.cpp" />
     <ClCompile Include="Inputs.cpp" />
-    <ClCompile Include="Entities\Healer.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Entities\NPC.cpp" />
-    <ClCompile Include="FSM\NpcContext.cpp" />
-    <ClCompile Include="States\PatrolState.cpp" />
-    <ClCompile Include="Entities\Player.cpp" />
-    <ClCompile Include="States\RunAwayState.cpp" />
-    <ClCompile Include="Scene\SceneMenu.cpp" />
-    <ClCompile Include="Scene\ScenePause.cpp" />
-    <ClCompile Include="FSM\State.cpp" />
-    <ClCompile Include="FSM\StateMachine.cpp" />
+    <ClCompile Include="NPC.cpp" />
+    <ClCompile Include="NpcContext.cpp" />
+    <ClCompile Include="PatrolState.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SceneMenu.cpp" />
+    <ClCompile Include="State.cpp" />
+    <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Entities\Warrior.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -161,7 +158,6 @@
     <ClInclude Include="States\IdleState.h" />
     <ClInclude Include="Scene\InGame.h" />
     <ClInclude Include="Inputs.h" />
-    <ClInclude Include="Entities\Healer.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Entities\NPC.h" />
     <ClInclude Include="FSM\NpcContext.h" />
@@ -176,8 +172,8 @@
     <ClInclude Include="TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="FSM\State.inl" />
-    <None Include="FSM\StateMachine.inl" />
+    <None Include="State.inl" />
+    <None Include="StateMachine.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
