@@ -79,20 +79,23 @@ void Healer::Init(Map* map, Player* player, std::vector<Npc*>* npcs)
 	context.npcs = npcs;
 	context.map = map;
 	context.player = player;
+
+	// Ajout des states
 	PatrolState* patrolState = fsm.CreateState<PatrolState>();
 	IdleState* idleState = fsm.CreateState<IdleState>();
 	HealState* healstate = fsm.CreateState<HealState>();
 	RunAwayState* runAwayState = fsm.CreateState<RunAwayState>();
 
+	// Création des transitions
 	idleState->AddTransition(Conditions::hasWaited, patrolState);
 	idleState->AddTransition(Conditions::needHealing, healstate);
+	idleState->AddTransition(Conditions::shouldFlee, runAwayState);
 	patrolState->AddTransition(Conditions::hasReachedPoint, idleState);
 	patrolState->AddTransition(Conditions::needHealing, healstate);
-	healstate->AddTransition(Conditions::onCooldown, patrolState);
-	runAwayState->AddTransition(Conditions::hasFlee, patrolState);
-	healstate->AddTransition(Conditions::shouldFlee, runAwayState);
 	patrolState->AddTransition(Conditions::shouldFlee, runAwayState);
-	idleState->AddTransition(Conditions::shouldFlee, runAwayState);
+	healstate->AddTransition(Conditions::onCooldown, patrolState);
+	healstate->AddTransition(Conditions::shouldFlee, runAwayState);
+	runAwayState->AddTransition(Conditions::hasFlee, patrolState);
 
 	fsm.Init(idleState, context);
 }

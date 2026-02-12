@@ -25,11 +25,14 @@ void Warrior::Init(Map* map, Player* player, std::vector<Npc*>* npcs)
 	context.map = map;
 	context.npcs = npcs;
 	context.player = player;
+
+	// Ajout des states
 	PatrolState* patrolState = fsm.CreateState<PatrolState>();
 	ChaseState* chaseState = fsm.CreateState<ChaseState>();
 	IdleState* idleState = fsm.CreateState<IdleState>();
 	RunAwayState* runAwayState = fsm.CreateState<RunAwayState>();
 
+	// Création des transitions
 	idleState->AddTransition(Conditions::isSeeingPlayer, chaseState);
 	idleState->AddTransition(Conditions::hasWaited, patrolState);
 	patrolState->AddTransition(Conditions::isSeeingPlayer, chaseState);
