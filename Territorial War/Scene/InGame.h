@@ -21,6 +21,8 @@ private:
 	void npcsDraw();
 	void draw();
 	void checkEndGame();
+
+	void WaveInfini();
 	void endScreen(bool win);
 
 	sf::RenderWindow* window;
@@ -33,5 +35,18 @@ private:
 	Map* map;
 	Player* player;
 	Inputs input;
-};
 
+
+	int waveNumber = 0;
+	int targetNpcCount = 0;
+
+
+	int score = 0;
+	int pointsPerNpc = 10;
+	int waveBonusMultiplier = 50;
+	int maxNpcs = 100;
+
+
+	sf::Font font;
+	std::optional<sf::Text> scoreText;
+};

@@ -2,13 +2,13 @@
 #include <iostream>
 #include "InGame.h"
 
-ScenePause::ScenePause(sf::RenderWindow* inWindow, int score, int wave)
+ScenePause::ScenePause(sf::RenderWindow* inWindow)
 {
 	window = inWindow;
 	sf::Vector2u winSize = window->getSize();
 
-	sf::IntRect rect({ 1,0 }, { 26, 17 });
-	if (!ContinuesTex.loadFromFile("assets/ButtonAgain.png", false, rect))
+	sf::IntRect rect2({ 0,0 }, { 26, 16 });
+	if (!ContinuesTex.loadFromFile("assets/ButtonAgain.png", false, rect2))
 		std::cout << "texture non chargee" << std::endl;
 	Continues.emplace(ContinuesTex);
 	Continues->setScale({ 8.f, 7.f });
@@ -16,8 +16,8 @@ ScenePause::ScenePause(sf::RenderWindow* inWindow, int score, int wave)
 	Continues->setOrigin({ bounds.size.x / 2.f, bounds.size.y / 2.f });
 	Continues->setPosition({ (float)winSize.x / 2, ((float)winSize.y / 2) - 90 });
 
-	rect = sf::IntRect({ 33, 0 }, { 25, 17 });
-	if (!MenuTex.loadFromFile("assets/ButtonHome.png", false, rect))
+	rect2 = sf::IntRect({ 33, 0 }, { 57-33, 16 });
+	if (!MenuTex.loadFromFile("assets/ButtonHome.png", false, rect2))
 		std::cout << "texture non chargee" << std::endl;
 	Menu.emplace(MenuTex);
 	Menu->setScale({ 8.f, 7.f });
@@ -30,21 +30,6 @@ ScenePause::ScenePause(sf::RenderWindow* inWindow, int score, int wave)
 	background.emplace(bgTex);
 	sf::Vector2u texSize = bgTex.getSize();
 	background->setScale({ (float)(winSize.x) / texSize.x, (float)(winSize.y) / texSize.y });
-
-
-	if (!font.openFromFile("assets/arial.ttf"))
-		std::cout << "police non chargee: assets/arial.ttf" << std::endl;
-	else
-	{
-		scoreText.emplace(font, "", 24);
-		std::string s = "Score: " + std::to_string(score) + "  Wave: " + std::to_string(wave);
-		scoreText->setString(s);
-		sf::FloatRect tb = scoreText->getLocalBounds();
-		sf::Vector2f origin{ tb.position.x + tb.size.x / 2.f, tb.position.y + tb.size.y / 2.f };
-		scoreText->setOrigin(origin);
-		scoreText->setPosition({ (float)winSize.x / 2.f, 20.f });
-		scoreText->setFillColor(sf::Color::White);
-	}
 }
 
 bool ScenePause::run()
@@ -55,7 +40,7 @@ bool ScenePause::run()
 		{
 			if (event->is<sf::Event::Closed>())
 				window->close();
-
+		
 			if (event->is<sf::Event::MouseButtonPressed>())
 			{
 				auto mouse = event->getIf<sf::Event::MouseButtonPressed>();
@@ -64,8 +49,10 @@ bool ScenePause::run()
 				{
 					sf::Vector2f mousePos = window->mapPixelToCoords(mouse->position);
 
-					if (Continues->getGlobalBounds().contains(mousePos))
+					if (Continues->getGlobalBounds().contains(mousePos)) {
+
 						return true;
+					}
 					else if (Menu->getGlobalBounds().contains(mousePos))
 						return false;
 				}
@@ -75,8 +62,6 @@ bool ScenePause::run()
 		draw();
 		window->display();
 	}
-
-	return false;
 }
 
 void ScenePause::draw()
@@ -84,6 +69,4 @@ void ScenePause::draw()
 	window->draw(*background);
 	window->draw(*Continues);
 	window->draw(*Menu);
-	if (scoreText)
-		window->draw(*scoreText);
 }

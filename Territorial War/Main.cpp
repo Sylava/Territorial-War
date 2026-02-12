@@ -11,6 +11,7 @@ int main()
     while (window.isOpen())
     {
         SceneMenu menu(&window);
+        ScenePause pause(&window);
         menu.run();
         texManager.clear();
         InGame game(&window);

@@ -8,8 +8,7 @@ class Inputs
 public:
 	Inputs(sf::RenderWindow* inWindow);
 
-	sf::Vector2f manageInputs(Player* player, bool& running);
+	sf::Vector2f manageInputs(Player* player, bool& running, int score, int wave);
 private:
 	sf::RenderWindow* window;
 };
-

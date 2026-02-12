@@ -11,9 +11,19 @@ InGame::InGame(sf::RenderWindow* inWindow) : window(inWindow), input(Inputs(wind
 {
     map = new Map(window);
     player = new Player(window, map);
-    npcs.push_back(new Warrior(window, map));
-    npcs.push_back(new Healer(window, map));
-    npcsInit(map);
+
+   
+    if (!font.openFromFile("assets/arial.ttf"))
+        std::cout << "police non chargee: assets/arial.ttf" << std::endl;
+    else
+    {
+       
+        scoreText.emplace(font, "", 24);
+        scoreText->setFillColor(sf::Color::White);
+    }
+
+   
+    WaveInfini();
 }
 
 void InGame::run()
@@ -22,13 +32,24 @@ void InGame::run()
     while (running)
     {
         float dt = clock.restart().asSeconds();
-        sf::Vector2f direction = input.manageInputs(player, running);
+        
+        sf::Vector2f direction = input.manageInputs(player, running, score, waveNumber);
         player->move(direction * dt, map);
         player->update(dt);
         npcsUpdate(dt);
         checkHits(player);
         draw();
         checkEndGame();
+
+       
+        if (npcs.empty() && running && player->hp > 0)
+        {
+           
+            score += waveNumber * waveBonusMultiplier;
+            std::cout << "Vague " << waveNumber << " terminee. Bonus: " << (waveNumber * waveBonusMultiplier) << " Score total: " << score << std::endl;
+
+            WaveInfini();
+        }
     }
 }
 
@@ -62,10 +83,13 @@ void InGame::checkHits(Player* player)
             (*it)->invunerability = 0.f;
             (*it)->hp--;
             if ((*it)->hp == 1)
-                 (*it)->runForYourLife = true;
+                (*it)->runForYourLife = true;
         }
         if ((*it)->hp <= 0)
         {
+            
+            score += pointsPerNpc;
+
             delete* it;
             it = npcs.erase(it);
             break;
@@ -75,7 +99,6 @@ void InGame::checkHits(Player* player)
             ++it;
         }
     }
-
 }
 
 bool InGame::circleIntersectsRect(const sf::CircleShape& circle, const sf::FloatRect& rect)
@@ -106,8 +129,7 @@ void InGame::checkEndGame()
 {
     if (player->hp <= 0)
         endScreen(false);
-    else if (npcs.empty())
-        endScreen(true);
+  
 }
 
 void InGame::endScreen(bool win)
@@ -132,6 +154,17 @@ void InGame::endScreen(bool win)
     bounds = home->getLocalBounds();
     home->setOrigin({ bounds.size.x / 2.f, bounds.size.y / 2.f });
     home->setPosition({ (float)window->getSize().x / 2, ((float)window->getSize().y / 2) + 80 });
+
+  
+    if (scoreText)
+    {
+        scoreText->setString("Score: " + std::to_string(score) + "  Wave: " + std::to_string(waveNumber));
+        sf::FloatRect tbc = scoreText->getLocalBounds();
+      
+        scoreText->setOrigin({ tbc.position.x + tbc.size.x / 2.f, tbc.position.y + tbc.size.y / 2.f });
+        scoreText->setPosition({ (float)window->getSize().x / 2.f, 20.f });
+    }
+
     bool clickedBtn = false;
     while (!clickedBtn)
     {
@@ -155,6 +188,8 @@ void InGame::endScreen(bool win)
         }
         window->clear();
         window->draw(*end);
+        if (scoreText)
+            window->draw(*scoreText);
         window->draw(*home);
         window->display();
     }
@@ -168,6 +203,47 @@ void InGame::draw()
         map->draw();
         npcsDraw();
         player->draw();
+
+      
+        if (scoreText)
+        {
+            scoreText->setString("Score: " + std::to_string(score) + "  Wave: " + std::to_string(waveNumber));
+            sf::FloatRect tbw = scoreText->getLocalBounds();
+           
+            scoreText->setOrigin({ tbw.position.x + tbw.size.x / 2.f, tbw.position.y + tbw.size.y / 2.f });
+            scoreText->setPosition({ (float)window->getSize().x / 2.f, 20.f });
+            window->draw(*scoreText);
+        }
+
         window->display();
     }
+}
+
+
+
+void InGame::WaveInfini()
+{
+
+    waveNumber++;
+
+
+    int computed = 2 << (waveNumber - 1);
+    if (computed > maxNpcs)
+        targetNpcCount = maxNpcs;
+    else
+        targetNpcCount = computed;
+
+    std::cout << "Lancement vague " << waveNumber << " : " << targetNpcCount << " ennemis" << std::endl;
+
+    for (int i = 0; i < targetNpcCount; ++i)
+    {
+        int type = rand() % 2;
+        if (type == 0)
+            npcs.push_back(new Warrior(window, map));
+        else
+            npcs.push_back(new Healer(window, map));
+    }
+
+
+    npcsInit(map);
 }

@@ -2,16 +2,15 @@
 #include <SFML/Graphics.hpp>
 #include <optional>
 #include "SceneMenu.h"
-
-class ScenePause
+class ScenePause 
 {
 public:
 	
-	ScenePause(sf::RenderWindow* inWindow, int score = 0, int wave = 0);
+	ScenePause(sf::RenderWindow* inWindow);
 	bool run();
 
 private:
-
+	
 	sf::RenderWindow* window;
 	sf::Texture bgTex;
 	sf::Texture ContinuesTex;
@@ -21,9 +20,8 @@ private:
 	std::optional<sf::Sprite> Menu;
 	bool running = true;
 
-
-	sf::Font font;
-	std::optional<sf::Text> scoreText;
-
 	void draw();
 };
+
+
+
