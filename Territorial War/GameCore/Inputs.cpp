@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Inputs.h"
-#include "Scene/ScenePause.h"
+#include "../Scene/ScenePause.h"
 
 
 Inputs::Inputs(sf::RenderWindow* inWindow)

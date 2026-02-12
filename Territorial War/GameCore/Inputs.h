@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Entities/Player.h"
+#include "../Entities/Player.h"
 
 
 class Inputs

@@ -12,6 +12,7 @@ public:
     sf::Sprite* attackAnimation(const float dt) override;
     void healAnimation(const float dt);
     void Init(Map* map, Player* player, std::vector<Npc*>* npcs) override;
+    void attack() override;
     void draw() override;
 
 private:

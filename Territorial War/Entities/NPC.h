@@ -6,7 +6,7 @@
 #include "../States/IdleState.h"
 #include "../States/HealState.h"
 #include "../States/RunawayState.h"
-#include "../Map.h"
+#include "../GameCore/Map.h"
 #include "Entity.h"
 
 using namespace NpcAi;
@@ -31,12 +31,14 @@ public:
     float skillCD = 1.f;
     float range;
     float detectionRadius;
-    bool runForYourLife = false;
+    float hasFlee = 10.f;
 
     virtual void Init(Map* map, Player* player, std::vector<Npc*>* npcs);
+    void moveTo();
     void move(const sf::Vector2f& move, const Map* map);
     void moveOnAxis(float& pos, float& hitboxPos, float delta, float min, float max, const Map* map);
     void update(const float dt) override;
+    virtual void attack() = 0;
 
 private:
 };

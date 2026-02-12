@@ -1,6 +1,6 @@
 #include "Warrior.h"
 #include "../FSM/Conditions.h"
-#include "../TextureManager.h"
+#include "../GameCore/TextureManager.h"
 
 Warrior::Warrior(sf::RenderWindow* inWindow, const Map* map) : Npc(inWindow)
 {
@@ -34,12 +34,20 @@ void Warrior::Init(Map* map, Player* player, std::vector<Npc*>* npcs)
 	idleState->AddTransition(Conditions::hasWaited, patrolState);
 	patrolState->AddTransition(Conditions::isSeeingPlayer, chaseState);
 	patrolState->AddTransition(Conditions::hasReachedPoint, idleState);
-	runAwayState->AddTransition(Conditions::hasRunAway, patrolState);
-	chaseState->AddTransition(Conditions::isLowHp, runAwayState);
+	runAwayState->AddTransition(Conditions::hasFlee, patrolState);
+	chaseState->AddTransition(Conditions::shouldFlee, runAwayState);
 	chaseState->AddTransition([](NpcContext& _context)
 		{
 			return !Conditions::isSeeingPlayer(_context);
 		}, idleState);
 
-	fsm.Init(patrolState, context);
+	fsm.Init(idleState, context);
+}
+
+void Warrior::attack()
+{
+	if (isAttacking == false)
+	{
+		isAttacking = true;
+	}
 }

@@ -6,11 +6,13 @@
 #include "InGame.h"
 #include "../Entities/Warrior.h"
 #include "../Entities/Healer.h"
+#include "TextureManager.h"
 
 InGame::InGame(sf::RenderWindow* inWindow) : window(inWindow), input(Inputs(window))
 {
     map = new Map(window);
     player = new Player(window, map);
+    // création des npcs
     npcs.push_back(new Warrior(window, map));
     npcs.push_back(new Healer(window, map));
     npcsInit(map);
@@ -19,16 +21,17 @@ InGame::InGame(sf::RenderWindow* inWindow) : window(inWindow), input(Inputs(wind
 void InGame::run()
 {
     sf::Clock clock;
+    // boucle de la partie
     while (running)
     {
         float dt = clock.restart().asSeconds();
+        checkEndGame();
         sf::Vector2f direction = input.manageInputs(player, running);
         player->move(direction * dt, map);
         player->update(dt);
         npcsUpdate(dt);
         checkHits(player);
         draw();
-        checkEndGame();
     }
 }
 
@@ -48,6 +51,7 @@ void InGame::npcsInit(Map* map)
     }
 }
 
+// vérifie si chaque entité reçoit des dégâts
 void InGame::checkHits(Player* player)
 {
     for (auto it = npcs.begin(); it != npcs.end(); )
@@ -61,8 +65,6 @@ void InGame::checkHits(Player* player)
         {
             (*it)->invunerability = 0.f;
             (*it)->hp--;
-            if ((*it)->hp == 1)
-                 (*it)->runForYourLife = true;
         }
         if ((*it)->hp <= 0)
         {
@@ -78,6 +80,7 @@ void InGame::checkHits(Player* player)
 
 }
 
+// collision entre cercle et rectangle
 bool InGame::circleIntersectsRect(const sf::CircleShape& circle, const sf::FloatRect& rect)
 {
     sf::Vector2f center = circle.getPosition();
@@ -102,6 +105,7 @@ void InGame::npcsDraw()
     }
 }
 
+// vérifie si la partie se termine
 void InGame::checkEndGame()
 {
     if (player->hp <= 0)
@@ -110,6 +114,7 @@ void InGame::checkEndGame()
         endScreen(true);
 }
 
+// gère l'écran de fin
 void InGame::endScreen(bool win)
 {
     running = false;
@@ -118,20 +123,18 @@ void InGame::endScreen(bool win)
         path = "assets/win.png";
     else
         path = "assets/gameover.png";
-    if (!endTex.loadFromFile(path))
-        std::cout << "texture non chargee" << std::endl;
-    end.emplace(endTex);
+    end.emplace(*TextureManager::loadTexture(path));
     sf::FloatRect bounds = end->getLocalBounds();
     end->setOrigin({ bounds.size.x / 2.f, bounds.size.y / 2.f });
     end->setPosition({ (float)window->getSize().x / 2, ((float)window->getSize().y / 2) - 80 });
+
     sf::IntRect rect({ 33, 0 }, { 25, 17 });
-    if (!homeTex.loadFromFile("assets/ButtonHome.png", false, rect))
-        std::cout << "texture non chargee" << std::endl;
-    home.emplace(homeTex);
+    home.emplace(*TextureManager::loadTexture("assets/ButtonHome.png"), rect);
     home->setScale({ 8.f, 7.f });
     bounds = home->getLocalBounds();
     home->setOrigin({ bounds.size.x / 2.f, bounds.size.y / 2.f });
     home->setPosition({ (float)window->getSize().x / 2, ((float)window->getSize().y / 2) + 80 });
+
     bool clickedBtn = false;
     while (!clickedBtn)
     {

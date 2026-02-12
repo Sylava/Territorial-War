@@ -17,7 +17,7 @@ public:
     sf::FloatRect hitbox;
     sf::Sprite* currentSprite = nullptr;
     float speed = 300.f;
-    float invunerability = 0.5f;
+    float invunerability = 0.4f;
     bool isAttacking = false;
     bool isMoving = false;
     int hpMax = 5;

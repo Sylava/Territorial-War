@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Entity.h"
-#include "../TextureManager.h"
+#include "../GameCore/TextureManager.h"
 
 Entity::Entity(sf::RenderWindow* inWindow, int inHp)
 {

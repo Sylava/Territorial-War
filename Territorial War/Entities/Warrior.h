@@ -7,5 +7,6 @@ public:
 	Warrior(sf::RenderWindow* inWindow, const Map* map);
 
     void Init(Map* map, Player* player, std::vector<Npc*>* npcs) override;
+	void attack() override;
 };
 

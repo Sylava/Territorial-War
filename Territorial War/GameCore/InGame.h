@@ -1,10 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <optional>
-#include "../Map.h"
+#include "Map.h"
 #include "../Entities/NPC.h"
 #include "../Entities/Player.h"
-#include "../Inputs.h"
+#include "Inputs.h"
 
 
 class InGame
@@ -24,8 +24,6 @@ private:
 	void endScreen(bool win);
 
 	sf::RenderWindow* window;
-	sf::Texture endTex;
-	sf::Texture homeTex;
 	std::optional<sf::Sprite> end;
 	std::optional<sf::Sprite> home;
 	bool running = true;

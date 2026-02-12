@@ -1,8 +1,8 @@
 #include <iostream>
 #include "Healer.h"
-#include "../Map.h"
+#include "../GameCore/Map.h"
 #include "../FSM/Conditions.h"
-#include "../TextureManager.h"
+#include "../GameCore/TextureManager.h"
 
 Healer::Healer(sf::RenderWindow* inWindow, const Map* map) : Npc(inWindow)
 {
@@ -14,9 +14,9 @@ Healer::Healer(sf::RenderWindow* inWindow, const Map* map) : Npc(inWindow)
 	healEffect.emplace(*TextureManager::loadTexture("assets/Heal_Effect.png"));
 	spriteRun.emplace(*TextureManager::loadTexture("assets/HealerRun.png"));
 	spriteAttack.emplace(*TextureManager::loadTexture("assets/HealerHeal.png"));
+	hitbox.size = { 40.f, 76.f };
 	position.x = map->right;
 	position.y = map->bottom + hitbox.size.y / 2;
-	hitbox.size = { 40.f, 76.f };
 	hitbox.position = { position.x - 20.f, position.y - 38.f };
 	range = 500.f;
 }
@@ -27,6 +27,19 @@ void Healer::update(const float dt)
 	Npc::update(dt);
 	if (isAttacking)
 		healAnimation(dt);
+}
+
+void Healer::attack()
+{
+	context.npc->isMoving = false;
+	if (context.npc->isAttacking == false)
+	{
+		context.npc->isAttacking = true;
+		if (context.npc->target->hp < context.npc->target->hpMax)
+			context.npc->target->hp++;
+		context.npc->attackIndex = 0;
+		context.npc->attackAnimTime = 0.08f;
+	}
 }
 
 sf::Sprite* Healer::attackAnimation(const float dt)
@@ -76,12 +89,12 @@ void Healer::Init(Map* map, Player* player, std::vector<Npc*>* npcs)
 	patrolState->AddTransition(Conditions::hasReachedPoint, idleState);
 	patrolState->AddTransition(Conditions::needHealing, healstate);
 	healstate->AddTransition(Conditions::onCooldown, patrolState);
-	runAwayState->AddTransition(Conditions::hasRunAway, patrolState);
-	healstate->AddTransition(Conditions::isLowHp, runAwayState);
-	patrolState->AddTransition(Conditions::isLowHp, runAwayState);
-	idleState->AddTransition(Conditions::isLowHp, runAwayState);
+	runAwayState->AddTransition(Conditions::hasFlee, patrolState);
+	healstate->AddTransition(Conditions::shouldFlee, runAwayState);
+	patrolState->AddTransition(Conditions::shouldFlee, runAwayState);
+	idleState->AddTransition(Conditions::shouldFlee, runAwayState);
 
-	fsm.Init(patrolState, context);
+	fsm.Init(idleState, context);
 }
 
 void Healer::draw()

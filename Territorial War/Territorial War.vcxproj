@@ -42,13 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -136,10 +136,10 @@
     <ClCompile Include="FSM\Conditions.cpp" />
     <ClCompile Include="States\HealState.cpp" />
     <ClCompile Include="States\IdleState.cpp" />
-    <ClCompile Include="Scene\InGame.cpp" />
-    <ClCompile Include="Inputs.cpp" />
+    <ClCompile Include="GameCore\InGame.cpp" />
+    <ClCompile Include="GameCore\Inputs.cpp" />
     <ClCompile Include="Entities\Healer.cpp" />
-    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="GameCore\Map.cpp" />
     <ClCompile Include="Entities\NPC.cpp" />
     <ClCompile Include="FSM\NpcContext.cpp" />
     <ClCompile Include="States\PatrolState.cpp" />
@@ -151,7 +151,7 @@
     <ClCompile Include="FSM\StateMachine.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Entities\Warrior.cpp" />
-    <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="GameCore\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entities\Entity.h" />
@@ -159,10 +159,10 @@
     <ClInclude Include="FSM\Conditions.h" />
     <ClInclude Include="States\HealState.h" />
     <ClInclude Include="States\IdleState.h" />
-    <ClInclude Include="Scene\InGame.h" />
-    <ClInclude Include="Inputs.h" />
+    <ClInclude Include="GameCore\InGame.h" />
+    <ClInclude Include="GameCore\Inputs.h" />
     <ClInclude Include="Entities\Healer.h" />
-    <ClInclude Include="Map.h" />
+    <ClInclude Include="GameCore\Map.h" />
     <ClInclude Include="Entities\NPC.h" />
     <ClInclude Include="FSM\NpcContext.h" />
     <ClInclude Include="States\PatrolState.h" />
@@ -173,7 +173,7 @@
     <ClInclude Include="FSM\State.h" />
     <ClInclude Include="FSM\StateMachine.h" />
     <ClInclude Include="Entities\Warrior.h" />
-    <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="GameCore\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FSM\State.inl" />

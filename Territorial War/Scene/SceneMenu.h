@@ -10,9 +10,6 @@ public:
 
 private:
 	sf::RenderWindow* window;
-	sf::Texture bgTex;
-	sf::Texture startTex;
-	sf::Texture exitTex;
 	std::optional<sf::Sprite> background;
 	std::optional<sf::Sprite> start;
 	std::optional<sf::Sprite> exit;

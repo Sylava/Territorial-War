@@ -1,14 +1,12 @@
 #include <random>
 #include "PatrolState.h"
 #include "../Entities/NPC.h"
-#include "../Map.h"
+#include "../GameCore/Map.h"
 
 void PatrolState::Enter(NpcContext& context)
 {
-    std::cout << "Enter Patrol State" << std::endl;
     context.reachedPoint = false;
     context.npc->isMoving = true;
-    context.reachedPoint = false;
     setPatrolPoints(context);
 }
 
@@ -26,6 +24,7 @@ void PatrolState::Exit(NpcContext& context)
 
 }
 
+// Donne un point où se diriger
 void PatrolState::setPatrolPoints(NpcContext& context)
 {
     float y = context.map->top + rand() % ((int)context.map->bottom - (int)context.map->top + 1);
@@ -33,6 +32,7 @@ void PatrolState::setPatrolPoints(NpcContext& context)
     pointToGo = sf::Vector2f(x, y);
 }
 
+// Retourne la distance entre deux points
 float PatrolState::getDistance(const sf::Vector2f& a, const sf::Vector2f& b)
 {
     float dx = b.x - a.x;

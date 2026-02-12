@@ -5,7 +5,7 @@
 
 void ChaseState::Enter(NpcContext& context)
 {
-    std::cout << "Enter Chase State" << std::endl;
+
 }
 
 void ChaseState::Execute(NpcContext& context, float dt)
@@ -13,15 +13,10 @@ void ChaseState::Execute(NpcContext& context, float dt)
     float distance = getDistance(context.npc->position, context.player->position);
     if (distance <= context.npc->range)
     {
-        context.npc->isMoving = false;
-        if (context.npc->isAttacking == false)
-        {
-            context.npc->isAttacking = true;
-        }
+        context.npc->attack();
     }
     else
     {
-        context.npc->isMoving = true;
         sf::Vector2f dir = (context.player->position - context.npc->position).normalized();
         context.npc->move(dir * context.npc->speed * dt, context.map);
     }

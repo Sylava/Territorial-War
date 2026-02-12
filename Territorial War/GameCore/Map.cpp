@@ -1,5 +1,6 @@
-#include "Map.h"
 #include <iostream>
+#include "Map.h"
+#include "TextureManager.h"
 
 Map::Map(sf::RenderWindow* inWindow)
 {
@@ -10,16 +11,8 @@ Map::Map(sf::RenderWindow* inWindow)
     bottom = ((float)mapHeight * 64) + yOffset - 80;
     left = xOffset;
     right = ((float)mapWidth * 64) + xOffset - 40;
-    sf::IntRect rect({ 7, 17 }, { 49, 34 });
-	if (!rockTex.loadFromFile("assets/Rock.png", false, rect))
-		std::cout << "texture non chargee" << std::endl;
-    rect = sf::IntRect({ 5, 14 }, { 53, 38 });
-    if (!rock2Tex.loadFromFile("assets/Rock2.png", false, rect))
-        std::cout << "texture non chargee" << std::endl;
     if (!bgTex.loadFromFile("assets/background.png"))
         std::cout << "texture non chargee" << std::endl;
-	if (!landTex.loadFromFile("assets/tiles.png"))
-		std::cout << "texture non chargee" << std::endl;
 
     createFirstRow();
     createMiddleRows();
@@ -35,27 +28,26 @@ void Map::createFirstRow()
 {
     for (int i = 0; i < mapWidth; ++i)
     {
+        sf::IntRect rect;
+        sf::Vector2f position;
         if (i == 0)
         {
-            sf::IntRect rect({ 320, 0 }, { 64, 64 });
-            sf::Sprite sprite(landTex, rect);
-            sprite.setPosition({ xOffset + 0, yOffset + 0 });
-            tiles.push_back(sprite);
+            rect = sf::IntRect({ 320, 0 }, { 64, 64 });
+            position = { xOffset + 0, yOffset + 0 };
         }
         else if (i < mapWidth - 1)
         {
-            sf::IntRect rect({ 384, 0 }, { 64, 64 });
-            sf::Sprite sprite(landTex, rect);
-            sprite.setPosition({ xOffset + 64 * (float)i, yOffset + 0 });
-            tiles.push_back(sprite);
+            rect = sf::IntRect({ 384, 0 }, { 64, 64 });
+            position = { xOffset + 64 * (float)i, yOffset + 0 };
         }
         else
         {
-            sf::IntRect rect({ 448, 0 }, { 64, 64 });
-            sf::Sprite sprite(landTex, rect);
-            sprite.setPosition({ xOffset + ((float)mapWidth - 1.f) * 64, yOffset + 0 });
-            tiles.push_back(sprite);
+            rect = sf::IntRect({ 448, 0 }, { 64, 64 });
+            position = { xOffset + ((float)mapWidth - 1.f) * 64, yOffset + 0 };
         }
+        sf::Sprite sprite(*TextureManager::loadTexture("assets/tiles.png"), rect);
+        sprite.setPosition(position);
+        tiles.push_back(sprite);
     }
 }
 
@@ -67,7 +59,6 @@ void Map::createMiddleRows()
         {
             sf::IntRect rect;
             sf::Vector2f position;
-
             if (x == 0)
             {
                 rect = sf::IntRect({ 320, 64 }, { 64, 64 });
@@ -83,10 +74,9 @@ void Map::createMiddleRows()
                 rect = sf::IntRect({ 448, 64 }, { 64, 64 });
                 position = { xOffset + (mapWidth - 1.f) * 64.f, yOffset + 64.f * (y + 1) };
             }
-
-            sf::Sprite tile(landTex, rect);
-            tile.setPosition(position);
-            tiles.push_back(tile);
+            sf::Sprite sprite(*TextureManager::loadTexture("assets/tiles.png"), rect);
+            sprite.setPosition(position);
+            tiles.push_back(sprite);
             createRock(position);
         }
     }
@@ -96,27 +86,26 @@ void Map::createLastRow()
 {
     for (int i = 0; i < mapWidth; ++i)
     {
+        sf::IntRect rect;
+        sf::Vector2f position;
         if (i == 0)
         {
-            sf::IntRect rect({ 320, 128 }, { 64, 64 });
-            sf::Sprite sprite(landTex, rect);
-            sprite.setPosition({ xOffset + 0, yOffset + ((float)mapHeight - 1) * 64 });
-            tiles.push_back(sprite);
+            rect = sf::IntRect({ 320, 128 }, { 64, 64 });
+            position = { xOffset + 0, yOffset + ((float)mapHeight - 1) * 64 };
         }
         else if (i < mapWidth - 1)
         {
-            sf::IntRect rect({ 384, 128 }, { 64, 64 });
-            sf::Sprite sprite(landTex, rect);
-            sprite.setPosition({ xOffset + 64 * (float)i, yOffset + ((float)mapHeight - 1) * 64 });
-            tiles.push_back(sprite);
+            rect = sf::IntRect({ 384, 128 }, { 64, 64 });
+            position = { xOffset + 64 * (float)i, yOffset + ((float)mapHeight - 1) * 64 };
         }
         else
         {
-            sf::IntRect rect({ 448, 128 }, { 64, 64 });
-            sf::Sprite sprite(landTex, rect);
-            sprite.setPosition({ xOffset + ((float)mapWidth - 1.f) * 64, yOffset + ((float)mapHeight - 1) * 64 });
-            tiles.push_back(sprite);
+            rect = sf::IntRect({ 448, 128 }, { 64, 64 });
+            position = { xOffset + ((float)mapWidth - 1.f) * 64, yOffset + ((float)mapHeight - 1) * 64 };
         }
+        sf::Sprite sprite(*TextureManager::loadTexture("assets/tiles.png"), rect);
+        sprite.setPosition(position);
+        tiles.push_back(sprite);
     }
 }
 
@@ -124,27 +113,26 @@ void Map::createRocksRow()
 {
     for (int i = 0; i < mapWidth; ++i)
     {
+        sf::IntRect rect;
+        sf::Vector2f position;
         if (i == 0)
         {
-            sf::IntRect rect({ 320, 320 }, { 64, 64 });
-            sf::Sprite sprite(landTex, rect);
-            sprite.setPosition({ xOffset + 0, yOffset + ((float)mapHeight) * 64 });
-            tiles.push_back(sprite);
+            rect = sf::IntRect({ 320, 320 }, { 64, 64 });
+            position = { xOffset + 0, yOffset + ((float)mapHeight) * 64 };
         }
         else if (i < mapWidth - 1)
         {
-            sf::IntRect rect({ 384, 320 }, { 64, 64 });
-            sf::Sprite sprite(landTex, rect);
-            sprite.setPosition({ xOffset + 64 * (float)i, yOffset + ((float)mapHeight) * 64 });
-            tiles.push_back(sprite);
+            rect = sf::IntRect({ 384, 320 }, { 64, 64 });
+            position = { xOffset + 64 * (float)i, yOffset + ((float)mapHeight) * 64 };
         }
         else
         {
-            sf::IntRect rect({ 448, 320 }, { 64, 64 });
-            sf::Sprite sprite(landTex, rect);
-            sprite.setPosition({ xOffset + ((float)mapWidth - 1.f) * 64, yOffset + ((float)mapHeight) * 64 });
-            tiles.push_back(sprite);
+            rect = sf::IntRect({ 448, 320 }, { 64, 64 });
+            position = { xOffset + ((float)mapWidth - 1.f) * 64, yOffset + ((float)mapHeight) * 64 };
         }
+        sf::Sprite sprite(*TextureManager::loadTexture("assets/tiles.png"), rect);
+        sprite.setPosition(position);
+        tiles.push_back(sprite);
     }
 }
 
@@ -157,14 +145,16 @@ void Map::createRock(const sf::Vector2f& position)
         {
             case 0:
             {
-                sf::Sprite rock(rockTex);
+                sf::IntRect rect({ 7, 17 }, { 49, 34 });
+                sf::Sprite rock(*TextureManager::loadTexture("assets/rock.png"), rect);
                 rock.setPosition(position);
                 rocks.push_back(rock);
                 break;
             }
             default:
             {
-                sf::Sprite rock(rock2Tex);
+                sf::IntRect rect({ 5, 14 }, { 53, 38 });
+                sf::Sprite rock(*TextureManager::loadTexture("assets/rock2.png"), rect);
                 rock.setPosition(position);
                 rocks.push_back(rock);
                 break;

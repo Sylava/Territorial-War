@@ -15,6 +15,7 @@ void Npc::Init(Map* map, Player* player, std::vector<Npc*>* npcs)
 
 void Npc::move(const sf::Vector2f& move, const Map* map)
 {
+    isMoving = true;
     if (move.x > 0.f)
         animMirror = true;
     else if (move.x < 0.f)
@@ -26,13 +27,14 @@ void Npc::move(const sf::Vector2f& move, const Map* map)
         attackArea.setPosition({ position.x + 25, position.y });
     else
         attackArea.setPosition({ position.x - 25, position.y });
-    if (position == oldPosition)
+    if (position == oldPosition) // Si la position n'a pas changé, on estime qu'il n'était pas en déplacement
         isMoving = false;
 }
 
 void Npc::update(const float dt)
 {
-    fsm.Update(context, dt);
+    hasFlee += dt;
+    fsm.Update(context, dt); // Update de la fsm
     Entity::update(dt);
 }
 

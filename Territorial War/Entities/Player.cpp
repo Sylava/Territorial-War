@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Player.h"
-#include "../TextureManager.h"
+#include "../GameCore/TextureManager.h"
 
 Player::Player(sf::RenderWindow* inWindow, const Map* map) : Entity(inWindow, 8)
 {

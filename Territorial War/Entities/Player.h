@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "../Map.h"
+#include "../GameCore/Map.h"
 #include "Entity.h"
 
 class Player: public Entity

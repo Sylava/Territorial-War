@@ -48,18 +48,18 @@ namespace NpcAi
                 return true;
             return false;
         }
-        static bool hasRunAway(NpcContext& context)
+        static bool hasFlee(NpcContext& context)
         {
             if (context.npc->runAwayTime >= 1.5f)
             {
-                context.npc->runForYourLife = false;
+                context.npc->hasFlee = 0.f;
                 return true;
             }
             return false;
         }
-        static bool isLowHp(NpcContext& context)
+        static bool shouldFlee(NpcContext& context)
         {
-            if (context.npc->runForYourLife)
+            if (context.npc->hasFlee >= 10.f && context.npc->hp == 1)
                 return true;
             return false;
         }

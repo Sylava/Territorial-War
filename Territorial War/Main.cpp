@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
-#include "Scene/InGame.h"
+#include "GameCore/InGame.h"
 #include "Scene/SceneMenu.h"
-#include "TextureManager.h"
+#include "GameCore/TextureManager.h"
 
 int main()
 {
