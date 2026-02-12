@@ -1,0 +1,38 @@
+vous êtes un ancien chavalier trahi par sont royaume. ils vous ont jetés sur une île de gladiateur.
+votre seul moyen de survie est de s'échaper de cette île.
+abbater tous les ennemies qui se dresse devant vous et échaper vous de l'île.
+
+thème du jeu: médivale et fantaisie.
+but du jeu: éléminer tous ces ennemis 
+
+type d'énemie:
+chevalier (attacke de corps a corps) ils vous tranchent en deux avec sont épée si vous ne faite pas attention. toujour acompagner d'un prêtre 
+prêtre (ne blesse pas mais soinne le chevalier) ils sont fuiard ne le laisser pas le temps de soigner.
+les states:
+- recherche (communs au 2 ennemeis)
+- repos (communs au 2 ennemeis)
+- deplacement (communs au 2 ennemeis)
+- fuite (communs au 2 ennemeis)
+- attack (chevalier)
+- soin (prêtre)
+
+ce que nous avons réussie a faire 
+- wave ennemies
+- map
+- score
+- barre hp (player et ennemies)
+- obstacle (player et ennemies)
+- déplacement (player et ennemies)
+- les textures (pour tout)
+- 2 IA (pour chaque ennemis différent)
+- jeu jouable 
+- finir dans les temps 
+
+ce que nous avons pas pu faire 
+- faire un système de magasin 
+- le score qui serre de monais
+- des son 
+- les power up 
+- défirent type de carte 
+
+tout ceci par manque de temps mais ceci sont que des plus que nous avons penser si on avait tout fini ce que nous avons fait avant.
