@@ -65,8 +65,6 @@ void SceneMenu::run()
 		draw();
 		window->display();
 	}
-	InGame game(window);
-	game.run();
 }
 
 void SceneMenu::draw()

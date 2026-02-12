@@ -42,13 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="States\ChaseState.cpp" />
     <ClCompile Include="FSM\Conditions.cpp" />
     <ClCompile Include="States\HealState.cpp" />
@@ -150,9 +151,10 @@
     <ClCompile Include="FSM\StateMachine.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Entities\Warrior.cpp" />
-    <ClCompile Include="WaveInfini.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Entities\Entity.h" />
     <ClInclude Include="States\ChaseState.h" />
     <ClInclude Include="FSM\Conditions.h" />
     <ClInclude Include="States\HealState.h" />
@@ -171,7 +173,7 @@
     <ClInclude Include="FSM\State.h" />
     <ClInclude Include="FSM\StateMachine.h" />
     <ClInclude Include="Entities\Warrior.h" />
-    <ClInclude Include="WaveInfini.h" />
+    <ClInclude Include="TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FSM\State.inl" />

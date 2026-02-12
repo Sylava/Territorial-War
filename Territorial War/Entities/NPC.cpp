@@ -1,6 +1,10 @@
 #include "NPC.h"
 #include "../FSM/Conditions.h"
 
+Npc::Npc(sf::RenderWindow* inWindow) : Entity(inWindow, 5)
+{
+}
+
 void Npc::Init(Map* map, Player* player, std::vector<Npc*>* npcs)
 {
     context.npc = this;
@@ -24,6 +28,12 @@ void Npc::move(const sf::Vector2f& move, const Map* map)
         attackArea.setPosition({ position.x - 25, position.y });
     if (position == oldPosition)
         isMoving = false;
+}
+
+void Npc::update(const float dt)
+{
+    fsm.Update(context, dt);
+    Entity::update(dt);
 }
 
 void Npc::moveOnAxis(float& pos, float& hitboxPos, float move, float min, float max, const Map* map)
