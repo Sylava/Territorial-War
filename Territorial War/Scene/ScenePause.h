@@ -13,8 +13,6 @@ private:
 
 	sf::RenderWindow* window;
 	sf::Texture bgTex;
-	sf::Texture ContinuesTex;
-	sf::Texture MenuTex;
 	std::optional<sf::Sprite> background;
 	std::optional<sf::Sprite> Continues;
 	std::optional<sf::Sprite> Menu;

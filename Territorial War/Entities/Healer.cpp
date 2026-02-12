@@ -14,9 +14,9 @@ Healer::Healer(sf::RenderWindow* inWindow, const Map* map) : Npc(inWindow)
 	healEffect.emplace(*TextureManager::loadTexture("assets/Heal_Effect.png"));
 	spriteRun.emplace(*TextureManager::loadTexture("assets/HealerRun.png"));
 	spriteAttack.emplace(*TextureManager::loadTexture("assets/HealerHeal.png"));
+	hitbox.size = { 40.f, 76.f };
 	position.x = map->right;
 	position.y = map->bottom + hitbox.size.y / 2;
-	hitbox.size = { 40.f, 76.f };
 	hitbox.position = { position.x - 20.f, position.y - 38.f };
 	range = 500.f;
 }

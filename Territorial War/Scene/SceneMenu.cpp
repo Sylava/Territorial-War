@@ -1,6 +1,7 @@
 #include "SceneMenu.h"
 #include <iostream>
 #include "InGame.h"
+#include "../TextureManager.h"
 
 SceneMenu::SceneMenu(sf::RenderWindow* inWindow)
 {
@@ -8,18 +9,18 @@ SceneMenu::SceneMenu(sf::RenderWindow* inWindow)
 	sf::Vector2u winSize = window->getSize();
 
 	sf::IntRect rect({ 3,79 }, { 69, 29 });
-	if(!startTex.loadFromFile("assets/buttons.png", false, rect))
-		std::cout << "texture non chargee" << std::endl;
-	start.emplace(startTex);
+	/*if(!startTex.loadFromFile("assets/buttons.png", false, rect))
+		std::cout << "texture non chargee" << std::endl;*/
+	start.emplace(*TextureManager::loadTexture("assets/buttons.png"), rect);
 	start->setScale({ 3.f, 3.f });
 	sf::FloatRect bounds = start->getLocalBounds();
 	start->setOrigin({ bounds.size.x / 2.f, bounds.size.y / 2.f });
 	start->setPosition({(float)winSize.x / 2, ((float)winSize.y / 2) - 80});
 
 	rect = sf::IntRect({ 4, 215 }, { 54, 29 });
-	if (!exitTex.loadFromFile("assets/buttons.png", false, rect))
-		std::cout << "texture non chargee" << std::endl;
-	exit.emplace(exitTex);
+	/*if (!exitTex.loadFromFile("assets/buttons.png", false, rect))
+		std::cout << "texture non chargee" << std::endl;*/
+	exit.emplace(*TextureManager::loadTexture("assets/buttons.png"), rect);
 	exit->setScale({ 3.f, 3.f });
 	bounds = exit->getLocalBounds();
 	exit->setOrigin({ bounds.size.x / 2.f, bounds.size.y / 2.f });
@@ -27,7 +28,7 @@ SceneMenu::SceneMenu(sf::RenderWindow* inWindow)
 
 	if (!bgTex.loadFromFile("assets/menu.jpg"))
 		std::cout << "texture background non chargee" << std::endl;
-	background.emplace(bgTex);
+	background.emplace(*TextureManager::loadTexture("assets/menu.jpg"));
 	sf::Vector2u texSize = bgTex.getSize();
 	background->setScale({ (float)(winSize.x) / texSize.x, (float)(winSize.y) / texSize.y });
 }

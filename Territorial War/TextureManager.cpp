@@ -22,6 +22,7 @@ void TextureManager::clear()
 	{
 		delete pair.second;
 	}
+	textures.clear();
 }
 
 sf::Texture* TextureManager::loadTexture(std::string const& path)

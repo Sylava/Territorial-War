@@ -21,6 +21,7 @@ private:
 	void npcsDraw();
 	void draw();
 	void checkEndGame();
+	void deleteObjects();
 	void endScreen(bool win);
 
 	sf::RenderWindow* window;

@@ -22,13 +22,24 @@ void InGame::run()
     while (running)
     {
         float dt = clock.restart().asSeconds();
+        checkEndGame();
         sf::Vector2f direction = input.manageInputs(player, running);
         player->move(direction * dt, map);
         player->update(dt);
         npcsUpdate(dt);
         checkHits(player);
         draw();
-        checkEndGame();
+    }
+    deleteObjects();
+}
+
+void InGame::deleteObjects()
+{
+    delete map;
+    delete player;
+    for (Npc* npc : npcs)
+    {
+        delete npc;
     }
 }
 
