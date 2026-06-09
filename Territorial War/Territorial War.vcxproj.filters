@@ -18,116 +18,134 @@
     <ClCompile Include="Main.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="SceneMenu.cpp">
+    <ClCompile Include="Entities\Entity.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="States\ChaseState.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="NPC.cpp">
+    <ClCompile Include="FSM\Conditions.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="StateMachine.cpp">
+    <ClCompile Include="States\HealState.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="State.cpp">
+    <ClCompile Include="States\IdleState.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="NpcContext.cpp">
+    <ClCompile Include="GameCore\InGame.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="PatrolState.cpp">
+    <ClCompile Include="GameCore\Inputs.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="ChaseState.cpp">
+    <ClCompile Include="Entities\Healer.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Conditions.cpp">
+    <ClCompile Include="GameCore\Map.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="InGame.cpp">
+    <ClCompile Include="Entities\NPC.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Inputs.cpp">
+    <ClCompile Include="FSM\NpcContext.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Warrior.cpp">
+    <ClCompile Include="States\PatrolState.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="IdleState.cpp">
+    <ClCompile Include="Entities\Player.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
+    <ClCompile Include="States\RunAwayState.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Healer.cpp">
+    <ClCompile Include="Scene\SceneMenu.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="HealState.cpp">
+    <ClCompile Include="Scene\ScenePause.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="ScenePause.cpp">
+    <ClCompile Include="FSM\State.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="FSM\StateMachine.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Warrior.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCore\TextureManager.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SceneMenu.h">
+    <ClInclude Include="Entities\Entity.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="States\ChaseState.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="NPC.h">
+    <ClInclude Include="FSM\Conditions.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="StateMachine.h">
+    <ClInclude Include="States\HealState.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="State.h">
+    <ClInclude Include="States\IdleState.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="NpcContext.h">
+    <ClInclude Include="GameCore\InGame.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="PatrolState.h">
+    <ClInclude Include="GameCore\Inputs.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="ChaseState.h">
+    <ClInclude Include="Entities\Healer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Conditions.h">
+    <ClInclude Include="GameCore\Map.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="InGame.h">
+    <ClInclude Include="Entities\NPC.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Inputs.h">
+    <ClInclude Include="FSM\NpcContext.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Warrior.h">
+    <ClInclude Include="States\PatrolState.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="IdleState.h">
+    <ClInclude Include="Entities\Player.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
+    <ClInclude Include="States\RunAwayState.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Healer.h">
+    <ClInclude Include="Scene\SceneMenu.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="HealState.h">
+    <ClInclude Include="Scene\ScenePause.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="ScenePause.h">
+    <ClInclude Include="FSM\State.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="FSM\StateMachine.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Warrior.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCore\TextureManager.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="StateMachine.inl">
+    <None Include="FSM\State.inl">
       <Filter>Fichiers d%27en-tête</Filter>
     </None>
-    <None Include="State.inl">
+    <None Include="FSM\StateMachine.inl">
       <Filter>Fichiers d%27en-tête</Filter>
     </None>
   </ItemGroup>
